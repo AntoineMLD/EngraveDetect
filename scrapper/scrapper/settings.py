@@ -25,7 +25,7 @@ AZURE_CONTAINER_NAME = os.getenv('AZURE_CONTAINER_NAME')
 
 
 ITEM_PIPELINES = {
-    'scrapper.pipelines.EngravingPipeline': 300,
+    'scrapper.pipelines.OpticalPipeline': 300,
 }
 
 

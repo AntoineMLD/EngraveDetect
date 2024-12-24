@@ -1,12 +1,16 @@
 import scrapy
-import logging
 import re
+import logging
 from scrapper.items import EngravingItem
+from scrapy.crawler import CrawlerProcess
+from scrapy.exceptions import CloseSpider
 
-class OpticalSpider(scrapy.Spider):
+
+class OpticalspiderSpider(scrapy.Spider):
     name = "opticalspider"
     allowed_domains = ["www.france-optique.com"]
 
+    # Ajout des URLs de tous les fournisseurs
     start_urls = [
         "https://www.france-optique.com/gravures/fournisseur=2399",
         "https://www.france-optique.com/gravures/fournisseur=1344",
@@ -36,17 +40,27 @@ class OpticalSpider(scrapy.Spider):
         self.log(f"Parsing page: {response.url}", level=logging.INFO)
 
         category_elements = response.xpath('//div[@class="row tr group"]')
+        if not category_elements:
+            self.log("No categories found on the page", level=logging.WARNING)
+            return
+
         for category in category_elements:
             category_name = category.xpath('./text()').get()
             if category_name:
                 category_name = category_name.strip()
+            else:
+                self.log(f"Category name is missing on page: {response.url}", level=logging.WARNING)
+                continue
 
             engraving_rows = category.xpath('./following-sibling::div[@class="row tr"]')
-            for engraving_row in engraving_rows:
-                
-                item = EngravingItem()
+            if not engraving_rows:
+                self.log(f"No engravings found for category: {category_name}", level=logging.WARNING)
+                continue
 
+            for engraving_row in engraving_rows:
+                item = EngravingItem()
                 item['category'] = category_name
+
                 item['glass_name'] = engraving_row.xpath(
                     './/div[contains(@class, "col s4 m4")]/p/text()'
                 ).get()
@@ -64,7 +78,11 @@ class OpticalSpider(scrapy.Spider):
 
                 match = re.search(r'fournisseur=(\d+)', response.url)
                 if match:
-                    item['glass_supplier_id'] = match.group(1)
+                    supplier_id = match.group(1)
+                    item['glass_supplier_id'] = supplier_id
+                else:
+                    self.log(f"Failed to extract supplier_id from URL: {response.url}", level=logging.ERROR)
+                    continue
 
                 self.log(f"Extracted item: {item}", level=logging.DEBUG)
                 yield item

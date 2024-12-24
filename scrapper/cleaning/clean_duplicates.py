@@ -41,7 +41,7 @@ def remove_duplicates(input_file, output_file):
 
 if __name__ == "__main__":
     # Emplacements des fichiers
-    input_file = "scrapper/data/output.json"  # Fichier JSON original
+    input_file = "scrapper/output_opticalspider.json"  # Fichier JSON original
     output_file = "scrapper/data/cleaned_output.json"  # Fichier nettoyé
 
     # Vérifier que le fichier d'entrée existe
