@@ -47,6 +47,8 @@ class Glass(models.Model):
     material = models.ForeignKey(Material, on_delete=models.SET_NULL, null=True, verbose_name="Matériau")
     supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE, related_name='glasses', verbose_name="Fournisseur")
     category = models.CharField(max_length=50, choices=CATEGORY_CHOICES, default='Other', verbose_name="Catégorie")
+    image_engraving = models.ImageField(upload_to='engraving_images/', blank=True, null=True, verbose_name="Image de gravure")
+    text_engraving = models.TextField(blank=True, null=True, verbose_name="Gravure en texte")
     nasal_engraving = models.CharField(max_length=100, blank=True, null=True, verbose_name="Gravure nasale")
 
     class Meta:
@@ -84,6 +86,7 @@ class ImageUpload(models.Model):
     image = models.ImageField(upload_to='engraving_images/', verbose_name="Image de gravure")
     uploaded_at = models.DateTimeField(auto_now_add=True, verbose_name="Date d'upload")
     analyzed = models.BooleanField(default=False, verbose_name="Analysé")
+    metadata = models.JSONField(blank=True, null=True, verbose_name="Métadonnées de l'image")
 
     class Meta:
         verbose_name = "Image uploadée"
