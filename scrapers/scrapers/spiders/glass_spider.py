@@ -6,7 +6,7 @@ from scrapy.crawler import CrawlerProcess
 from scrapy.exceptions import CloseSpider
 
 
-class Glass_spiderSpider(scrapy.Spider):
+class GlassSpider(scrapy.Spider):
     name = "glass_spider"
     allowed_domains = ["www.france-optique.com"]
 

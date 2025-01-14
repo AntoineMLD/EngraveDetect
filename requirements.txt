@@ -1,3 +1,4 @@
 scrapy
 python-dotenv
 azure-storage-blob
+pytest
