@@ -31,16 +31,16 @@ class ScrapersPipeline:
 
         # Dictionnaire des fournisseurs
         self.supplier_mapping = {
-            2399: "ADN OPTIS",
-            1344: "BBGR OPTIQUE",
+            2399: "ADN OPTIS", # pas scrappé
+            1344: "BBGR OPTIQUE", # pas scrappé
             70: "DIVEL FRANCE",
-            521: "ESSILOR FRANCE",
+            521: "ESSILOR FRANCE", 
             1488: "HEPHILENS",
             130: "HOYA VISION CARE FRANCE",
             1958: "INDO OPTICAL FRANCE",
-            2217: "K OPTICAL",
+            2217: "K OPTICAL", 
             2532: "LEICA EYECARE",
-            644: "MEGA OPTIC",
+            644: "MEGA OPTIC", 
             1838: "MONT ROYAL",
             561: "NIKON VERRES OPTIQUES",
             711: "NOVACEL",
