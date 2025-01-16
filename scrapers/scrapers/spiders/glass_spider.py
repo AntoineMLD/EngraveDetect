@@ -12,7 +12,7 @@ class GlassSpider(scrapy.Spider):
 
     # Ajout des URLs de tous les fournisseurs
     start_urls = [
-        "https://www.france-optique.com/gravures/fournisseur=2399"
+        "https://www.france-optique.com/gravures/fournisseur=2399",
         "https://www.france-optique.com/gravures/fournisseur=1344",
         "https://www.france-optique.com/gravures/fournisseur=70",
         "https://www.france-optique.com/gravures/fournisseur=521",
