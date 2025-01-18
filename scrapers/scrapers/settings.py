@@ -14,12 +14,12 @@ NEWSPIDER_MODULE = "scrapers.spiders"
 TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
 FEED_EXPORT_ENCODING = "utf-8"
 
-ITEM_PIPELINES = {
-    "scrapers.pipelines.ScrapersPipeline": 300,
-}
+#ITEM_PIPELINES = {
+#    "scrapers.pipelines.ScrapersPipeline": 300,
+#}
 
-LOG_FILE = "logs/scrapy.log"
-LOG_LEVEL = "INFO" 
+#LOG_FILE = "logs/scrapy.log"
+#LOG_LEVEL = "INFO" 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = "scrapers (+http://www.yourdomain.com)"
 
