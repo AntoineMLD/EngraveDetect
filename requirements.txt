@@ -3,3 +3,6 @@ python-dotenv
 azure-storage-blob
 pytest
 pandas
+sqlalchemy
+psycopg2
+tabulate
