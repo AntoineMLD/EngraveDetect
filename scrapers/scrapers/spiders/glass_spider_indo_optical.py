@@ -1,23 +1,23 @@
 import scrapy
-import re
 import logging
 from scrapers.items import ScrapersItem
 
-class GlassSpider(scrapy.Spider):
+class GlassSpiderIndoOptical(scrapy.Spider):
     name = "glass_spider_indo_optical"
     allowed_domains = ["www.france-optique.com"]
     
     
-    start_urls = ["https://www.france-optique.com/gravures/fournisseur=1958"]
-    start_urls = ["https://www.france-optique.com/gravures/fournisseur=2217"]
-    start_urls = ["https://www.france-optique.com/gravures/fournisseur=2532"]
-    start_urls = ["https://www.france-optique.com/gravures/fournisseur=644"]
-    start_urls = ["https://www.france-optique.com/gravures/fournisseur=1838"]
-    start_urls = ["https://www.france-optique.com/gravures/fournisseur=561"]
-    start_urls = ["https://www.france-optique.com/gravures/fournisseur=711"]
-    start_urls = ["https://www.france-optique.com/gravures/fournisseur=2395"]
-    start_urls = ["https://www.france-optique.com/gravures/fournisseur=127"]
-    start_urls = ["https://www.france-optique.com/gravures/fournisseur=659"]
+    start_urls = ["https://www.france-optique.com/gravures/fournisseur=1958",
+                  "https://www.france-optique.com/gravures/fournisseur=2217",
+                  "https://www.france-optique.com/gravures/fournisseur=2532",
+                  "https://www.france-optique.com/gravures/fournisseur=644",
+                  "https://www.france-optique.com/gravures/fournisseur=1838",
+                  "https://www.france-optique.com/gravures/fournisseur=561",
+                  "https://www.france-optique.com/gravures/fournisseur=711",
+                  "https://www.france-optique.com/gravures/fournisseur=2395",
+                  "https://www.france-optique.com/gravures/fournisseur=127",
+                  "https://www.france-optique.com/gravures/fournisseur=659"]
+    
     
     
     
@@ -36,6 +36,8 @@ class GlassSpider(scrapy.Spider):
         for line in lines:
             
             item = ScrapersItem()
+            # Ajoute l'URL source à l'item
+            item['source_url'] = response.url
 
             # Extraction du nom du verre
             glass_name = line.xpath('.//div[contains(@class, "td col s4 m4")]/p/text()').get()

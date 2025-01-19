@@ -1,22 +1,18 @@
 import scrapy
-import re
 import logging
 from scrapers.items import ScrapersItem
 
-class GlassSpider(scrapy.Spider):
-    name = "glass_spider_indo_optical"
+class GlassSpiderOptovision(scrapy.Spider):
+    name = "glass_spider_optovision"
     allowed_domains = ["www.france-optique.com"]
     
     
-    start_urls = ["https://www.france-optique.com/gravures/fournisseur=789"]
-    start_urls = ["https://www.france-optique.com/gravures/fournisseur=2069"]
-    start_urls = ["https://www.france-optique.com/gravures/fournisseur=1407"]
-    start_urls = ["https://www.france-optique.com/gravures/fournisseur=2397"]
-    start_urls = ["https://www.france-optique.com/gravures/fournisseur=2644"]
-    start_urls = ["https://www.france-optique.com/gravures/fournisseur=2414"]
-    
-    
-    
+    start_urls = ["https://www.france-optique.com/gravures/fournisseur=789",
+                  "https://www.france-optique.com/gravures/fournisseur=2069",
+                  "https://www.france-optique.com/gravures/fournisseur=1407",
+                  "https://www.france-optique.com/gravures/fournisseur=2397",
+                  "https://www.france-optique.com/gravures/fournisseur=2644",
+                  "https://www.france-optique.com/gravures/fournisseur=2414"]
     
 
     def parse(self, response):
@@ -32,6 +28,9 @@ class GlassSpider(scrapy.Spider):
         for line in lines:
             
             item = ScrapersItem()
+
+            # Ajoute l'URL source à l'item
+            item['source_url'] = response.url
 
             # Extraction du nom du verre
             glass_name = line.xpath('.//div[contains(@class, "td col s4 m4")]/p/text()').get()

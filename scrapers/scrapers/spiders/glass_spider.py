@@ -6,8 +6,8 @@ class GlassSpider(scrapy.Spider):
     name = "glass_spider"
     allowed_domains = ["www.france-optique.com"]
     
-    start_urls = ["https://www.france-optique.com/fournisseur/1344-bbgr-optique/gravures"]
-    start_urls = ["https://www.france-optique.com/fournisseur/2399-adn-optis"]
+    start_urls = ["https://www.france-optique.com/fournisseur/1344-bbgr-optique/gravures",
+                  "https://www.france-optique.com/fournisseur/2399-adn-optis"]
     
     
 
@@ -19,6 +19,9 @@ class GlassSpider(scrapy.Spider):
 
         for line in lines:
             item = ScrapersItem()
+
+            # Ajoute l'URL source à l'item
+            item['source_url'] = response.url
 
             # Extraction du nom du verre
             glass_name = line.css('div.row.tr:not(.group) div.td.col.s3.m3 p::text').get('')

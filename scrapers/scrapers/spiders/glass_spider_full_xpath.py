@@ -5,8 +5,9 @@ from scrapers.items import ScrapersItem
 class GlassSpiderFullXPath(scrapy.Spider):
     name = "glass_spider_full_xpath"
     allowed_domains = ["www.france-optique.com"]
-    start_urls = ["https://www.france-optique.com/gravures/fournisseur=70"]
-    start_urls = ["https://www.france-optique.com/gravures/fournisseur=521"]
+    start_urls = ["https://www.france-optique.com/gravures/fournisseur=70",
+                  "https://www.france-optique.com/gravures/fournisseur=521"]
+    
     
 
     def parse(self, response):
@@ -23,6 +24,9 @@ class GlassSpiderFullXPath(scrapy.Spider):
         for line in lines:
             
             item = ScrapersItem()
+
+            # Ajoute l'URL source à l'item
+            item['source_url'] = response.url
 
             # Extraction du nom du verre avec full XPath
             glass_name = line.xpath('.//div[contains(@class, "td")][4]/p/text()').get()

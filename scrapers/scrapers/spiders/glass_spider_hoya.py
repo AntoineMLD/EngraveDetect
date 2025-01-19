@@ -1,9 +1,8 @@
 import scrapy
-import re
 import logging
 from scrapers.items import ScrapersItem
 
-class GlassSpider(scrapy.Spider):
+class GlassSpiderHoya(scrapy.Spider):
     name = "glass_spider_hoya"
     allowed_domains = ["www.france-optique.com"]
     
@@ -26,6 +25,9 @@ class GlassSpider(scrapy.Spider):
         for line in lines:
             
             item = ScrapersItem()
+
+            # Ajoute l'URL source à l'item
+            item['source_url'] = response.url
 
             # Extraction du nom du verre
             glass_name = line.xpath('.//div[contains(@class, "td col s4 m4")]/p/text()').get()
