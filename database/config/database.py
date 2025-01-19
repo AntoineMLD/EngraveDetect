@@ -12,31 +12,31 @@ load_dotenv()
 
 def get_database_url() -> str:
     """
-    Construit et retourne l'URL de connexion à la base de données
+    Retourne l'URL de connexion à la base de données SQLite
     
     Returns:
         str: URL de connexion à la base de données
     """
-    required_env_vars = ['DB_USER', 'DB_PASSWORD', 'DB_NAME']
-    missing_vars = [var for var in required_env_vars if not os.getenv(var)]
+    # Obtenir le chemin absolu du répertoire racine du projet
+    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
     
-    if missing_vars:
-        error_msg = f"Variables d'environnement manquantes : {', '.join(missing_vars)}"
-        db_logger.critical(error_msg)
-        raise ValueError(error_msg)
-
-    return "postgresql://{user}:{password}@{host}:{port}/{name}".format(
-        user=os.getenv("DB_USER"),
-        password=os.getenv("DB_PASSWORD"),
-        host=os.getenv("DB_HOST", "localhost"),
-        port=os.getenv("DB_PORT", "5432"),
-        name=os.getenv("DB_NAME")
-    )
+    # Créer le dossier data s'il n'existe pas
+    db_dir = os.path.join(project_root, 'data')
+    os.makedirs(db_dir, exist_ok=True)
+    
+    # Construire le chemin complet de la base de données
+    db_path = os.path.join(db_dir, 'verres.db')
+    
+    # Convertir les backslashes en forward slashes pour SQLite
+    db_path = db_path.replace('\\', '/')
+    
+    db_logger.info(f"Chemin de la base de données : {db_path}")
+    return f"sqlite:///{db_path}"
 
 # Configuration du moteur SQLAlchemy
 def create_db_engine():
     """
-    Crée et configure le moteur SQLAlchemy
+    Crée et configure le moteur SQLAlchemy pour SQLite
     
     Returns:
         Engine: Instance du moteur SQLAlchemy
@@ -44,12 +44,7 @@ def create_db_engine():
     try:
         engine = create_engine(
             get_database_url(),
-            pool_size=20,  # Nombre de connexions dans le pool
-            max_overflow=10,  # Connexions supplémentaires maximales
-            pool_timeout=30,  # Timeout pour obtenir une connexion
-            pool_recycle=3600,  # Recycle des connexions après 1 heure
-            pool_pre_ping=True,  # Vérifie la validité des connexions
-            echo=os.getenv("SQL_ECHO", "false").lower() == "true"  # Logs SQL
+            echo=False  # Mettre à True pour voir les requêtes SQL
         )
         db_logger.info("Moteur de base de données créé avec succès")
         return engine

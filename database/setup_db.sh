@@ -22,62 +22,44 @@ info_message() {
     echo -e "${YELLOW}➜ $1${NC}"
 }
 
-# Charger les variables d'environnement
-info_message "Chargement des variables d'environnement..."
-if [ -f "../.env" ]; then
-    export $(cat ../.env | grep -v '#' | xargs)
-    success_message "Variables d'environnement chargées"
-else
-    error_message "Fichier .env non trouvé dans le répertoire parent"
-fi
+# Obtenir le chemin absolu du script
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-# Vérifier si PostgreSQL est installé
-if ! command -v psql &> /dev/null; then
-    error_message "PostgreSQL n'est pas installé. Veuillez l'installer avant de continuer."
-fi
+# Se placer dans le répertoire du script
+cd "$SCRIPT_DIR"
 
-# Vérifier si la base de données existe déjà
-info_message "Vérification de l'existence de la base de données..."
-if PGPASSWORD=$DB_PASSWORD psql -h $DB_HOST -p $DB_PORT -U $DB_USER -lqt | cut -d \| -f 1 | grep -qw $DB_NAME; then
-    info_message "La base de données $DB_NAME existe déjà"
-else
-    info_message "Création de la base de données $DB_NAME..."
-    if PGPASSWORD=$DB_PASSWORD createdb -h $DB_HOST -p $DB_PORT -U $DB_USER $DB_NAME; then
-        success_message "Base de données créée avec succès"
-    else
-        error_message "Erreur lors de la création de la base de données"
-    fi
-fi
-
-# Créer le dossier logs s'il n'existe pas
+# Créer la structure des dossiers avec les bons droits
+info_message "Création de la structure des dossiers..."
+mkdir -p data
+chmod 777 data
 mkdir -p logs
+chmod 777 logs
+success_message "Structure des dossiers créée"
 
-# Initialiser la base de données avec SQLAlchemy
-info_message "Initialisation des tables dans la base de données..."
-
-# Remonter d'un niveau, exécuter Python, puis revenir
+# Initialiser la base de données SQLite
+info_message "Initialisation de la base de données SQLite..."
 cd ..
-python -c "from database.models.base import init_models; init_models()"
+PYTHONPATH=$PWD python -c "from database.models.base import init_models; init_models()"
 PYTHON_RESULT=$?
 cd database
 
 if [ $PYTHON_RESULT -eq 0 ]; then
-    success_message "Tables créées avec succès"
+    success_message "Base de données initialisée avec succès"
 else
-    error_message "Erreur lors de la création des tables"
+    error_message "Erreur lors de l'initialisation de la base de données"
 fi
 
-# Vérification finale de la connexion
+# Vérification finale
 info_message "Vérification de la structure de la base de données..."
-if PGPASSWORD=$DB_PASSWORD psql -h $DB_HOST -p $DB_PORT -U $DB_USER -d $DB_NAME -c '\dt'; then
-    success_message "Base de données initialisée avec succès"
+if [ -f "data/verres.db" ]; then
+    success_message "Base de données créée avec succès"
     echo -e "\n${GREEN}✔ Installation terminée avec succès !${NC}"
 else
-    error_message "Erreur lors de la vérification finale"
+    error_message "La base de données n'a pas été créée correctement"
 fi
 
 # Afficher les instructions finales
 echo -e "\n${YELLOW}Pour utiliser la base de données :${NC}"
-echo "1. Importez les modèles : from database.models.base import Verres, Tags, Fournisseurs"
+echo "1. Importez les modèles : from database.models.base import Verre, Fournisseur, Materiau, Gamme, Serie, Traitement"
 echo "2. Utilisez le gestionnaire de contexte : from database.config.database import get_db"
 echo -e "\n${YELLOW}Les logs seront disponibles dans :${NC} logs/db_YYYYMMDD.log"

@@ -8,165 +8,148 @@ Le projet vise à collecter et structurer les données des verres optiques de di
 ### Architecture technique
 - **Language**: Python
 - **Framework principal**: Scrapy
-- **Structure des données**: Format CSV
+- **Base de données**: SQLite
+- **Structure des données**: Format CSV pour l'import, SQLite pour le stockage
 - **Organisation**: Architecture en couches (spiders, pipelines, data cleaning)
 
-## 2. Structure des données
+## 2. Structure de la Base de Données
 
-### Données collectées
-- Nom du verre
-- Gamme
-- Série
-- Variante
-- Hauteur minimale/maximale
-- Traitements (protection, photochromique)
-- Matériau
-- Indice
-- Fournisseur
-- URLs (gravure, source)
+### Schéma de la Base de Données
+![Schéma de la base de données](image.png)
+
+### Tables principales
+- **verres**: Table centrale contenant les informations des verres optiques
+- **fournisseurs**: Référentiel des fournisseurs
+- **materiaux**: Types de matériaux utilisés
+- **gammes**: Gammes de produits
+- **series**: Séries de produits
+- **traitements**: Types de traitements disponibles
+- **verres_traitements**: Table de liaison entre verres et traitements
+
+### Relations
+- Un verre appartient à un fournisseur (1:N)
+- Un verre peut avoir un matériau (1:N)
+- Un verre appartient à une gamme (1:N)
+- Un verre peut appartenir à une série (1:N)
+- Un verre peut avoir plusieurs traitements (N:N)
+
+### Structure détaillée des tables
+
+#### Table verres
+- `id`: Identifiant unique (PK)
+- `nom`: Nom du verre
+- `variante`: Variante du verre (nullable)
+- `hauteur_min`: Hauteur minimale (nullable)
+- `hauteur_max`: Hauteur maximale (nullable)
+- `indice`: Indice de réfraction (nullable)
+- `url_gravure`: URL de la gravure (nullable)
+- `url_source`: URL source (nullable)
+- `fournisseur_id`: Référence au fournisseur (FK)
+- `materiau_id`: Référence au matériau (FK, nullable)
+- `gamme_id`: Référence à la gamme (FK)
+- `serie_id`: Référence à la série (FK, nullable)
+
+#### Table traitements
+- `id`: Identifiant unique (PK)
+- `nom`: Nom du traitement
+- `type`: Type de traitement ('protection' ou 'photochromique')
+
+#### Table fournisseurs
+- `id`: Identifiant unique (PK)
+- `nom`: Nom du fournisseur (unique)
+
+#### Table materiaux
+- `id`: Identifiant unique (PK)
+- `nom`: Nom du matériau (unique)
+
+#### Table gammes
+- `id`: Identifiant unique (PK)
+- `nom`: Nom de la gamme (unique)
+
+#### Table series
+- `id`: Identifiant unique (PK)
+- `nom`: Nom de la série (unique)
+
+#### Table verres_traitements
+- `verre_id`: Référence au verre (PK, FK)
+- `traitement_id`: Référence au traitement (PK, FK)
+
+## 3. Structure des données
 
 ### Format des fichiers
-
-```
 scrapers/
 ├── datalake/
 │ ├── staging/
 │ │ └── data/
 │ └── enhanced/
 │ └── data/
-```
 
-## 3. Composants principaux
-
-### Spiders
-- **GlassSpider**: Spider générique pour la majorité des fournisseurs
-- **GlassSpiderHoya**: Spécialisé pour Hoya
-- **GlassSpiderIndoOptical**: Spécialisé pour Indo Optical
-- **GlassSpiderOptovision**: Spécialisé pour Optovision
-- **GlassSpiderParticular**: Pour les cas particuliers
-- **GlassSpiderFullXPath**: Utilisant des XPath complets
-
-### Pipeline de données
-1. Collecte des données brutes
-2. Nettoyage et standardisation
-3. Enrichissement
-4. Export en format structuré
-
-## 4. Fournisseurs couverts
-- SHAMIR FRANCE
-- ZEISS VISION CARE FRANCE
-- LEICA EYECARE
-- VERRES KODAK
-- BBGR OPTIQUE
-- ESSILOR
-- HOYA
-- Et autres...
-
-## 5. Processus de maintenance
-
-### Mise à jour des données
-- Exécution périodique des spiders
-- Validation des données collectées
-- Mise à jour de la base de données
-
-### Gestion des erreurs
-- Logging détaillé
-- Système de retry pour les requêtes échouées
-- Alertes en cas d'échec critique
-
-## 6. Points d'attention
-
-### Performances
-- Gestion des temps d'attente entre requêtes
-- Optimisation des parsers
-- Parallélisation des spiders
-
-### Qualité des données
-- Validation des formats
-- Détection des anomalies
-- Standardisation des valeurs
-
-## 7. Évolutions futures possibles
-- Ajout de nouveaux fournisseurs
-- Amélioration de la détection des changements
-- Automatisation complète du pipeline
-- Interface de visualisation des données
-- API pour accès aux données
-
-## 8. Installation et démarrage
+## 4. Installation et Configuration
 
 ### Prérequis
 - Python 3.8+
 - pip
 - virtualenv (recommandé)
+- DBeaver (ou autre client SQL) pour explorer la base de données
 
 ### Installation
-```bash
-# Créer un environnement virtuel
+#Créer un environnement virtuel
 python -m venv venv
-
-# Activer l'environnement virtuel
-source venv/bin/activate  # Linux/Mac
-venv\Scripts\activate     # Windows
-
-# Installer les dépendances
-pip install -r requirements.txt
-```
-
-### Exécution
-```bash
-# Lancer un spider spécifique
-scrapy crawl glass_spider
-
-# Lancer tous les spiders
-python scrapers/run_all_spiders.py
-```
-
-## 9. Contribution
-1. Fork le projet
-2. Créer une branche pour votre fonctionnalité
-3. Commiter vos changements
-4. Pousser vers la branche
-5. Ouvrir une Pull Request
-
-## 10. Licence
-Ce projet est sous licence privée. Tous droits réservés.
-
-## 11. Contact
-Pour toute question ou suggestion concernant ce projet, veuillez contacter l'équipe de développement.
-
-
-```bash
-# Créer un environnement virtuel
-python -m venv venv
-
-# Activer l'environnement virtuel
+#Activer l'environnement virtuel
 source venv/bin/activate # Linux/Mac
 venv\Scripts\activate # Windows
-
-# Installer les dépendances
+#Installer les dépendances
 pip install -r requirements.txt
-```
 
-```bash
-# Exécution
-Lancer un spider spécifique
-scrapy crawl glass_spider
-Lancer tous les spiders
-python scrapers/run_all_spiders.py
-```
+### Initialisation de la base de données
+#Initialiser la base de données
+./database/setup_db.sh
+#Importer les données
+./database/import_data.sh
 
+## 5. Utilisation
 
+### Connexion à la base de données (DBeaver)
+1. Créer une nouvelle connexion SQLite
+2. Sélectionner le fichier : `database/data/verres.db`
+3. Tester la connexion
+4. Explorer les données via l'interface DBeaver
 
-## 9. Contribution
-1. Fork le projet
-2. Créer une branche pour votre fonctionnalité
-3. Commiter vos changements
-4. Pousser vers la branche
-5. Ouvrir une Pull Request
+### Requêtes courantes
+#Vérifier les doublons potentiels
+SELECT
+nom, fournisseur_id, COUNT() as occurrences
+FROM verres
+GROUP BY nom, fournisseur_id
+HAVING COUNT() > 1;
 
-## 10. Licence
-Ce projet est sous licence privée. Tous droits réservés.
+-- Exemple de requête pour obtenir les verres avec leurs relations
+SELECT
+v.nom,
+f.nom as fournisseur,
+m.nom as materiau,
+g.nom as gamme,
+s.nom as serie
+FROM verres v
+JOIN fournisseurs f ON v.fournisseur_id = f.id
+LEFT JOIN materiaux m ON v.materiau_id = m.id
+JOIN gammes g ON v.gamme_id = g.id
+LEFT JOIN series s ON v.serie_id = s.id;
 
-## 11. Contact
+## 6. Maintenance
+
+### Mise à jour des données
+1. Exécuter les spiders pour collecter les nouvelles données
+2. Placer les fichiers CSV dans le dossier enhanced/data
+3. Exécuter le script d'import
+
+### Vérification des doublons
+#Vérifier les doublons potentiels
+SELECT
+nom, fournisseur_id, COUNT() as occurrences
+FROM verres
+GROUP BY nom, fournisseur_id
+HAVING COUNT() > 1;
+
+## 7. Contact
 Pour toute question ou suggestion concernant ce projet, veuillez contacter l'équipe de développement.

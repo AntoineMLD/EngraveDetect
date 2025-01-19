@@ -1,87 +1,107 @@
-from sqlalchemy import Column, Integer, String, Float, Boolean, ForeignKey, UniqueConstraint
+from sqlalchemy import Column, Integer, String, Float, Boolean, ForeignKey, Table
 from sqlalchemy.orm import relationship
 from sqlalchemy.schema import Index
 from database.config.database import Base
 from database.utils.logger import db_logger
 
-class Verres(Base):
+# Table d'association pour les traitements
+verres_traitements = Table('verres_traitements', Base.metadata,
+    Column('verre_id', Integer, ForeignKey('verres.id'), primary_key=True),
+    Column('traitement_id', Integer, ForeignKey('traitements.id'), primary_key=True)
+)
+
+class Fournisseur(Base):
+    __tablename__ = "fournisseurs"
+    
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    nom = Column(String(500), nullable=False, unique=True)
+    verres = relationship("Verre", back_populates="fournisseur")
+
+    __table_args__ = (
+        Index('idx_fournisseurs_nom', 'nom'),
+    )
+
+class Materiau(Base):
+    __tablename__ = "materiaux"
+    
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    nom = Column(String(500), nullable=False, unique=True)
+    verres = relationship("Verre", back_populates="materiau")
+
+    __table_args__ = (
+        Index('idx_materiaux_nom', 'nom'),
+    )
+
+class Gamme(Base):
+    __tablename__ = "gammes"
+    
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    nom = Column(String(500), nullable=False, unique=True)
+    verres = relationship("Verre", back_populates="gamme")
+
+    __table_args__ = (
+        Index('idx_gammes_nom', 'nom'),
+    )
+
+class Serie(Base):
+    __tablename__ = "series"
+    
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    nom = Column(String(500), nullable=False, unique=True)
+    verres = relationship("Verre", back_populates="serie")
+
+    __table_args__ = (
+        Index('idx_series_nom', 'nom'),
+    )
+
+class Traitement(Base):
+    __tablename__ = "traitements"
+    
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    nom = Column(String(500), nullable=False, unique=True)
+    type = Column(String(50), nullable=False)  # 'protection' ou 'photochromique'
+    verres = relationship("Verre", 
+                         secondary=verres_traitements,
+                         back_populates="traitements")
+
+    __table_args__ = (
+        Index('idx_traitements_nom', 'nom'),
+        Index('idx_traitements_type', 'type'),
+    )
+
+class Verre(Base):
     __tablename__ = "verres"
     
-    __table_args__ = (
-        Index('idx_verres_categorie', 'categorie'),
-        Index('idx_verres_nom_verre', 'nom_verre'),
-    )
-
     id = Column(Integer, primary_key=True, autoincrement=True)
-    categorie = Column(String(500), nullable=False)      
-    nom_verre = Column(String(500), nullable=False)     
-    gravure_url = Column(String(1000), nullable=True)    
+    nom = Column(String(500), nullable=False)
+    variante = Column(String(500), nullable=True)
+    hauteur_min = Column(Integer, nullable=True)
+    hauteur_max = Column(Integer, nullable=True)
     indice = Column(Float, nullable=True)
-    materiau = Column(String(500), nullable=True)        
-    has_image = Column(Boolean, default=False)
-    
+    url_gravure = Column(String(1000), nullable=True)
+    url_source = Column(String(1000), nullable=True)
+
+    # Clés étrangères
+    fournisseur_id = Column(Integer, ForeignKey('fournisseurs.id'), nullable=False)
+    materiau_id = Column(Integer, ForeignKey('materiaux.id'), nullable=True)
+    gamme_id = Column(Integer, ForeignKey('gammes.id'), nullable=False)
+    serie_id = Column(Integer, ForeignKey('series.id'), nullable=True)
+
     # Relations
-    fournisseur_nom = Column(
-        String(500),
-        ForeignKey('fournisseurs.nom', ondelete='CASCADE'),
-        nullable=False
-    )
-    fournisseur = relationship(
-        "Fournisseurs",
-        back_populates="verres",
-        lazy='joined'
-    )
-    tags = relationship(
-        "Tags",
-        secondary='verres_tags',
-        back_populates="verres",
-        lazy='select'
-    )
-
-class Tags(Base):
-    __tablename__ = "tags"
-
-    id = Column(Integer, primary_key=True, index=True)
-    nom = Column(String(500), unique=True, nullable=False)  # Augmenté à 500
-    
-    # Relation
-    verres = relationship(
-        "Verres",
-        secondary='verres_tags',
-        back_populates="tags",
-        lazy='select'
-    )
-
-class Fournisseurs(Base):
-    __tablename__ = "fournisseurs"
-
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    nom = Column(String(500), unique=True, nullable=False)  # Augmenté à 500
-    
-    # Relation
-    verres = relationship(
-        "Verres",
-        back_populates="fournisseur",
-        lazy='select'
-    )
-
-class VerresTags(Base):
-    __tablename__ = 'verres_tags'
-
-    verre_id = Column(
-        Integer, 
-        ForeignKey('verres.id', ondelete='CASCADE'), 
-        primary_key=True
-    )
-    tag_id = Column(
-        Integer, 
-        ForeignKey('tags.id', ondelete='CASCADE'), 
-        primary_key=True
-    )
+    fournisseur = relationship("Fournisseur", back_populates="verres")
+    materiau = relationship("Materiau", back_populates="verres")
+    gamme = relationship("Gamme", back_populates="verres")
+    serie = relationship("Serie", back_populates="verres")
+    traitements = relationship("Traitement",
+                             secondary=verres_traitements,
+                             back_populates="verres")
 
     __table_args__ = (
-        Index('idx_verres_tags_verre_id', 'verre_id'),
-        Index('idx_verres_tags_tag_id', 'tag_id')
+        Index('idx_verres_nom', 'nom'),
+        Index('idx_verres_indice', 'indice'),
+        Index('idx_verres_fournisseur_id', 'fournisseur_id'),
+        Index('idx_verres_materiau_id', 'materiau_id'),
+        Index('idx_verres_gamme_id', 'gamme_id'),
     )
 
 def init_models():
