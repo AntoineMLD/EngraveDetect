@@ -121,21 +121,6 @@ scrapy crawl glass_spider
 # Lancer tous les spiders
 python scrapers/run_all_spiders.py
 ```
-
-## 9. Contribution
-1. Fork le projet
-2. Créer une branche pour votre fonctionnalité
-3. Commiter vos changements
-4. Pousser vers la branche
-5. Ouvrir une Pull Request
-
-## 10. Licence
-Ce projet est sous licence privée. Tous droits réservés.
-
-## 11. Contact
-Pour toute question ou suggestion concernant ce projet, veuillez contacter l'équipe de développement.
-
-
 ```bash
 # Créer un environnement virtuel
 python -m venv venv
@@ -148,16 +133,6 @@ venv\Scripts\activate # Windows
 pip install -r requirements.txt
 ```
 
-```bash
-# Exécution
-Lancer un spider spécifique
-scrapy crawl glass_spider
-Lancer tous les spiders
-python scrapers/run_all_spiders.py
-```
-
-
-
 ## 9. Contribution
 1. Fork le projet
 2. Créer une branche pour votre fonctionnalité
@@ -170,3 +145,5 @@ Ce projet est sous licence privée. Tous droits réservés.
 
 ## 11. Contact
 Pour toute question ou suggestion concernant ce projet, veuillez contacter l'équipe de développement.
+
+
