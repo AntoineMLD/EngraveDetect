@@ -36,7 +36,7 @@ def run_spider(spider_name):
    print(f"{'='*50}")
    
    try:
-       # Lancer le spider avec capture des sorties et timeout plus long
+       # Lance le spider avec capture des sorties et timeout plus long
        process = subprocess.run(
            ['scrapy', 'crawl', spider_name],
            text=True,
@@ -44,7 +44,7 @@ def run_spider(spider_name):
            timeout=3600  # 1 heure de timeout
        )
        
-       # Afficher la sortie du spider
+       # Affiche la sortie du spider
        print("Sortie du spider:")
        print(process.stdout)
        
@@ -52,17 +52,17 @@ def run_spider(spider_name):
            print("Erreurs du spider:")
            print(process.stderr)
 
-       # Vérifier si le spider a réussi
+       # Vérifie si le spider a réussi
        if process.returncode != 0:
            print(f"Le spider {spider_name} a échoué avec le code {process.returncode}")
            return False
 
-       # Importer le spider pour vérifier ses start_urls
+       # Importe le spider pour vérifier ses start_urls
        spider_module = import_module(f"scrapers.spiders.{spider_name}")
        spider_class = getattr(spider_module, ''.join(word.capitalize() for word in spider_name.split('_')))
        spider_instance = spider_class()
        
-       # Vérifier les fichiers manquants
+       # Vérifie les fichiers manquants
        missing_files = check_output_files(spider_name, spider_instance.start_urls)
        if missing_files:
            print(f"\nFichiers manquants pour {spider_name}:")
@@ -105,7 +105,6 @@ def run_all_spiders():
        if not run_spider(spider):
            failed_spiders.append(spider)
            print(f"Échec pour {spider}")
-           # Attendre plus longtemps après un échec
            time.sleep(60)  # 1 minute de pause après un échec
        else:
            print(f"Succès pour {spider}")
