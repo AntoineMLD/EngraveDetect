@@ -121,17 +121,6 @@ scrapy crawl glass_spider
 # Lancer tous les spiders
 python scrapers/run_all_spiders.py
 ```
-```bash
-# Créer un environnement virtuel
-python -m venv venv
-
-# Activer l'environnement virtuel
-source venv/bin/activate # Linux/Mac
-venv\Scripts\activate # Windows
-
-# Installer les dépendances
-pip install -r requirements.txt
-```
 
 ## 9. Contribution
 1. Fork le projet
