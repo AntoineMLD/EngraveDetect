@@ -71,7 +71,7 @@ def run_spider(spider_name):
            return False
            
        # Attendre entre les spiders
-       time.sleep(30)  # 30 secondes de pause entre les spiders
+       time.sleep(10)  # 10 secondes de pause entre les spiders
        return True
        
    except subprocess.TimeoutExpired:
@@ -105,7 +105,7 @@ def run_all_spiders():
        if not run_spider(spider):
            failed_spiders.append(spider)
            print(f"Échec pour {spider}")
-           time.sleep(60)  # 1 minute de pause après un échec
+           time.sleep(10)  # 10 secondes de pause après un échec
        else:
            print(f"Succès pour {spider}")
    

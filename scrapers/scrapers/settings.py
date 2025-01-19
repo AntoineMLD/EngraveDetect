@@ -14,6 +14,16 @@ NEWSPIDER_MODULE = "scrapers.spiders"
 TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
 FEED_EXPORT_ENCODING = "utf-8"
 
+CONCURRENT_REQUESTS = 1  # Limite le nombre de requêtes simultanées
+DOWNLOAD_DELAY = 3  # Ajoute un délai de 3 secondes entre les requêtes
+RANDOMIZE_DOWNLOAD_DELAY = True
+
+# Retry settings
+RETRY_ENABLED = True
+RETRY_TIMES = 5  # Nombre de tentatives
+RETRY_HTTP_CODES = [500, 502, 503, 504, 408, 429]
+
+
 ITEM_PIPELINES = {
     "scrapers.pipelines.ScrapersPipeline": 300,
 }

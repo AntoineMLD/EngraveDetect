@@ -1,353 +1,126 @@
-glass_index,glass_name,glass_supplier_name,image_engraving,material,nasal_engraving
-ORG,synchrony progressif Ultra HDC 1.74,ZEISS VISION CARE FRANCE,,"1,74",UHC
-ORG,ZEISS progressif Precision Individual 2 1.74,ZEISS VISION CARE FRANCE,,"1,74",I274
-ORG,synchrony progressif Ultra HDC 1.67,ZEISS VISION CARE FRANCE,,"1,67",UHC
-ORG,ZEISS progressif Precision Individual 2 1.67,ZEISS VISION CARE FRANCE,,"1,67",I267
-ORG,synchrony progressif Ultra HDC 1.6,ZEISS VISION CARE FRANCE,,"1,6",UHC
-ORG,ZEISS progressif Precision Individual 2 1.6,ZEISS VISION CARE FRANCE,,"1,6",I260
-POLY,synchrony progressif Ultra HDC Poly,ZEISS VISION CARE FRANCE,,"1,59",UHC
-POLY,ZEISS progressif Precision Individual 2 Poly,ZEISS VISION CARE FRANCE,,"1,59",I259
-ORG,synchrony progressif Ultra HDC 1.5,ZEISS VISION CARE FRANCE,,"1,5",UHC
-TVX,ZEISS progressif Precision Individual 2 1.53,ZEISS VISION CARE FRANCE,,"1,53",I253
-ORG,synchrony progressif Performance HD 1.74,ZEISS VISION CARE FRANCE,,"1,74",PH
-ORG,ZEISS progressif Precision Individual 2 1.5,ZEISS VISION CARE FRANCE,,"1,5",I250
-ORG,synchrony progressif Performance HD 1.67,ZEISS VISION CARE FRANCE,,"1,67",PH
-ORG,ZEISS progressif Precision Superb 1.74,ZEISS VISION CARE FRANCE,,"1,74",PS74
-ORG,synchrony progressif Performance HD 1.6,ZEISS VISION CARE FRANCE,,"1,6",PH
-ORG,ZEISS progressif Precision Superb 1.67,ZEISS VISION CARE FRANCE,,"1,67",PS67
-POLY,synchrony progressif Performance HD Poly,ZEISS VISION CARE FRANCE,,"1,59",PH
-ORG,ZEISS progressif Precision Superb 1.6,ZEISS VISION CARE FRANCE,,"1,6",PS60
-ORG,synchrony progressif Performance HD 1.5,ZEISS VISION CARE FRANCE,,"1,5",PH
-POLY,ZEISS progressif Precision Superb Poly,ZEISS VISION CARE FRANCE,,"1,59",PS59
-ORG,synchrony progressif Performance HD Short 1.74,ZEISS VISION CARE FRANCE,,"1,74",PHS
-TVX,ZEISS progressif Precision Superb 1.53,ZEISS VISION CARE FRANCE,,"1,53",PS53
-ORG,synchrony progressif Performance HD Short 1.67,ZEISS VISION CARE FRANCE,,"1,67",PHS
-ORG,ZEISS progressif Precision Superb 1.5,ZEISS VISION CARE FRANCE,,"1,5",PS50
-ORG,synchrony progressif Performance HD Short 1.6,ZEISS VISION CARE FRANCE,,"1,6",PHS
-ORG,ZEISS progressif Precision Plus 1.74,ZEISS VISION CARE FRANCE,,"1,74",PL74
-POLY,synchrony progressif Performance HD Short Poly,ZEISS VISION CARE FRANCE,,"1,59",PHS
-ORG,ZEISS progressif Precision Plus 1.67,ZEISS VISION CARE FRANCE,,"1,67",PL67
-ORG,synchrony progressif Performance HD Short 1.5,ZEISS VISION CARE FRANCE,,"1,5",PHS
-POLY,ZEISS progressif Precision Plus Poly,ZEISS VISION CARE FRANCE,,"1,59",PL59
-ORG,synchrony progressif Easy View HD 1.67,ZEISS VISION CARE FRANCE,,"1,67",EV
-ORG,ZEISS progressif Precision Plus 1.6,ZEISS VISION CARE FRANCE,,"1,6",PL60
-ORG,synchrony progressif Easy View HD 1.6,ZEISS VISION CARE FRANCE,,"1,6",EV
-TVX,ZEISS progressif Precision Plus 1.53,ZEISS VISION CARE FRANCE,,"1,53",PL53
-POLY,synchrony progressif Easy View HD Poly,ZEISS VISION CARE FRANCE,,"1,59",EV
-ORG,ZEISS progressif Precision Plus 1.5,ZEISS VISION CARE FRANCE,,"1,5",PL50
-ORG,synchrony progressif Easy View HD 1.5,ZEISS VISION CARE FRANCE,,"1,5",EV
-ORG,ZEISS progressif Precision Pure 1.74,ZEISS VISION CARE FRANCE,,"1,74","PU74,18"
-ORG,synchrony progressif Easy S HD 1.67,ZEISS VISION CARE FRANCE,,"1,67",ES
-ORG,ZEISS progressif Precision Pure 1.67,ZEISS VISION CARE FRANCE,,"1,67","PU67,18"
-ORG,synchrony progressif Easy S HD 1.6,ZEISS VISION CARE FRANCE,,"1,6",ES
-ORG,ZEISS progressif Precision Pure 1.6,ZEISS VISION CARE FRANCE,,"1,6","PU60,18"
-POLY,synchrony progressif Easy S HD Poly,ZEISS VISION CARE FRANCE,,"1,59",ES
-POLY,ZEISS progressif Precision Pure Poly,ZEISS VISION CARE FRANCE,,"1,59","PU59,18"
-ORG,synchrony progressif Easy S HD 1.5,ZEISS VISION CARE FRANCE,,"1,5",ES
-TVX,ZEISS progressif Precision Pure 1.53,ZEISS VISION CARE FRANCE,,"1,53","PU53,18"
-ORG,synchrony progressif Easy Adapt FF 1.67,ZEISS VISION CARE FRANCE,,"1,67",EA
-ORG,ZEISS progressif Precision Pure 1.5,ZEISS VISION CARE FRANCE,,"1,5","PU50,18"
-ORG,synchrony progressif Easy Adapt FF 1.6,ZEISS VISION CARE FRANCE,,"1,6",EA
-ORG,ZEISS progressif Precision Pure Short 1.74,ZEISS VISION CARE FRANCE,,"1,74","PU74,14"
-ORG,synchrony progressif Easy Adapt FF 1.5,ZEISS VISION CARE FRANCE,,"1,5",EA
-ORG,ZEISS progressif Precision Pure Short 1.67,ZEISS VISION CARE FRANCE,,"1,67","PU67,14"
-1.6,synchrony progressif Easy View 1.6,ZEISS VISION CARE FRANCE,,ORG,
-ORG,ZEISS progressif Precision Pure Short 1.6,ZEISS VISION CARE FRANCE,,"1,6","PU60,14"
-POLY,ZEISS progressif Precision Pure Short Poly,ZEISS VISION CARE FRANCE,,"1,59","PU59,14"
-TVX,ZEISS progressif Precision Pure Short 1.53,ZEISS VISION CARE FRANCE,,"1,53","PU53,14"
-ORG,synchrony progressif Easy S 1.6,ZEISS VISION CARE FRANCE,,"1,6",CU
-ORG,ZEISS progressif Precision Pure Short 1.5,ZEISS VISION CARE FRANCE,,"1,5","PU50,14"
-POLY,synchrony progressif Easy S Poly,ZEISS VISION CARE FRANCE,,"1,59",CU
-ORG,ZEISS progressif Light 3Dve 1.74,ZEISS VISION CARE FRANCE,,"1,74",L3e74
-ORG,synchrony progressif Easy S 1.5,ZEISS VISION CARE FRANCE,,"1,5",CU
-ORG,ZEISS progressif Light 3Dve 1.67,ZEISS VISION CARE FRANCE,,"1,67",L3e67
-ORG,synchrony Work&Read HD 1.67,ZEISS VISION CARE FRANCE,,"1,67",WR
-ORG,ZEISS progressif Light 3Dve 1.6,ZEISS VISION CARE FRANCE,,"1,6",L3e60
-ORG,synchrony Work&Read HD 1.6,ZEISS VISION CARE FRANCE,,"1,6",WR
-POLY,ZEISS progressif Light 3Dve Poly,ZEISS VISION CARE FRANCE,,"1,59",L3e59
-POLY,synchrony Work&Read HD Poly,ZEISS VISION CARE FRANCE,,"1,59",WR
-TVX,ZEISS progressif Light 3Dve 1.53,ZEISS VISION CARE FRANCE,,"1,53",L3e53
-ORG,synchrony Work&Read HD 1.5,ZEISS VISION CARE FRANCE,,"1,5",WR
-ORG,ZEISS progressif Light 3Dve 1.5,ZEISS VISION CARE FRANCE,,"1,5",L3e50
-POLY,synchrony Access Poly,ZEISS VISION CARE FRANCE,,"1,59",075 : version A / 125 : version B
-ORG,ZEISS progressif Light 3Dv 1.74,ZEISS VISION CARE FRANCE,,"1,74",L3v74
-ORG,synchrony Access 1.5,ZEISS VISION CARE FRANCE,,"1,5",075 : version A / 125 : version B
-ORG,ZEISS progressif Light 3Dv 1.67,ZEISS VISION CARE FRANCE,,"1,67",L3v67
-ORG,synchrony unifocal HD 1.74,ZEISS VISION CARE FRANCE,,"1,74",HD
-ORG,ZEISS progressif Light 3Dv 1.6,ZEISS VISION CARE FRANCE,,"1,6",L3v60
-ORG,synchrony unifocal HD 1.67,ZEISS VISION CARE FRANCE,,"1,67",HD
-POLY,ZEISS progressif Light 3Dv Poly,ZEISS VISION CARE FRANCE,,"1,59",L3v59
-ORG,synchrony unifocal HD 1.6,ZEISS VISION CARE FRANCE,,"1,6",HD
-TVX,ZEISS progressif Light 3Dv 1.53,ZEISS VISION CARE FRANCE,,"1,53",L3v53
-POLY,synchrony unifocal HD Poly,ZEISS VISION CARE FRANCE,,"1,59",HD
-ORG,ZEISS progressif Light 3Dv 1.5,ZEISS VISION CARE FRANCE,,"1,5",L3v50
-ORG,synchrony unifocal HD 1.5,ZEISS VISION CARE FRANCE,,"1,5",HD
-ORG,ZEISS progressif Light 3D 1.74,ZEISS VISION CARE FRANCE,,"1,74","L3D74,18"
-ORG,synchrony unifocal AS 1.67,ZEISS VISION CARE FRANCE,,"1,67",AS
-ORG,ZEISS progressif Light 3D 1.67,ZEISS VISION CARE FRANCE,,"1,67","L3D67,18"
-ORG,synchrony unifocal AS 1.6,ZEISS VISION CARE FRANCE,,"1,6",AS
-ORG,ZEISS progressif Light 3D 1.6,ZEISS VISION CARE FRANCE,,"1,6","L3D60,18"
-POLY,synchrony unifocal AS Poly,ZEISS VISION CARE FRANCE,,"1,59",AS
-POLY,ZEISS progressif Light 3D Poly,ZEISS VISION CARE FRANCE,,"1,59","L3D59,18"
-ORG,synchrony unifocal AS 1.5,ZEISS VISION CARE FRANCE,,"1,5",AS
-TVX,ZEISS progressif Light 3D 1.53,ZEISS VISION CARE FRANCE,,"1,53","L3D53,18"
-ORG,ZEISS progressif Light 3D 1.5,ZEISS VISION CARE FRANCE,,"1,5","L3D50,18"
-ORG,ZEISS progressif Light 3D 1.74 Short,ZEISS VISION CARE FRANCE,,"1,74","L3D74,14"
-ORG,ZEISS progressif Light 3D 1.67 Short,ZEISS VISION CARE FRANCE,,"1,67","L3D67,14"
-ORG,ZEISS progressif Light 3D 1.6 Short,ZEISS VISION CARE FRANCE,,"1,6","L3D60,14"
-POLY,ZEISS progressif Light 3D Poly Short,ZEISS VISION CARE FRANCE,,"1,59","L3D59,14"
-TVX,ZEISS progressif Light 3D 1.53 Short,ZEISS VISION CARE FRANCE,,"1,53","L3D53,14"
-ORG,ZEISS progressif Light 3D 1.5 Short,ZEISS VISION CARE FRANCE,,"1,5","L3D50,14"
-ORG,ZEISS progressif Light D 1.74,ZEISS VISION CARE FRANCE,,"1,74","LD74,18"
-ORG,ZEISS progressif Light D 1.67,ZEISS VISION CARE FRANCE,,"1,67","LD67,18"
-ORG,ZEISS progressif Light D 1.6,ZEISS VISION CARE FRANCE,,"1,6","LD60,18"
-POLY,ZEISS progressif Light D Poly,ZEISS VISION CARE FRANCE,,"1,59","LD59,18"
-TVX,ZEISS progressif Light D 1.53,ZEISS VISION CARE FRANCE,,"1,53","LD53,18"
-ORG,ZEISS progressif Light D 1.5,ZEISS VISION CARE FRANCE,,"1,5","LD50,18"
-ORG,ZEISS progressif Light D 1.74 Short,ZEISS VISION CARE FRANCE,,"1,74","LD74,14"
-ORG,ZEISS progressif Light D 1.67 Short,ZEISS VISION CARE FRANCE,,"1,67","LD67,14"
-ORG,ZEISS progressif Light D 1.6 Short,ZEISS VISION CARE FRANCE,,"1,6","LD60,14"
-POLY,ZEISS progressif Light D Poly Short,ZEISS VISION CARE FRANCE,,"1,59","LD59,14"
-TVX,ZEISS progressif Light D 1.53 Short,ZEISS VISION CARE FRANCE,,"1,53","LD53,14"
-ORG,ZEISS progressif Light D 1.5 Short,ZEISS VISION CARE FRANCE,,"1,5","LD50,14"
-ORG,ZEISS progressif Classic 1.67,ZEISS VISION CARE FRANCE,,"1,67",C67
-ORG,ZEISS progressif Classic 1.6,ZEISS VISION CARE FRANCE,,"1,6",C60
-POLY,ZEISS progressif Classic Poly,ZEISS VISION CARE FRANCE,,"1,59",C59
-TVX,ZEISS progressif Classic 1.53,ZEISS VISION CARE FRANCE,,"1,53",C53
-ORG,ZEISS progressif Classic 1.5,ZEISS VISION CARE FRANCE,,"1,5",C50
-ORG,ZEISS progressif Classic Short 1.67,ZEISS VISION CARE FRANCE,,"1,67",c67
-ORG,ZEISS progressif Classic Short 1.6,ZEISS VISION CARE FRANCE,,"1,6",c60
-POLY,ZEISS progressif Classic Short Poly,ZEISS VISION CARE FRANCE,,"1,59",c59
-TVX,ZEISS progressif Classic Short 1.53,ZEISS VISION CARE FRANCE,,"1,53",c53
-ORG,ZEISS progressif Classic Short 1.5,ZEISS VISION CARE FRANCE,,"1,5",c50
-ORG,ZEISS progressif DriveSafe Individual 1.74,ZEISS VISION CARE FRANCE,,"1,74",DSI74
-ORG,ZEISS progressif DriveSafe Individual 1.67,ZEISS VISION CARE FRANCE,,"1,67",DSI67
-ORG,ZEISS progressif DriveSafe Individual 1.6,ZEISS VISION CARE FRANCE,,"1,6",DSI60
-POLY,ZEISS progressif DriveSafe Individual Poly,ZEISS VISION CARE FRANCE,,"1,59",DSI59
-TVX,ZEISS progressif DriveSafe Individual 1.53,ZEISS VISION CARE FRANCE,,"1,53",DSI53
-ORG,ZEISS progressif DriveSafe Individual 1.5,ZEISS VISION CARE FRANCE,,"1,5",DSI50
-ORG,ZEISS progressif DriveSafe 1.74,ZEISS VISION CARE FRANCE,,"1,74",DS74
-ORG,ZEISS progressif DriveSafe 1.67,ZEISS VISION CARE FRANCE,,"1,67",DS67
-ORG,ZEISS progressif DriveSafe 1.6,ZEISS VISION CARE FRANCE,,"1,6",DS60
-POLY,ZEISS progressif DriveSafe Poly,ZEISS VISION CARE FRANCE,,"1,59",DS59
-TVX,ZEISS progressif DriveSafe 1.53,ZEISS VISION CARE FRANCE,,"1,53",DS53
-ORG,ZEISS progressif DriveSafe 1.5,ZEISS VISION CARE FRANCE,,"1,5",DS50
-ORG,ZEISS progressif EnergizeMe 1.67,ZEISS VISION CARE FRANCE,,"1,67","PEM67,14"
-ORG,ZEISS progressif EnergizeMe 1.6,ZEISS VISION CARE FRANCE,,"1,6","PEM60,14"
-POLY,ZEISS progressif EnergizeMe Poly,ZEISS VISION CARE FRANCE,,"1,59","PEM59,14"
-TVX,ZEISS progressif EnergizeMe 1.53,ZEISS VISION CARE FRANCE,,"1,53","PEM53,14"
-ORG,ZEISS progressif EnergizeMe 1.5,ZEISS VISION CARE FRANCE,,"1,5","PEM50,14"
-ORG,ZEISS officelens Individual 1.74,ZEISS VISION CARE FRANCE,,"1,74",OI74
-ORG,ZEISS officelens Individual 1.67,ZEISS VISION CARE FRANCE,,"1,67",OI67
-ORG,ZEISS officelens Individual 1.6,ZEISS VISION CARE FRANCE,,"1,6",OI60
-POLY,ZEISS officelens Individual Poly,ZEISS VISION CARE FRANCE,,"1,59",OI59
-TVX,ZEISS officelens Individual 1.53,ZEISS VISION CARE FRANCE,,"1,53",OI53
-ORG,ZEISS officelens Individual 1.5,ZEISS VISION CARE FRANCE,,"1,5",OI50
-ORG,ZEISS officelens Plus 1.74,ZEISS VISION CARE FRANCE,,"1,74",OP74
-ORG,ZEISS officelens Plus 1.67,ZEISS VISION CARE FRANCE,,"1,67",OP67
-ORG,ZEISS officelens Plus 1.6,ZEISS VISION CARE FRANCE,,"1,6",OP60
-POLY,ZEISS officelens Plus Poly,ZEISS VISION CARE FRANCE,,"1,59",OP59
-TVX,ZEISS officelens Plus 1.53,ZEISS VISION CARE FRANCE,,"1,53",OP53
-ORG,ZEISS officelens Plus 1.5,ZEISS VISION CARE FRANCE,,"1,5",OP50
-ORG,ZEISS officelens Plus Short 1.74,ZEISS VISION CARE FRANCE,,"1,74",Op74
-ORG,ZEISS officelens Plus Short 1.67,ZEISS VISION CARE FRANCE,,"1,67",Op67
-ORG,ZEISS officelens Plus Short 1.6,ZEISS VISION CARE FRANCE,,"1,6",Op60
-POLY,ZEISS officelens Plus Short Poly,ZEISS VISION CARE FRANCE,,"1,59",Op59
-TVX,ZEISS officelens Plus Short 1.53,ZEISS VISION CARE FRANCE,,"1,53",Op53
-ORG,ZEISS officelens Plus Short 1.5,ZEISS VISION CARE FRANCE,,"1,5",Op50
-ORG,ZEISS progressif Individual Sport 1.6,ZEISS VISION CARE FRANCE,,"1,6",I260
-POLY,ZEISS progressif Individual Sport Poly,ZEISS VISION CARE FRANCE,,"1,59",I259
-TVX,ZEISS progressif Individual Sport 1.53,ZEISS VISION CARE FRANCE,,"1,53",I253
-ORG,ZEISS progressif Individual Sport 1.5,ZEISS VISION CARE FRANCE,,"1,5",I250
-ORG,ZEISS progressif Plus 2 Sport 1.6,ZEISS VISION CARE FRANCE,,"1,6",P260
-POLY,ZEISS progressif Plus 2 Sport Poly,ZEISS VISION CARE FRANCE,,"1,59",P259
-TVX,ZEISS progressif Plus 2 Sport 1.53,ZEISS VISION CARE FRANCE,,"1,53",P253
-ORG,ZEISS progressif Plus 2 Sport 1.5,ZEISS VISION CARE FRANCE,,"1,5",P250
-ORG,ZEISS progressif Plus 2 Sport Short 1.6,ZEISS VISION CARE FRANCE,,"1,6",p260
-POLY,ZEISS progressif Plus 2 Sport Short Poly,ZEISS VISION CARE FRANCE,,"1,59",p259
-TVX,ZEISS progressif Plus 2 Sport Short 1.53,ZEISS VISION CARE FRANCE,,"1,53",p253
-ORG,ZEISS progressif Plus 2 Sport Short 1.5,ZEISS VISION CARE FRANCE,,"1,5",p250
-ORG,ZEISS unifocal Individual 1.74,ZEISS VISION CARE FRANCE,,"1,74",VI74
-ORG,ZEISS unifocal Individual 1.67,ZEISS VISION CARE FRANCE,,"1,67",VI67
-ORG,ZEISS unifocal Individual 1.6,ZEISS VISION CARE FRANCE,,"1,6",VI60
-POLY,ZEISS unifocal Individual Poly,ZEISS VISION CARE FRANCE,,"1,59",VI59
-TVX,ZEISS unifocal Individual 1.53,ZEISS VISION CARE FRANCE,,"1,53",VI53
-ORG,ZEISS unifocal Individual 1.5,ZEISS VISION CARE FRANCE,,"1,5",VI50
-ORG,ZEISS unifocal Superb 1.74,ZEISS VISION CARE FRANCE,,"1,74",VS74
-ORG,ZEISS unifocal Superb 1.67,ZEISS VISION CARE FRANCE,,"1,67",VS67
-ORG,ZEISS unifocal Superb 1.6,ZEISS VISION CARE FRANCE,,"1,6",VS60
-POLY,ZEISS unifocal Superb Poly,ZEISS VISION CARE FRANCE,,"1,59",VS59
-TVX,ZEISS unifocal Superb 1.53,ZEISS VISION CARE FRANCE,,"1,53",VS53
-ORG,ZEISS unifocal Superb 1.5,ZEISS VISION CARE FRANCE,,"1,5",VS50
-ORG,ZEISS unifocal DriveSafe Individual 1.74,ZEISS VISION CARE FRANCE,,"1,74",VDI74
-ORG,ZEISS unifocal DriveSafe Individual 1.67,ZEISS VISION CARE FRANCE,,"1,67",VDI67
-ORG,ZEISS unifocal DriveSafe Individual 1.6,ZEISS VISION CARE FRANCE,,"1,6",VDI60
-POLY,ZEISS unifocal DriveSafe Individual Poly,ZEISS VISION CARE FRANCE,,"1,59",VDI59
-TVX,ZEISS unifocal DriveSafe Individual 1.53,ZEISS VISION CARE FRANCE,,"1,53",VDI53
-ORG,ZEISS unifocal DriveSafe Individual 1.5,ZEISS VISION CARE FRANCE,,"1,5",VDI50
-ORG,ZEISS unifocal DriveSafe 1.74,ZEISS VISION CARE FRANCE,,"1,74",VD74
-ORG,ZEISS unifocal DriveSafe 1.67,ZEISS VISION CARE FRANCE,,"1,67",VD67
-ORG,ZEISS unifocal DriveSafe 1.6,ZEISS VISION CARE FRANCE,,"1,6",VD60
-POLY,ZEISS unifocal DriveSafe Poly,ZEISS VISION CARE FRANCE,,"1,59",VD59
-TVX,ZEISS unifocal DriveSafe 1.53,ZEISS VISION CARE FRANCE,,"1,53",VD53
-ORG,ZEISS unifocal DriveSafe 1.5,ZEISS VISION CARE FRANCE,,"1,5",VD50
-ORG,Zeiss Digital Lens First 1.74,ZEISS VISION CARE FRANCE,,"1,74",DLF74
-ORG,Zeiss Digital Lens First 1.67,ZEISS VISION CARE FRANCE,,"1,67",DLF67
-ORG,Zeiss Digital Lens First 1.6,ZEISS VISION CARE FRANCE,,"1,6",DLF60
-POLY,Zeiss Digital Lens First Poly,ZEISS VISION CARE FRANCE,,"1,59",DLF59
-TVX,Zeiss Digital Lens First 1.53,ZEISS VISION CARE FRANCE,,"1,53",DLF53
-ORG,Zeiss Digital Lens First 1.5,ZEISS VISION CARE FRANCE,,"1,5",DLF50
-ORG,ZEISS Digital EnergizeMe 1.67,ZEISS VISION CARE FRANCE,,"1,67",DEM67
-ORG,ZEISS Digital EnergizeMe 1.6,ZEISS VISION CARE FRANCE,,"1,6",DEM60
-POLY,ZEISS Digital EnergizeMe Poly,ZEISS VISION CARE FRANCE,,"1,59",DEM59
-TVX,ZEISS Digital EnergizeMe 1.53,ZEISS VISION CARE FRANCE,,"1,53",DEM53
-ORG,ZEISS Digital EnergizeMe 1.5,ZEISS VISION CARE FRANCE,,"1,5",DEM50
-ORG,ZEISS unifocal EnergizeMe 1.67,ZEISS VISION CARE FRANCE,,"1,67",SEM67
-ORG,ZEISS unifocal EnergizeMe 1.6,ZEISS VISION CARE FRANCE,,"1,6",SEM60
-POLY,ZEISS unifocal EnergizeMe Poly,ZEISS VISION CARE FRANCE,,"1,59",SEM59
-TVX,ZEISS unifocal EnergizeMe 1.53,ZEISS VISION CARE FRANCE,,"1,53",SEM53
-ORG,ZEISS unifocal EnergizeMe 1.5,ZEISS VISION CARE FRANCE,,"1,5",SEM50
-ORG,ZEISS unifocal AS 1.74,ZEISS VISION CARE FRANCE,,"1,74",AS74
-ORG,ZEISS unifocal AS 1.67,ZEISS VISION CARE FRANCE,,"1,67",AS67
-ORG,ZEISS unifocal AS 1.6,ZEISS VISION CARE FRANCE,,"1,6",AS60
-POLY,ZEISS unifocal AS Poly,ZEISS VISION CARE FRANCE,,"1,59",AS59
-TVX,ZEISS unifocal AS 1.53,ZEISS VISION CARE FRANCE,,"1,53",AS53
-ORG,ZEISS unifocal AS 1.5,ZEISS VISION CARE FRANCE,,"1,5",AS50
-ORG,ZEISS unifocal Spherique 1.74,ZEISS VISION CARE FRANCE,,"1,74",SP74
-ORG,ZEISS unifocal Spherique 1.67,ZEISS VISION CARE FRANCE,,"1,67",SP67
-ORG,ZEISS unifocal Spherique 1.6,ZEISS VISION CARE FRANCE,,"1,6",SP60
-TVX,ZEISS unifocal Spherique 1.53,ZEISS VISION CARE FRANCE,,"1,53",SP53
-ORG,ZEISS unifocal Spherique 1.5,ZEISS VISION CARE FRANCE,,"1,5",SP50
-ORG,ZEISS unifocal Individual Sport 1.6,ZEISS VISION CARE FRANCE,,"1,6",VI60
-POLY,ZEISS unifocal Individual Sport Poly,ZEISS VISION CARE FRANCE,,"1,59",VI59
-TVX,ZEISS unifocal Individual Sport 1.53,ZEISS VISION CARE FRANCE,,"1,53",VI53
-ORG,ZEISS unifocal Individual Sport 1.5,ZEISS VISION CARE FRANCE,,"1,5",VI50
-1.59,Synchrony progressif Easy View Poly,ZEISS VISION CARE FRANCE,,POLY,
-1.5,Synchrony progressif Easy View 1.5,ZEISS VISION CARE FRANCE,,ORG,
-1.74,ZEISS progressif Clear 3Dve 1.74,ZEISS VISION CARE FRANCE,,ORG,C3e74
-1.67,ZEISS progressif Clear 3Dve 1.67,ZEISS VISION CARE FRANCE,,ORG,C3e67
-1.6,ZEISS progressif Clear 3Dve 1.6,ZEISS VISION CARE FRANCE,,ORG,C3e60
-1.53,ZEISS progressif Clear 3Dve 1.53,ZEISS VISION CARE FRANCE,,TVX,C3e53
-1.5,ZEISS progressif Clear 3Dve 1.5,ZEISS VISION CARE FRANCE,,ORG,C3e50
-1.74,ZEISS progressif Clear 3Dv 1.74,ZEISS VISION CARE FRANCE,,ORG,C3v74
-1.67,ZEISS progressif Clear 3Dv 1.67,ZEISS VISION CARE FRANCE,,ORG,C3v67
-1.6,ZEISS progressif Clear 3Dv 1.6,ZEISS VISION CARE FRANCE,,ORG,C3v60
-1.53,ZEISS progressif Clear 3Dv 1.53,ZEISS VISION CARE FRANCE,,TVX,C3v53
-1.5,ZEISS progressif Clear 3Dv 1.5,ZEISS VISION CARE FRANCE,,ORG,C3v50
-1.74,ZEISS progressif Clear 3D 1.74,ZEISS VISION CARE FRANCE,,ORG,"C3D74 , 18"
-1.67,ZEISS progressif Clear 3D 1.67,ZEISS VISION CARE FRANCE,,ORG,"C3D67 , 18"
-1.6,ZEISS progressif Clear 3D 1.6,ZEISS VISION CARE FRANCE,,ORG,"C3D60 , 18"
-1.53,ZEISS progressif Clear 3D 1.53,ZEISS VISION CARE FRANCE,,TVX,"C3D53 , 18"
-1.5,ZEISS progressif Clear 3D 1.5,ZEISS VISION CARE FRANCE,,ORG,"C3D50 , 18"
-1.74,ZEISS progressif Clear 3D 1.74 Short,ZEISS VISION CARE FRANCE,,ORG,"C3D74 , 14"
-1.67,ZEISS progressif Clear 3D 1.67 Short,ZEISS VISION CARE FRANCE,,ORG,"C3D67 , 14"
-1.6,ZEISS progressif Clear 3D 1.6 Short,ZEISS VISION CARE FRANCE,,ORG,"C3D60 , 14"
-1.59,ZEISS progressif Clear 3D Poly Short,ZEISS VISION CARE FRANCE,,POLY,"C3D59 , 14"
-1.53,ZEISS progressif Clear 3D 1.53 Short,ZEISS VISION CARE FRANCE,,TVX,"C3D53 , 14"
-1.5,ZEISS progressif Clear 3D 1.5 Short,ZEISS VISION CARE FRANCE,,ORG,"C3D50 , 14"
-1.6,ZEISS progressif Individual PhotoCare2 1.6,ZEISS VISION CARE FRANCE,,ORG,C3 + 60
-1.5,ZEISS progressif Individual PhotoCare2 1.5,ZEISS VISION CARE FRANCE,,ORG,C3 + 50
-1.6,ZEISS progressif PhotoCare2 1.6,ZEISS VISION CARE FRANCE,,ORG,C3D60
-1.5,ZEISS progressif PhotoCare2 1.5,ZEISS VISION CARE FRANCE,,ORG,C3D50
-1.74,ZEISS Digital Lens 50/75/100 1.74,ZEISS VISION CARE FRANCE,,ORG,D74
-1.67,ZEISS Digital Lens 50/75/100 1.67,ZEISS VISION CARE FRANCE,,ORG,D67
-1.6,ZEISS Digital Lens 50/75/100 1.6,ZEISS VISION CARE FRANCE,,ORG,D60
-1.59,ZEISS Digital Lens 50/75/100 Poly,ZEISS VISION CARE FRANCE,,POLY,D59
-1.53,ZEISS Digital Lens 50/75/100 1.53,ZEISS VISION CARE FRANCE,,TVX,D53
-1.5,ZEISS Digital Lens 50/75/100 1.5,ZEISS VISION CARE FRANCE,,ORG,D50
-1.74,ZEISS progressif Classic 1.74,ZEISS VISION CARE FRANCE,,ORG,C74
-1.74,ZEISS progressif Classic Short 1.74,ZEISS VISION CARE FRANCE,,ORG,c74
-1.5,ZEISS progressif Classic Indivual 1.5,ZEISS VISION CARE FRANCE,,ORG,CI50
-1.53,ZEISS progressif Classic Indivual 1.53,ZEISS VISION CARE FRANCE,,TVX,CI53
-1.6,ZEISS progressif Classic Indivual 1.6,ZEISS VISION CARE FRANCE,,ORG,CI60
-1.67,ZEISS progressif Classic Indivual 1.67,ZEISS VISION CARE FRANCE,,ORG,CI67
-1.74,ZEISS progressif Classic Indivual 1.74,ZEISS VISION CARE FRANCE,,ORG,CI74
-1.59,ZEISS progressif Classic Indivual Poly,ZEISS VISION CARE FRANCE,,POLY,CI59
-1.5,ZEISS unifocal MyoVision ACE 1.5,ZEISS VISION CARE FRANCE,,ORG,MCA50
-1.53,ZEISS unifocal MyoVision ACE 1.53,ZEISS VISION CARE FRANCE,,TVX,MCA53
-1.60,ZEISS unifocal MyoVision ACE 1.6,ZEISS VISION CARE FRANCE,,ORG,MCA60
-1.67,ZEISS unifocal MyoVision ACE 1.67,ZEISS VISION CARE FRANCE,,ORG,MCA67
-1.74,ZEISS unifocal MyoVision ACE 1.74,ZEISS VISION CARE FRANCE,,ORG,MCA74
-1.59,ZEISS unifocal MyoVision ACE Poly,ZEISS VISION CARE FRANCE,,POLY,MCA59
-1.5,ZEISS unifocal ClearView 1.5,ZEISS VISION CARE FRANCE,,ORG,CV50
-1.53,ZEISS unifocal ClearView 1.53,ZEISS VISION CARE FRANCE,,TVX,CV53
-1.6,ZEISS unifocal ClearView 1.6,ZEISS VISION CARE FRANCE,,ORG,CV60
-1.67,ZEISS unifocal ClearView 1.67,ZEISS VISION CARE FRANCE,,ORG,CV67
-1.74,ZEISS unifocal ClearView 1.74,ZEISS VISION CARE FRANCE,,ORG,CV74
-1.59,ZEISS unifocal ClearView Poly,ZEISS VISION CARE FRANCE,,POLY,CV59
-1.59,ZEISS unifocal MyoCare S Poly,ZEISS VISION CARE FRANCE,,POLY,MS59
-1.5,ZEISS unifocal MyoCare 1.5,ZEISS VISION CARE FRANCE,,ORG,MCR50
-1.6,ZEISS unifocal MyoCare 1.6,ZEISS VISION CARE FRANCE,,ORG,MCR60
-1.59,ZEISS unifocal MyoCare Poly,ZEISS VISION CARE FRANCE,,POLY,MCR59
-1.5,ZEISS unifocal SmartLife Young 1.5,ZEISS VISION CARE FRANCE,,ORG,SY50
-1.53,ZEISS unifocal SmartLife Young 1.53,ZEISS VISION CARE FRANCE,,TVX,SY53
-1.6,ZEISS unifocal SmartLife Young 1.6,ZEISS VISION CARE FRANCE,,ORG,SY60
-1.67,ZEISS unifocal SmartLife Young 1.67,ZEISS VISION CARE FRANCE,,ORG,SY67
-1.74,ZEISS unifocal SmartLife Young 1.74,ZEISS VISION CARE FRANCE,,ORG,SY74
-1.59,ZEISS unifocal SmartLife Young Poly,ZEISS VISION CARE FRANCE,,POLY,SY59
-1.5,ZEISS unifocal SmartLife 1.5,ZEISS VISION CARE FRANCE,,ORG,SL50
-1.53,ZEISS unifocal SmartLife 1.53,ZEISS VISION CARE FRANCE,,TVX,SL53
-1.6,ZEISS unifocal SmartLife 1.6,ZEISS VISION CARE FRANCE,,ORG,SL60
-1.67,ZEISS unifocal SmartLife 1.67,ZEISS VISION CARE FRANCE,,ORG,SL67
-1.74,ZEISS unifocal SmartLife 1.74,ZEISS VISION CARE FRANCE,,ORG,SL74
-1.59,ZEISS unifocal SmartLife Poly,ZEISS VISION CARE FRANCE,,POLY,SL59
-1.5,ZEISS progressif SmartLife Pure Short 1.5,ZEISS VISION CARE FRANCE,,ORG,"SPU50
-14"
-1.53,ZEISS progressif SmartLife Pure Short 1.53,ZEISS VISION CARE FRANCE,,TVX,"SPU53
-14"
-1.6,ZEISS progressif SmartLife Pure Short 1.6,ZEISS VISION CARE FRANCE,,ORG,"SPU60
-14"
-1.67,ZEISS progressif SmartLife Pure Short 1.67,ZEISS VISION CARE FRANCE,,ORG,"SPU67
-14"
-1.74,ZEISS progressif SmartLife Pure Short 1.74,ZEISS VISION CARE FRANCE,,ORG,"SPU74
-14"
-1.59,ZEISS progressif SmartLife Pure Short Poly,ZEISS VISION CARE FRANCE,,POLY,"SPU59
-14"
-1.5,ZEISS unifocal SmartLife Individual 50/75/100 1.5,ZEISS VISION CARE FRANCE,,ORG,DLI50
-1.53,ZEISS unifocal SmartLife Individual 50/75/100 1.53,ZEISS VISION CARE FRANCE,,TVX,DLI53
-1.6,ZEISS unifocal SmartLife Individual 50/75/100 1.6,ZEISS VISION CARE FRANCE,,ORG,DLI60
-1.67,ZEISS unifocal SmartLife Individual 50/75/100 1.67,ZEISS VISION CARE FRANCE,,ORG,DLI67
-1.74,ZEISS unifocal SmartLife Individual 50/75/100 1.74,ZEISS VISION CARE FRANCE,,ORG,DLI74
-1.59,ZEISS unifocal SmartLife Individual 50/75/100 Poly,ZEISS VISION CARE FRANCE,,POLY,DLI59
-1.5,ZEISS progressif SmartLife Individual 1.5,ZEISS VISION CARE FRANCE,,ORG,SIN50
-1.53,ZEISS progressif SmartLife Individual 1.53,ZEISS VISION CARE FRANCE,,TVX,SIN53
-1.6,ZEISS progressif SmartLife Individual 1.6,ZEISS VISION CARE FRANCE,,ORG,SIN60
-1.67,ZEISS progressif SmartLife Individual 1.67,ZEISS VISION CARE FRANCE,,ORG,SIN67
-1.74,ZEISS progressif SmartLife Individual 1.74,ZEISS VISION CARE FRANCE,,ORG,SIN74
-1.59,ZEISS progressif SmartLife Individual Poly,ZEISS VISION CARE FRANCE,,POLY,SIN59
-1.5,ZEISS progressif SmartLife Superb 1.5,ZEISS VISION CARE FRANCE,,ORG,SSB50
-1.53,ZEISS progressif SmartLife Superb 1.53,ZEISS VISION CARE FRANCE,,TVX,SSB53
-1.6,ZEISS progressif SmartLife Superb 1.6,ZEISS VISION CARE FRANCE,,ORG,SSB60
-1.67,ZEISS progressif SmartLife Superb 1.67,ZEISS VISION CARE FRANCE,,ORG,SSB67
-1.74,ZEISS progressif SmartLife Superb 1.74,ZEISS VISION CARE FRANCE,,ORG,SSB74
-1.59,ZEISS progressif SmartLife Superb Poly,ZEISS VISION CARE FRANCE,,POLY,SSB59
-1.5,ZEISS progressif SmartLife Plus 1.5,ZEISS VISION CARE FRANCE,,ORG,SPL50
-1.53,ZEISS progressif SmartLife Plus 1.53,ZEISS VISION CARE FRANCE,,TVX,SPL53
-1.6,ZEISS progressif SmartLife Plus 1.6,ZEISS VISION CARE FRANCE,,ORG,SPL60
-1.67,ZEISS progressif SmartLife Plus 1.67,ZEISS VISION CARE FRANCE,,ORG,SPL67
-1.74,ZEISS progressif SmartLife Plus 1.74,ZEISS VISION CARE FRANCE,,ORG,SPL74
-1.59,ZEISS progressif SmartLife Plus Poly,ZEISS VISION CARE FRANCE,,POLY,SPL59
-1.5,ZEISS progressif SmartLife Pure 1.5,ZEISS VISION CARE FRANCE,,ORG,"SPU50
-18"
-1.53,ZEISS progressif SmartLife Pure 1.53,ZEISS VISION CARE FRANCE,,TVX,"SPU53
-18"
-1.6,ZEISS progressif SmartLife Pure 1.6,ZEISS VISION CARE FRANCE,,ORG,"SPU60
-18"
-1.67,ZEISS progressif SmartLife Pure 1.67,ZEISS VISION CARE FRANCE,,ORG,"SPU67
-18"
-1.74,ZEISS progressif SmartLife Pure 1.74,ZEISS VISION CARE FRANCE,,ORG,"SPU74
-18"
-1.59,ZEISS progressif SmartLife Pure Poly,ZEISS VISION CARE FRANCE,,POLY,"SPU59
-18"
-1.5,ZEISS unifocal SmartLife 50/75/100 1.5,ZEISS VISION CARE FRANCE,,ORG,DSL50
-1.53,ZEISS unifocal SmartLife 50/75/100 1.53,ZEISS VISION CARE FRANCE,,TVX,DSL53
-1.6,ZEISS unifocal SmartLife 50/75/100 1.6,ZEISS VISION CARE FRANCE,,ORG,DSL60
-1.67,ZEISS unifocal SmartLife 50/75/100 1.67,ZEISS VISION CARE FRANCE,,ORG,DSL67
-1.74,ZEISS unifocal SmartLife 50/75/100 1.74,ZEISS VISION CARE FRANCE,,ORG,DSL74
-1.59,ZEISS unifocal SmartLife 50/75/100 Poly,ZEISS VISION CARE FRANCE,,POLY,DSL59
-1.5,ZEISS unifocal SmartLife Individual 1.5,ZEISS VISION CARE FRANCE,,ORG,SLI50
-1.53,ZEISS unifocal SmartLife Individual 1.53,ZEISS VISION CARE FRANCE,,TVX,SLI53
-1.6,ZEISS unifocal SmartLife Individual 1.6,ZEISS VISION CARE FRANCE,,ORG,SLI60
-1.67,ZEISS unifocal SmartLife Individual 1.67,ZEISS VISION CARE FRANCE,,ORG,SLI67
-1.74,ZEISS unifocal SmartLife Individual 1.74,ZEISS VISION CARE FRANCE,,ORG,SLI74
-1.59,ZEISS unifocal SmartLife Individual Poly,ZEISS VISION CARE FRANCE,,POLY,SLI59
+glass_index,glass_name,glass_supplier_name,image_engraving,material,nasal_engraving,source_url
+1.50,ABSOLU URBAIN 1.5 blanc / X400 / Xblue / Transitions® GenS™ / Transitions® XTRActive® / Pola / Pol Dégradé / Pola DRW™,MEGA OPTIC,,ORG,ABU,https://www.france-optique.com/gravures/fournisseur=644
+1.53,ABSOLU URBAIN TVX® 1.53 blanc / Transitions® GenS™ / Transitions® XTRActive® / Pola,MEGA OPTIC,,TVX,ABU,https://www.france-optique.com/gravures/fournisseur=644
+1.59,ABSOLU URBAIN 1.59 blanc / Transitions® GenS™ / Transitions® XTRActive® / Pola / Pola DRW™,MEGA OPTIC,,POLY,ABU,https://www.france-optique.com/gravures/fournisseur=644
+1.6,ABSOLU URBAIN 1.6 blanc / Xblue / Transitions® GenS™ / Transitions® XTRActive® / Pola,MEGA OPTIC,,MR8,ABU,https://www.france-optique.com/gravures/fournisseur=644
+1.67,ABSOLU URBAIN 1.67 blanc / Xblue / Transitions® GenS™ / Transitions® XTRActive® / Pola,MEGA OPTIC,,ORG,ABU,https://www.france-optique.com/gravures/fournisseur=644
+1.74,ABSOLU URBAIN 1.74 blanc / Xblue / Transitions® GenS™,MEGA OPTIC,,ORG,ABU,https://www.france-optique.com/gravures/fournisseur=644
+1.5,ABSOLU SCRIPT 1.5 blanc / X400 / Xblue / Transitions® GenS™ / Transitions® XTRActive® / Pola / Pola Dégradé / Pola DRW™,MEGA OPTIC,,ORG,ABS,https://www.france-optique.com/gravures/fournisseur=644
+1.53,ABSOLU SCRIPT TVX® 1.53 blanc / Transitions® GenS™ / Transitions® XTRActive® / Pola,MEGA OPTIC,,TVX,ABS,https://www.france-optique.com/gravures/fournisseur=644
+1.59,ABSOLU SCRIPT 1.59 blanc /Transitions® GenS™ / Transitions® XTRActive® / Pola / Pola DRW™,MEGA OPTIC,,POLY,ABS,https://www.france-optique.com/gravures/fournisseur=644
+1.6,ABSOLU SCRIPT 1.6 blanc / Xblue / Transitions® GenS™ / Transitions® XTRActive® / Pola,MEGA OPTIC,,MR8,ABS,https://www.france-optique.com/gravures/fournisseur=644
+1.67,ABSOLU SCRIPT 1.67 blanc / Xblue / Transitions® GenS™ / Transitions® XTRActive® / Pola,MEGA OPTIC,,ORG,ABS,https://www.france-optique.com/gravures/fournisseur=644
+1.74,ABSOLU SCRIPT 1.74 blanc / Xblue / Transitions® GenS™,MEGA OPTIC,,ORG,ABS,https://www.france-optique.com/gravures/fournisseur=644
+1.5,ABSOLU EVASION 1.5 blanc / X400 / Xblue / Transitions® GenS™ / Transitions® XTRActive® / Pola / Pola Dégradé / Pola DRW™,MEGA OPTIC,,ORG,ABE,https://www.france-optique.com/gravures/fournisseur=644
+1.53,ABSOLU EVASION TVX® 1.53 blanc / Transitions® GenS™ / Transitions® XTRActive® / Pola,MEGA OPTIC,,TVX,ABE,https://www.france-optique.com/gravures/fournisseur=644
+1.59,ABSOLU EVASION 1.59 blanc / Transitions® GenS™ / Transitions® XTRActive® / Pola / Pola DRW™,MEGA OPTIC,,POLY,ABE,https://www.france-optique.com/gravures/fournisseur=644
+1.6,ABSOLU EVASION 1.6 blanc / Xblue / Transitions® GenS™ / Transitions® XTRActive® / Pola,MEGA OPTIC,,ORG,ABE,https://www.france-optique.com/gravures/fournisseur=644
+1.67,ABSOLU EVASION 1.67 blanc / Xblue / Transitions® GenS™ / Transitions® XTRActive® / Pola,MEGA OPTIC,,ORG,ABE,https://www.france-optique.com/gravures/fournisseur=644
+1.74,ABSOLU EVASION 1.74 blanc / Xblue / Transitions® GenS™,MEGA OPTIC,,ORG,ABE,https://www.france-optique.com/gravures/fournisseur=644
+1.5,ATRIA 1.5 blanc / X400 / Xblue / Transitions® GenS™ / Transitions® XTRActive® / Pola / Pola Dégradé / Pola DRW™,MEGA OPTIC,,ORG,IA,https://www.france-optique.com/gravures/fournisseur=644
+1.53,ATRIA TVX® 1.53 blanc / Trans® GenS™ / Trans® XTRActive® / Pola,MEGA OPTIC,,TVX,IA,https://www.france-optique.com/gravures/fournisseur=644
+1.59,ATRIA 1.59 blanc / Transitions® GenS™ / Transitions® XTRActive® / Pola / Pola DRW™,MEGA OPTIC,,POLY,IA,https://www.france-optique.com/gravures/fournisseur=644
+1.6,ATRIA 1.6 blanc / Xblue / Transitions® GenS™ / Transitions® XTRActive® / Pola,MEGA OPTIC,,MR8,IA,https://www.france-optique.com/gravures/fournisseur=644
+1.67,ATRIA 1.67 blanc / Xblue / Transitions® GenS™ / Transitions® XTRActive® / Pola,MEGA OPTIC,,ORG,IA,https://www.france-optique.com/gravures/fournisseur=644
+1.74,ATRIA 1.74 blanc / Xblue / Transitions® GenS™,MEGA OPTIC,,ORG,IA,https://www.france-optique.com/gravures/fournisseur=644
+1.5,3D Fit 1.5 blanc / X400 / Xblue / Trans® GenS™ / Trans® XTRActive® / Trans® XTRActive® Pola / Pola / Pola Dégradé / Pola DRW™,MEGA OPTIC,,ORG,3DFIT,https://www.france-optique.com/gravures/fournisseur=644
+1.53,3D Fit TVX® 1.53 blanc / Trans® GenS™ / Transitions® XTRActive® / Pola,MEGA OPTIC,,TVX,3DFIT,https://www.france-optique.com/gravures/fournisseur=644
+1.59,3D Fit 1.59 blanc / Trans® GenS™ / Transitions® XTRActive® / Pola / Pola DRW™,MEGA OPTIC,,POLY,3DFIT,https://www.france-optique.com/gravures/fournisseur=644
+1.6,3D Fit 1.6 blanc / Xblue / Trans® GenS™ / Trans® XTRActive® / Trans® XTRActive® Pola / Pola,MEGA OPTIC,,ORG,3DFIT,https://www.france-optique.com/gravures/fournisseur=644
+1.67,3D Fit 1.67 blanc / Xblue / Trans® GenS™ / Trans® XTRActive® / Trans® XTRActive® Pola / Pola,MEGA OPTIC,,ORG,3DFIT,https://www.france-optique.com/gravures/fournisseur=644
+1.74,3D Fit 1.74 blanc/Xblue/Trans™,MEGA OPTIC,,ORG,3DFIT,https://www.france-optique.com/gravures/fournisseur=644
+1.5,3D Full Tech 1.5 blanc / X400 / Xblue / Trans® GenS™ / Trans® XTRActive® / Trans® XTRActive® Pola / Pola / Pola Dégradé / Pola DRW™,MEGA OPTIC,,ORG,3DFT,https://www.france-optique.com/gravures/fournisseur=644
+1.53,3D Full Tech TVX® 1.53 blanc / Trans® GenS™ / Trans® XTRActive® / Pola,MEGA OPTIC,,TVX,3DFT,https://www.france-optique.com/gravures/fournisseur=644
+1.59,3D Full Tech 1.59 blanc / Trans® GenS™ / Trans® XTRActive® / Pola / Pola DRW™,MEGA OPTIC,,POLY,3DFT,https://www.france-optique.com/gravures/fournisseur=644
+1.6,3D Full Tech 1.6 blanc / Xblue / Trans® GenS™ / Trans® XTRActive® / Trans® XTRActive® Pola / Pola,MEGA OPTIC,,MR8,3DFT,https://www.france-optique.com/gravures/fournisseur=644
+1.67,3D Full Tech 1.67 blanc / Xblue / Trans® GenS™ / Trans® XTRActive® / Trans® XTRActive® Pola / Pola,MEGA OPTIC,,ORG,3DFT,https://www.france-optique.com/gravures/fournisseur=644
+1.74,3D Full Tech 1.74 blanc/Xblue/Trans™,MEGA OPTIC,,ORG,3DFT,https://www.france-optique.com/gravures/fournisseur=644
+1.50,VIPHD 1.5 blanc / X400 / Xblue / Transitions® GenS™ / Transitions® XTRActive® / Pola / Pola Dégradé / Pola DRW™,MEGA OPTIC,,ORG,VI,https://www.france-optique.com/gravures/fournisseur=644
+1.53,VIPHD TVX® 1.53 blanc / Transitions® GenS™ / Transitions® XTRActive® / Pola,MEGA OPTIC,,TVX,VI,https://www.france-optique.com/gravures/fournisseur=644
+1.59,VIPHD 1.59 blanc / Transitions® GenS™ / Transitions® XTRActive® / Pola / Pola DRW™,MEGA OPTIC,,POLY,VI,https://www.france-optique.com/gravures/fournisseur=644
+1.6,VIPHD 1.6 blanc / Xblue / Transitions® GenS™ / Transitions® XTRActive® / Pola,MEGA OPTIC,,MR8,VI,https://www.france-optique.com/gravures/fournisseur=644
+1.67,VIPHD 1.67 blanc / Xblue / Transitions® GenS™ / Transitions® XTRActive® / Pola,MEGA OPTIC,,ORG,VI,https://www.france-optique.com/gravures/fournisseur=644
+1.74,VIPHD 1.74 blanc / Xblue / Transitions® GenS™,MEGA OPTIC,,ORG,VI,https://www.france-optique.com/gravures/fournisseur=644
+1.50,AGILAHD 1.5 blanc,MEGA OPTIC,,ORG,AG/AGm,https://www.france-optique.com/gravures/fournisseur=644
+1.6,AGILAHD 1.6 blanc,MEGA OPTIC,,ORG,AG/AGm,https://www.france-optique.com/gravures/fournisseur=644
+1.50,PRISMAHD 1.5 blanc / Xblue / Transitions® GenS™ / Pola,MEGA OPTIC,,ORG,PR/PRm,https://www.france-optique.com/gravures/fournisseur=644
+1.59,PRISMAHD 1.59 blanc / Transitions® GenS™,MEGA OPTIC,,POLY,PR/PRm,https://www.france-optique.com/gravures/fournisseur=644
+1.60,PRISMAHD 1.6 blanc / Xblue / Transitions® GenS™ / Pola,MEGA OPTIC,,MR8,PR/PRm,https://www.france-optique.com/gravures/fournisseur=644
+1.67,PRISMAHD 1.67 blanc / Xblue / Transitions® GenS™ / Pola,MEGA OPTIC,,ORG,PR/PRm,https://www.france-optique.com/gravures/fournisseur=644
+1.74,PRISMAHD 1.74 blanc / Xblue,MEGA OPTIC,,ORG,PR/PRm,https://www.france-optique.com/gravures/fournisseur=644
+1.5,PSEHD 1.5 blanc / Xblue / Transitions® GenS™ / Pola,MEGA OPTIC,,ORG,PS/PSm,https://www.france-optique.com/gravures/fournisseur=644
+1.59,PSEHD 1.59 blanc,MEGA OPTIC,,POLY,PS/PSm,https://www.france-optique.com/gravures/fournisseur=644
+1.60,PSEHD 1.6 blanc / Xblue / Transitions® GenS™ / Pola,MEGA OPTIC,,MR8,PS/PSm,https://www.france-optique.com/gravures/fournisseur=644
+1.67,PSEHD 1.67 blanc / Xblue,MEGA OPTIC,,ORG,PS/PSm,https://www.france-optique.com/gravures/fournisseur=644
+1.5,POWER DESK 1.5 blanc/X400/Xblue/Trans™/Trans™ XTRActive® NG,MEGA OPTIC,,ORG,PW,https://www.france-optique.com/gravures/fournisseur=644
+1.53,POWER DESK TVX® 1.53 blanc/Xblue//Trans™/Trans™ XTRActive® NG,MEGA OPTIC,,TVX,PW,https://www.france-optique.com/gravures/fournisseur=644
+1.59,POWER DESK 1.59 blanc/Trans™/Trans™ XTRActive® NG,MEGA OPTIC,,POLY,PW,https://www.france-optique.com/gravures/fournisseur=644
+1.6,POWER DESK 1.6 blanc/X400/Xblue/Trans™/Trans™ XTRActive® NG,MEGA OPTIC,,MR8,PW,https://www.france-optique.com/gravures/fournisseur=644
+1.67,POWER DESK 1.67 blanc/Xblue/Trans™/Trans™ XTRActive® NG,MEGA OPTIC,,ORG,PW,https://www.france-optique.com/gravures/fournisseur=644
+1.74,POWER DESK 1.74 blanc/Xblue/Trans™,MEGA OPTIC,,ORG,PW,https://www.france-optique.com/gravures/fournisseur=644
+1.5,E-TOUCH 1.5 blanc / Xblue / Trans® GenS™ / Trans® XTRActive®,MEGA OPTIC,,ORG,ET,https://www.france-optique.com/gravures/fournisseur=644
+1.6,E-TOUCH 1.6 blanc / Xblue / Trans® GenS™ / Trans® XTRActive®,MEGA OPTIC,,MR8,ET,https://www.france-optique.com/gravures/fournisseur=644
+1.67,E-TOUCH 1.67 blanc / Xblue / Trans® GenS™ / Trans® XTRActive®,MEGA OPTIC,,ORG,ET,https://www.france-optique.com/gravures/fournisseur=644
+1.5,€SPRIX MD 1.5 AR,MEGA OPTIC,,ORG,"ESPmdF
+ESPmdA
+ESPmdM",https://www.france-optique.com/gravures/fournisseur=644
+1.6,€SPRIX MD 1.6 AR,MEGA OPTIC,,MR8,"ESPmdF
+ESPmdA
+ESPmdM",https://www.france-optique.com/gravures/fournisseur=644
+1.67,€SPRIX MD 1.67 AR,MEGA OPTIC,,ORG,"ESPmdF
+ESPmdA
+ESPmdM",https://www.france-optique.com/gravures/fournisseur=644
+1.74,€SPRIX MD 1.74 AR,MEGA OPTIC,,ORG,"ESPmdF
+ESPmdA
+ESPmdM",https://www.france-optique.com/gravures/fournisseur=644
+1.5,€SPRIX PROG & Mini 1.5 AR,MEGA OPTIC,,ORG,ESP/ESPm,https://www.france-optique.com/gravures/fournisseur=644
+1.59,€SPRIX PROG & Min 1.59 AR,MEGA OPTIC,,POLY,ESP/ESPm,https://www.france-optique.com/gravures/fournisseur=644
+1.6,€SPRIX PROG & Min 1.6 AR,MEGA OPTIC,,MR8,ESP/ESPm,https://www.france-optique.com/gravures/fournisseur=644
+1.67,€SPRIX PROG  & Min 1.67 AR,MEGA OPTIC,,ORG,ESP/ESPm,https://www.france-optique.com/gravures/fournisseur=644
+1.74,€SPRIX PROG  & Min 1.74 AR,MEGA OPTIC,,ORG,ESP/ESPm,https://www.france-optique.com/gravures/fournisseur=644
+1.5,IDEO 1.5 blanc / XBlue,MEGA OPTIC,,ORG,ID,https://www.france-optique.com/gravures/fournisseur=644
+1.6,IDEO 1.6 blanc / XBlue,MEGA OPTIC,,MR8,ID,https://www.france-optique.com/gravures/fournisseur=644
+1.67,IDEO 1.67 blanc / XBlue,MEGA OPTIC,,ORG,ID,https://www.france-optique.com/gravures/fournisseur=644
+1.74,IDEO 1.74 blanc / XBlue,MEGA OPTIC,,ORG,ID,https://www.france-optique.com/gravures/fournisseur=644
+1.5,MOVILENS 1.5 blanc / XBlue,MEGA OPTIC,,ORG,MO,https://www.france-optique.com/gravures/fournisseur=644
+1.6,MOVILENS 1.6 blanc / XBlue,MEGA OPTIC,,MR8,MO,https://www.france-optique.com/gravures/fournisseur=644
+1.67,MOVILENS 1.67 blanc / XBlue,MEGA OPTIC,,ORG,MO,https://www.france-optique.com/gravures/fournisseur=644
+1.74,MOVILENS 1.74 blanc / XBlue,MEGA OPTIC,,ORG,MO,https://www.france-optique.com/gravures/fournisseur=644
+1.5,OFFICEHD 1.5 blanc / X400 / Xblue,MEGA OPTIC,,ORG,OF,https://www.france-optique.com/gravures/fournisseur=644
+1.53,OFFICEHD TVX® 1.53 blanc,MEGA OPTIC,,TVX,OF,https://www.france-optique.com/gravures/fournisseur=644
+1.59,OFFICEHD 1.59 blanc,MEGA OPTIC,,POLY,OF,https://www.france-optique.com/gravures/fournisseur=644
+1.6,OFFICEHD 1.6 blanc / Xblue,MEGA OPTIC,,MR8,OF,https://www.france-optique.com/gravures/fournisseur=644
+1.67,OFFICEHD 1.67 blanc / Xblue,MEGA OPTIC,,ORG,OF,https://www.france-optique.com/gravures/fournisseur=644
+1.74,OFFICEHD 1.74 blanc / Xblue,MEGA OPTIC,,ORG,OF,https://www.france-optique.com/gravures/fournisseur=644
+1.5,STRESS-LESS 1.5 blanc / X400 / Xblue / Transitions® GenS™ / Transitions® XTRActive® / Pola / Pola DRW™,MEGA OPTIC,,ORG,SL,https://www.france-optique.com/gravures/fournisseur=644
+1.53,STRESS-LESS TVX® 1.53 blanc / Transitions® GenS™ / Transitions® XTRActive® / Pola,MEGA OPTIC,,TVX,SL,https://www.france-optique.com/gravures/fournisseur=644
+1.59,STRESS-LESS 1.59 blanc / Transitions® GenS™ / Transitions® XTRActive® / Pola / Pola DRW™,MEGA OPTIC,,POLY,SL,https://www.france-optique.com/gravures/fournisseur=644
+1.6,STRESS-LESS 1.6 blanc / Xblue / Transitions® GenS™ / Transitions® XTRActive® / Pola,MEGA OPTIC,,MR8,SL,https://www.france-optique.com/gravures/fournisseur=644
+1.67,STRESS-LESS 1.67 blanc / Xblue / Transitions® GenS™ / Transitions® XTRActive® / Pola,MEGA OPTIC,,ORG,SL,https://www.france-optique.com/gravures/fournisseur=644
+1.74,STRESS-LESS 1.74 blanc / Xblue / Transitions® GenS™,MEGA OPTIC,,ORG,SL,https://www.france-optique.com/gravures/fournisseur=644
+1.5,OrgaINDIVIDUAL 1.5 blanc / X400 / Xblue / Transitions® GenS™ / Transitions® XTRActive® / Pola / Pola Dégradé / Pola DRW™,MEGA OPTIC,,ORG,OI,https://www.france-optique.com/gravures/fournisseur=644
+1.53,OrgaINDIVIDUAL TVX® 1.53 blanc / Transitions® GenS™ / Transitions® XTRActive® / Pola,MEGA OPTIC,,TVX,OI,https://www.france-optique.com/gravures/fournisseur=644
+1.59,OrgaINDIVIDUAL 1.59 blanc / Transitions® GenS™ / Transitions® XTRActive® / Pola / Pola DRW™,MEGA OPTIC,,POLY,OI,https://www.france-optique.com/gravures/fournisseur=644
+1.6,OrgaINDIVIDUAL 1.6 blanc / Xblue / Transitions® GenS™ / Transitions® XTRActive® / Pola,MEGA OPTIC,,MR8,OI,https://www.france-optique.com/gravures/fournisseur=644
+1.67,OrgaINDIVIDUAL 1.67 blanc / Xblue / Transitions® GenS™ / Transitions® XTRActive® / Pola,MEGA OPTIC,,ORG,OI,https://www.france-optique.com/gravures/fournisseur=644
+1.74,OrgaINDIVIDUAL 1.74 blanc / Xblue / Transitions® GenS™,MEGA OPTIC,,ORG,OI,https://www.france-optique.com/gravures/fournisseur=644
+1.5,VIPSPORT 1.5 blanc / Transitions® GenS™ / Transitions® XTRActive® / Pola / Pola DRW™,MEGA OPTIC,,ORG,VS,https://www.france-optique.com/gravures/fournisseur=644
+1.53,VIPSPORT TVX® 1.53 blanc / Transitions® GenS™ / Transitions® XTRActive® / Pola,MEGA OPTIC,,TVX,VS,https://www.france-optique.com/gravures/fournisseur=644
+1.59,VIPSPORT 1.59 blanc / Transitions® GenS™ / Transitions® XTRActive® / Pola / Pola DRW™,MEGA OPTIC,,POLY,VS,https://www.france-optique.com/gravures/fournisseur=644
+1.60,VIPSPORT 1.6 blanc / Transitions® GenS™ / Transitions® XTRActive® /Pola,MEGA OPTIC,,MR8,VS,https://www.france-optique.com/gravures/fournisseur=644
+1.67,VIPSPORT 1.67 blanc / Transitions® GenS™ / Transitions® XTRActive® /Pola,MEGA OPTIC,,ORG,VS,https://www.france-optique.com/gravures/fournisseur=644
+1.74,VIPSPORT 1.74 blanc,MEGA OPTIC,,ORG,VS,https://www.france-optique.com/gravures/fournisseur=644
+1.5,OrgaSPORT 1.5 blanc / Transitions® GenS™ / Transitions® XTRActive® / Pola / Pola DRW™,MEGA OPTIC,,ORG,OS,https://www.france-optique.com/gravures/fournisseur=644
+1.53,OrgaSPORT TVX® 1.53 blanc / Transitions® GenS™ / Transitions® XTRActive® / Pola,MEGA OPTIC,,TVX,OS,https://www.france-optique.com/gravures/fournisseur=644
+1.59,OrgaSPORT 1.59 blanc / Transitions® GenS™ / Transitions® XTRActive® / Pola / Pola DRW™,MEGA OPTIC,,POLY,OS,https://www.france-optique.com/gravures/fournisseur=644
+1.60,OrgaSPORT 1.6 blanc / Transitions® GenS™ / Transitions® XTRActive® / Pola,MEGA OPTIC,,MR8,OS,https://www.france-optique.com/gravures/fournisseur=644
+1.67,OrgaSPORT 1.67 blanc / Transitions® GenS™ / Transitions® XTRActive® / Pola,MEGA OPTIC,,ORG,OS,https://www.france-optique.com/gravures/fournisseur=644
+1.74,OrgaSPORT 1.74 blanc,MEGA OPTIC,,ORG,OS,https://www.france-optique.com/gravures/fournisseur=644
+1.5,PERSONNAHD 1.5 blanc / XBlue,MEGA OPTIC,,ORG,PN,https://www.france-optique.com/gravures/fournisseur=644
+1.6,PERSONNAHD 1.6 blanc / XBlue,MEGA OPTIC,,MR8,PN,https://www.france-optique.com/gravures/fournisseur=644
+1.67,PERSONNAHD 1.67 blanc / XBlue,MEGA OPTIC,,ORG,PN,https://www.france-optique.com/gravures/fournisseur=644
+1.74,PERSONNAHD 1.74 blanc / Xblue,MEGA OPTIC,,ORG,PN,https://www.france-optique.com/gravures/fournisseur=644
+1.5,PERFORMANCEHD 1.5 blanc / XBlue,MEGA OPTIC,,ORG,PF,https://www.france-optique.com/gravures/fournisseur=644
+1.6,PERFORMANCEHD 1.6 blanc / XBlue,MEGA OPTIC,,MR8,PF,https://www.france-optique.com/gravures/fournisseur=644
+1.67,PERFORMANCEHD 1.67 blanc / XBlue,MEGA OPTIC,,ORG,PF,https://www.france-optique.com/gravures/fournisseur=644
+1.74,PERFORMANCEHD 1.74 blanc / XBlue,MEGA OPTIC,,ORG,PF,https://www.france-optique.com/gravures/fournisseur=644
