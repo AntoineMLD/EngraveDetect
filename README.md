@@ -95,61 +95,35 @@ scrapers/
 ### Installation
 #Créer un environnement virtuel
 python -m venv venv
-#Activer l'environnement virtuel
-source venv/bin/activate # Linux/Mac
-venv\Scripts\activate # Windows
-#Installer les dépendances
+
+# Activer l'environnement virtuel
+source venv/bin/activate  # Linux/Mac
+venv\Scripts\activate     # Windows
+
+# Installer les dépendances
 pip install -r requirements.txt
+```
 
-### Initialisation de la base de données
-#Initialiser la base de données
-./database/setup_db.sh
-#Importer les données
-./database/import_data.sh
+### Exécution
+```bash
+# Lancer un spider spécifique
+scrapy crawl glass_spider
 
-## 5. Utilisation
+# Lancer tous les spiders
+python scrapers/run_all_spiders.py
+```
 
-### Connexion à la base de données (DBeaver)
-1. Créer une nouvelle connexion SQLite
-2. Sélectionner le fichier : `database/data/verres.db`
-3. Tester la connexion
-4. Explorer les données via l'interface DBeaver
+## 9. Contribution
+1. Fork le projet
+2. Créer une branche pour votre fonctionnalité
+3. Commiter vos changements
+4. Pousser vers la branche
+5. Ouvrir une Pull Request
 
-### Requêtes courantes
-#Vérifier les doublons potentiels
-SELECT
-nom, fournisseur_id, COUNT() as occurrences
-FROM verres
-GROUP BY nom, fournisseur_id
-HAVING COUNT() > 1;
+## 10. Licence
+Ce projet est sous licence privée. Tous droits réservés.
 
--- Exemple de requête pour obtenir les verres avec leurs relations
-SELECT
-v.nom,
-f.nom as fournisseur,
-m.nom as materiau,
-g.nom as gamme,
-s.nom as serie
-FROM verres v
-JOIN fournisseurs f ON v.fournisseur_id = f.id
-LEFT JOIN materiaux m ON v.materiau_id = m.id
-JOIN gammes g ON v.gamme_id = g.id
-LEFT JOIN series s ON v.serie_id = s.id;
-
-## 6. Maintenance
-
-### Mise à jour des données
-1. Exécuter les spiders pour collecter les nouvelles données
-2. Placer les fichiers CSV dans le dossier enhanced/data
-3. Exécuter le script d'import
-
-### Vérification des doublons
-#Vérifier les doublons potentiels
-SELECT
-nom, fournisseur_id, COUNT() as occurrences
-FROM verres
-GROUP BY nom, fournisseur_id
-HAVING COUNT() > 1;
-
-## 7. Contact
+## 11. Contact
 Pour toute question ou suggestion concernant ce projet, veuillez contacter l'équipe de développement.
+
+
