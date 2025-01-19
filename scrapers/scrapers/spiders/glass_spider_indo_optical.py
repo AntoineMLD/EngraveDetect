@@ -5,8 +5,6 @@ from scrapers.items import ScrapersItem
 class GlassSpiderIndoOptical(scrapy.Spider):
     name = "glass_spider_indo_optical"
     allowed_domains = ["www.france-optique.com"]
-    
-    
     start_urls = ["https://www.france-optique.com/gravures/fournisseur=1958",
                   "https://www.france-optique.com/gravures/fournisseur=2217",
                   "https://www.france-optique.com/gravures/fournisseur=2532",
