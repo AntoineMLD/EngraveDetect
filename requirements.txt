@@ -8,3 +8,4 @@ psycopg2
 tabulate
 beautifulsoup4
 requests
+uvicorn 
