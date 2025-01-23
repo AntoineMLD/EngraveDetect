@@ -5,6 +5,7 @@ from typing import List
 from pydantic import BaseModel
 from database.models.base import Materiau
 from database.config.database import get_db
+from api.dependencies.auth import verify_auth
 
 
 class MateriauBase(BaseModel):
@@ -15,12 +16,11 @@ class MateriauBase(BaseModel):
 
 router = APIRouter()
 
-# Obtenir tous les matériaux 
+# Routes GET (non protégées)
 @router.get("/materiaux", response_model=List[MateriauBase])
 def get_materiaux(db: Session = Depends(get_db)):
     return db.query(Materiau).all()
 
-# Obtenir un matériaux par ID
 @router.get("/materiaux/{materiau_id}", response_model=MateriauBase)
 def get_materiau(materiau_id: int, db: Session = Depends(get_db)):
     materiau = db.query(Materiau).filter(Materiau.id == materiau_id).first()
@@ -28,34 +28,45 @@ def get_materiau(materiau_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Materiau non trouvé")
     return materiau
 
-# Créer un matériau
+# Routes protégées (POST, PUT, DELETE)
 @router.post("/materiaux", response_model=MateriauBase)
-def create_materiau(materiau: MateriauBase, db: Session = Depends(get_db)):
+async def create_materiau(
+    materiau: MateriauBase, 
+    db: Session = Depends(get_db),
+    _: str = Depends(verify_auth)
+):
     db_materiau = Materiau(nom=materiau.nom)
     db.add(db_materiau)
     db.commit()
     db.refresh(db_materiau)
     return db_materiau
 
-# Mettre à jour un matériau
-@router.put("/materiaus/{materiau_id}", response_model=MateriauBase)
-def update_materiau(materiau_id: int, materiau : MateriauBase, db: Session= Depends(get_db)):
+@router.put("/materiaux/{materiau_id}", response_model=MateriauBase)
+async def update_materiau(
+    materiau_id: int, 
+    materiau: MateriauBase, 
+    db: Session = Depends(get_db),
+    _: str = Depends(verify_auth)
+):
     db_materiau = db.query(Materiau).filter(Materiau.id == materiau_id).first()
     if db_materiau is None:
-        raise HTTPException(status_code=404, detail="Materiaux non trouvé")
+        raise HTTPException(status_code=404, detail="Materiau non trouvé")
     
     db_materiau.nom = materiau.nom
     db.commit()
     db.refresh(db_materiau)
     return db_materiau
 
-# supprimer un matériau
 @router.delete("/materiaux/{materiau_id}")
-def deleter_materiau(materiau_id: int, db: Session = Depends(get_db)):
+async def delete_materiau(
+    materiau_id: int, 
+    db: Session = Depends(get_db),
+    _: str = Depends(verify_auth)
+):
     db_materiau = db.query(Materiau).filter(Materiau.id == materiau_id).first()
     if db_materiau is None:
         raise HTTPException(status_code=404, detail="Materiau non trouvé")
     
     db.delete(db_materiau)
-    db.commit
-    return {"message": "Matériau supprimé"}
+    db.commit()
+    return {"message": "Materiau supprimé"}

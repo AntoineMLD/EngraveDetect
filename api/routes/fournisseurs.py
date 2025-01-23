@@ -5,6 +5,7 @@ from typing import List
 from pydantic import BaseModel
 from database.models.base import Fournisseur
 from database.config.database import get_db
+from api.dependencies.auth import verify_auth
 
 # Les modèles Pydantic pour la validation des données
 class FournisseurBase(BaseModel):
@@ -15,7 +16,7 @@ class FournisseurBase(BaseModel):
 
 router = APIRouter()
 
-# Obtenir tous les fournisseurs
+# Routes GET (non protégées)
 @router.get("/fournisseurs", response_model=List[FournisseurBase])
 def get_fournisseurs(db: Session = Depends(get_db)):
     fournisseurs = db.query(Fournisseur).all()
@@ -29,18 +30,26 @@ def get_fournisseur(fournisseur_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Fournisseur non trouvé")
     return FournisseurBase.from_orm(fournisseur)
 
-# Créer un fournisseur
+# Routes protégées (POST, PUT, DELETE)
 @router.post("/fournisseurs", response_model=FournisseurBase)
-def create_fournisseur(fournisseur: FournisseurBase, db: Session = Depends(get_db)):
+async def create_fournisseur(
+    fournisseur: FournisseurBase, 
+    db: Session = Depends(get_db),
+    _: str = Depends(verify_auth)
+):
     db_fournisseur = Fournisseur(nom=fournisseur.nom)
     db.add(db_fournisseur)
     db.commit()
     db.refresh(db_fournisseur)
     return db_fournisseur
 
-# Mettre à jour un fournisseur
 @router.put("/fournisseurs/{fournisseur_id}", response_model=FournisseurBase)
-def update_fournisseur(fournisseur_id: int, fournisseur: FournisseurBase, db: Session = Depends(get_db)):
+async def update_fournisseur(
+    fournisseur_id: int, 
+    fournisseur: FournisseurBase, 
+    db: Session = Depends(get_db),
+    _: str = Depends(verify_auth)
+):
     db_fournisseur = db.query(Fournisseur).filter(Fournisseur.id == fournisseur_id).first()
     if db_fournisseur is None:
         raise HTTPException(status_code=404, detail="Fournisseur non trouvé")
@@ -50,9 +59,12 @@ def update_fournisseur(fournisseur_id: int, fournisseur: FournisseurBase, db: Se
     db.refresh(db_fournisseur)
     return db_fournisseur
 
-# Supprimer un fournisseur
 @router.delete("/fournisseurs/{fournisseur_id}")
-def delete_fournisseur(fournisseur_id: int, db: Session = Depends(get_db)):
+async def delete_fournisseur(
+    fournisseur_id: int, 
+    db: Session = Depends(get_db),
+    _: str = Depends(verify_auth)
+):
     db_fournisseur = db.query(Fournisseur).filter(Fournisseur.id == fournisseur_id).first()
     if db_fournisseur is None:
         raise HTTPException(status_code=404, detail="Fournisseur non trouvé")

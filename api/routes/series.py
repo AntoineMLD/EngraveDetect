@@ -5,6 +5,7 @@ from typing import List
 from pydantic import BaseModel
 from database.models.base import Serie
 from database.config.database import get_db
+from api.dependencies.auth import verify_auth
 
 class SerieBase(BaseModel):
     nom: str 
@@ -14,31 +15,38 @@ class SerieBase(BaseModel):
 
 router = APIRouter()
 
-# obtenir toutes les séries 
+# Routes GET (non protégées)
 @router.get("/series", response_model=List[SerieBase])
 def get_series(db: Session = Depends(get_db)):
     return db.query(Serie).all()
 
-# Obtenir une série par ID 
-@router.get("/serie/{serie_id}", response_model=SerieBase)
+@router.get("/series/{serie_id}", response_model=SerieBase)
 def get_serie(serie_id: int, db: Session = Depends(get_db)):
     serie = db.query(Serie).filter(Serie.id == serie_id).first()
     if serie is None:
         raise HTTPException(status_code=404, detail="Serie non trouvée")
     return serie
 
-# Créer une série 
+# Routes protégées (POST, PUT, DELETE)
 @router.post("/series", response_model=SerieBase)
-def create_serie(serie: SerieBase, db: Session = Depends(get_db)):
+async def create_serie(
+    serie: SerieBase, 
+    db: Session = Depends(get_db),
+    _: str = Depends(verify_auth)
+):
     db_serie = Serie(nom=serie.nom)
     db.add(db_serie)
     db.commit()
     db.refresh(db_serie)
     return db_serie
 
-# Mettre à jour une série 
-@router.put("/serie/{serie_id}", response_model=SerieBase)
-def update_serie(serie_id: int, serie: SerieBase, db: Session = Depends(get_db)):
+@router.put("/series/{serie_id}", response_model=SerieBase)
+async def update_serie(
+    serie_id: int, 
+    serie: SerieBase, 
+    db: Session = Depends(get_db),
+    _: str = Depends(verify_auth)
+):
     db_serie = db.query(Serie).filter(Serie.id == serie_id).first()
     if db_serie is None:
         raise HTTPException(status_code=404, detail="Serie non trouvée")
@@ -48,13 +56,16 @@ def update_serie(serie_id: int, serie: SerieBase, db: Session = Depends(get_db))
     db.refresh(db_serie)
     return db_serie
 
-# supprimer une série
-@router.delete("/serie/{serie_id}")
-def delete_serie(serie_id: int, db: Session = Depends(get_db)):
+@router.delete("/series/{serie_id}")
+async def delete_serie(
+    serie_id: int, 
+    db: Session = Depends(get_db),
+    _: str = Depends(verify_auth)
+):
     db_serie = db.query(Serie).filter(Serie.id == serie_id).first()
     if db_serie is None:
-        raise HTTPException(status_code=404, detail="Série non trouvée")
+        raise HTTPException(status_code=404, detail="Serie non trouvée")
     
     db.delete(db_serie)
     db.commit()
-    return {"message": "Série supprimée"}
+    return {"message": "Serie supprimée"}

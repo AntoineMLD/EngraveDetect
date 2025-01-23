@@ -8,4 +8,8 @@ psycopg2
 tabulate
 beautifulsoup4
 requests
-uvicorn 
+uvicorn
+fastapi[standard]
+python-jose[cryptography]
+passlib[bcrypt]
+python-multipart
