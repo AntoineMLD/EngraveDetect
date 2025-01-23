@@ -66,10 +66,9 @@ SessionLocal = sessionmaker(
 # Création de la base déclarative
 Base = declarative_base()
 
-@contextmanager
 def get_db() -> Generator[Session, None, None]:
     """
-    Gestionnaire de contexte pour obtenir une session de base de données
+    Générateur pour obtenir une session de base de données
     
     Yields:
         Session: Session de base de données
@@ -91,6 +90,7 @@ def get_db() -> Generator[Session, None, None]:
     finally:
         db.close()
         db_logger.debug("Session de base de données fermée")
+
 
 def init_database() -> None:
     """

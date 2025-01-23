@@ -11,18 +11,18 @@ class GammeBase(BaseModel):
     nom: str 
 
     class Config:
-        from_attributes = True 
+        orm_mode = True 
 
 router = APIRouter()
 
 # Obtenir toutes les gammes 
 @router.get("/gammes", response_model=List[GammeBase])
-async def get_gammes(db: Session = Depends(get_db)):
+def get_gammes(db: Session = Depends(get_db)):
     return db.query(Gamme).all() 
 
 # Obtenir une gamme par ID 
 @router.get("/gammes/{gamme_id}", response_model=GammeBase)
-async def get_gamme(gamme_id: int, db: Session = Depends(get_db)):
+def get_gamme(gamme_id: int, db: Session = Depends(get_db)):
     gamme = db.query(Gamme).filter(Gamme.id ==gamme_id).first()
     if gamme is None:
         raise HTTPException(status_code=404, detail="Gamme non trouvée")
@@ -30,7 +30,7 @@ async def get_gamme(gamme_id: int, db: Session = Depends(get_db)):
 
 # Créer une gamme
 @router.post("/gammes", response_model=GammeBase)
-async def create_gamme(gamme: GammeBase, db: Session = Depends(get_db)):
+def create_gamme(gamme: GammeBase, db: Session = Depends(get_db)):
     db_gamme = Gamme(nom=gamme.nom)
     db.add(db_gamme)
     db.commit()
@@ -39,8 +39,8 @@ async def create_gamme(gamme: GammeBase, db: Session = Depends(get_db)):
 
 # Mettre à jour une gamme
 @router.put("/gammes/{gamme_id}", response_model=GammeBase)
-async def update_gamme(gamme_id: int, gamme: GammeBase, db: Session = Depends(get_db)):
-    db_gamme = db.query(Gamme).Filter(Gamme.id == gamme_id).first()
+def update_gamme(gamme_id: int, gamme: GammeBase, db: Session = Depends(get_db)):
+    db_gamme = db.query(Gamme).filter(Gamme.id == gamme_id).first()
     if db_gamme is None:
         raise HTTPException(status_code=404, detail="Gamme non trouvée")
     
@@ -51,7 +51,7 @@ async def update_gamme(gamme_id: int, gamme: GammeBase, db: Session = Depends(ge
 
 # Supprime une gamme 
 @router.delete("/gammes/{gamme_id}")
-async def deleter_gamme(gamme_id: int, db: Session = Depends(get_db)):
+def deleter_gamme(gamme_id: int, db: Session = Depends(get_db)):
     db_gamme = db.query(Gamme).filter(Gamme.id == gamme_id).first()
     if db_gamme is None:
         raise HTTPException(status_code=404, detail="Gamme non trouvée")

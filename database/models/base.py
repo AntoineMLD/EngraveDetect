@@ -3,6 +3,7 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.schema import Index
 from database.config.database import Base
 from database.utils.logger import db_logger
+from pydantic import BaseModel
 
 # Table d'association pour les traitements
 verres_traitements = Table('verres_traitements', Base.metadata,
@@ -103,6 +104,12 @@ class Verre(Base):
         Index('idx_verres_materiau_id', 'materiau_id'),
         Index('idx_verres_gamme_id', 'gamme_id'),
     )
+
+class ExampleModel(BaseModel):
+    # Définissez vos champs ici
+
+    class Config:
+        orm_mode = True  # Ajout de orm_mode = True
 
 def init_models():
     """

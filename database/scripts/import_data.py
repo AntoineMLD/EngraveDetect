@@ -6,6 +6,8 @@ from sqlalchemy import and_
 from database.config.database import get_db
 from database.models.base import Verre, Fournisseur, Materiau, Gamme, Serie, Traitement
 from database.utils.logger import db_logger
+from typing import Any, List, Optional
+from pydantic import BaseModel
 
 def get_or_create(db, model, **kwargs):
     """
@@ -268,3 +270,10 @@ def import_data() -> None:
 
 if __name__ == "__main__":
     import_data()
+
+class VerreBase(BaseModel):
+    id: int
+    name: str
+
+class VerreResponse(VerreBase):
+    additional_info: Optional[Any] = None
