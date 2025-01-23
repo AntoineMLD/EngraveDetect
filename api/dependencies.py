@@ -2,4 +2,8 @@ from database.config.database import SessionLocal
 
 
 def get_db():
-    return SessionLocal
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
