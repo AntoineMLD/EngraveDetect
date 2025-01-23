@@ -93,9 +93,15 @@ class Verre(Base):
     materiau = relationship("Materiau", back_populates="verres")
     gamme = relationship("Gamme", back_populates="verres")
     serie = relationship("Serie", back_populates="verres")
-    traitements = relationship("Traitement",
-                             secondary=verres_traitements,
-                             back_populates="verres")
+    traitements = relationship(
+        "Traitement",
+        secondary=verres_traitements,
+        back_populates="verres",
+        lazy="joined"  # Chargement eager pour éviter les problèmes N+1
+    )
+
+    def __repr__(self):
+        return f"<Verre(id={self.id}, nom={self.nom})>"
 
     __table_args__ = (
         Index('idx_verres_nom', 'nom'),
