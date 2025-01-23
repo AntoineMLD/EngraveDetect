@@ -2,91 +2,221 @@
 
 ## Description
 
-EngraveDetect est un projet conçu pour gérer et analyser les données liées aux verres optiques, y compris les fournisseurs, matériaux, gammes, séries, traitements, et verres eux-mêmes. Il utilise FastAPI pour fournir une API RESTful permettant d'interagir avec une base de données SQLite.
+EngraveDetect est une application complète de gestion et d'analyse des verres optiques. Ce système permet de gérer l'ensemble du cycle de vie des verres optiques, depuis leur référencement jusqu'à leur traitement, en passant par la gestion des fournisseurs et des caractéristiques techniques.
+
+## Table des matières
+- [Fonctionnalités](#fonctionnalités)
+- [Prérequis](#prérequis)
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Utilisation](#utilisation)
+- [Architecture du Projet](#architecture-du-projet)
+- [API Reference](#api-reference)
+- [Base de données](#base-de-données)
+- [Tests](#tests)
+- [Sécurité](#sécurité)
+- [Déploiement](#déploiement)
+- [Contribution](#contribution)
+- [Licence](#licence)
+- [Support](#support)
 
 ## Fonctionnalités
 
-- **Gestion des fournisseurs** : Créer, lire, mettre à jour et supprimer des fournisseurs.
-- **Gestion des matériaux** : Créer, lire, mettre à jour et supprimer des matériaux.
-- **Gestion des gammes** : Créer, lire, mettre à jour et supprimer des gammes.
-- **Gestion des séries** : Créer, lire, mettre à jour et supprimer des séries.
-- **Gestion des traitements** : Créer, lire, mettre à jour et supprimer des traitements.
-- **Gestion des verres** : Lire les informations détaillées sur les verres, y compris leurs traitements associés.
+### Gestion des Données
+- **Fournisseurs** : 
+  - Création et gestion des profils fournisseurs
+  - Suivi des informations de contact
+  - Historique des interactions
+
+- **Matériaux** :
+  - Catalogue complet des matériaux disponibles
+  - Caractéristiques techniques détaillées
+  - Compatibilité avec les traitements
+
+- **Gammes et Séries** :
+  - Organisation hiérarchique des produits
+  - Gestion des gammes par fournisseur
+  - Classification des séries spéciales
+
+- **Traitements** :
+  - Catalogue des traitements disponibles
+  - Compatibilité avec les matériaux
+  - Processus d'application
+
+- **Verres** :
+  - Fiches techniques détaillées
+  - Association avec les traitements
+  - Traçabilité complète
+
+### Fonctionnalités Techniques
+- API RESTful complète
+- Authentication JWT
+- Documentation interactive (Swagger/OpenAPI)
+- Gestion des erreurs robuste
+- Logging détaillé
+- Validation des données
+
+## Prérequis
+
+- Python 3.8 ou supérieur
+- SQLite 3
+- Git
+- Environnement virtuel Python (recommandé)
 
 ## Installation
 
-1. Clonez le dépôt :
+1. **Clonage du dépôt**
    ```bash
    git clone https://github.com/votre-utilisateur/engravedetect.git
    cd engravedetect
    ```
 
-2. Créez un environnement virtuel et activez-le :
+2. **Création de l'environnement virtuel**
    ```bash
    python -m venv venv
-   source venv/bin/activate  # Sur Windows, utilisez `venv\Scripts\activate`
+   # Sur Windows
+   .\venv\Scripts\activate
+   # Sur Linux/MacOS
+   source venv/bin/activate
    ```
 
-3. Installez les dépendances :
+3. **Installation des dépendances**
    ```bash
    pip install -r requirements.txt
    ```
 
-4. Initialisez la base de données :
+4. **Configuration de l'environnement**
+   ```bash
+   cp .env.example .env
+   # Éditez le fichier .env avec vos paramètres
+   ```
+
+5. **Initialisation de la base de données**
    ```bash
    bash database/setup_db.sh
    ```
 
-5. Importez les données initiales :
+6. **Import des données initiales**
    ```bash
-   python database/scripts/import_data.py
+   bash database/import_data.sh
    ```
+
+## Configuration
+
+Le fichier `.env` doit contenir les variables suivantes :
+```env
+DATABASE_URL=sqlite:///./sql_app.db
+SECRET_KEY=votre_clé_secrète
+ALGORITHM=HS256
+ACCESS_TOKEN_EXPIRE_MINUTES=30
+```
 
 ## Utilisation
 
-1. Lancez le serveur FastAPI :
+1. **Démarrage du serveur**
    ```bash
-   uvicorn api.main:app --reload
+   uvicorn api.main:app --reload --host 0.0.0.0 --port 8000
    ```
 
-2. Accédez à la documentation interactive de l'API à l'adresse [http://localhost:8000/docs](http://localhost:8000/docs).
+2. **Accès aux interfaces**
+   - Documentation API : http://localhost:8000/docs
+   - Documentation alternative : http://localhost:8000/redoc
+   - API Base URL : http://localhost:8000/api/v1
 
-## Structure du Projet
+## Architecture du Projet
 
-- `api/`: Contient les routes de l'API et les dépendances.
-- `database/`: Contient la configuration de la base de données, les modèles et les scripts d'initialisation.
-- `requirements.txt`: Liste des dépendances Python nécessaires au projet.
+```
+engravedetect/
+├── api/
+│   ├── dependencies/      # Dépendances de l'API (auth, etc.)
+│   ├── routes/           # Routes de l'API par ressource
+│   └── main.py          # Point d'entrée de l'API
+├── database/
+│   ├── config/          # Configuration de la base de données
+│   ├── models/          # Modèles SQLAlchemy
+│   └── scripts/         # Scripts d'initialisation et import
+├── tests/               # Tests unitaires et d'intégration
+├── .env                 # Variables d'environnement
+├── requirements.txt     # Dépendances Python
+└── README.md           # Documentation
+```
 
-## Schéma de la Base de Données
+## API Reference
+
+### Endpoints Principaux
+
+#### Fournisseurs
+- `GET /api/v1/fournisseurs/` - Liste tous les fournisseurs
+- `POST /api/v1/fournisseurs/` - Crée un nouveau fournisseur
+- `GET /api/v1/fournisseurs/{id}` - Détails d'un fournisseur
+- `PUT /api/v1/fournisseurs/{id}` - Met à jour un fournisseur
+- `DELETE /api/v1/fournisseurs/{id}` - Supprime un fournisseur
+
+[Documentation complète similaire pour les autres endpoints]
+
+## Base de données
+
+### Schéma Relationnel
 
 ![Schéma de la base de données](image.png)
 
-### Tables principales
+### Tables Principales
 
 - **verres**: Table centrale contenant les informations des verres optiques
-- **fournisseurs**: Référentiel des fournisseurs
-- **materiaux**: Types de matériaux utilisés
-- **gammes**: Gammes de produits
-- **series**: Séries de produits
-- **traitements**: Types de traitements disponibles
-- **verres_traitements**: Table de liaison entre verres et traitements
+  - `id`: Identifiant unique
+  - `reference`: Référence du verre
+  - `fournisseur_id`: Lien vers le fournisseur
+  - [autres champs...]
 
-### Relations
+[Description détaillée des autres tables]
 
-- Un verre appartient à un fournisseur (1:N)
-- Un verre peut avoir un matériau (1:N)
-- Un verre appartient à une gamme (1:N)
-- Un verre peut appartenir à une série (1:N)
-- Un verre peut avoir plusieurs traitements (N:N)
+## Tests
 
+```bash
+# Exécution de tous les tests
+pytest
+
+# Tests avec couverture
+pytest --cov=app tests/
+```
+
+## Sécurité
+
+- Authentication JWT
+- Hachage des mots de passe avec Bcrypt
+- Validation des données entrantes
+- Protection CORS
+- Rate limiting
+
+## Déploiement
+
+### Production
+1. Configurez les variables d'environnement de production
+2. Utilisez un serveur WSGI (Gunicorn recommandé)
+3. Configurez un reverse proxy (Nginx recommandé)
+
+```bash
+gunicorn api.main:app --workers 4 --worker-class uvicorn.workers.UvicornWorker
+```
+
+## Contribution
+
+1. Fork le projet
+2. Créez votre branche (`git checkout -b feature/AmazingFeature`)
+3. Committez vos changements (`git commit -m 'Add some AmazingFeature'`)
+4. Push vers la branche (`git push origin feature/AmazingFeature`)
+5. Ouvrez une Pull Request
 
 ## Licence
 
 Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de détails.
 
-## Contact
+## Support
 
-Pour toute question ou suggestion concernant ce projet, veuillez contacter l'équipe de développement.
+Pour toute question ou assistance :
+- Ouvrez une issue sur GitHub
+- Contactez l'équipe de développement à [email]
+- Consultez la documentation en ligne
 
 
 
