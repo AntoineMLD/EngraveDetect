@@ -1,223 +1,207 @@
 # EngraveDetect
 
 ## Description
+EngraveDetect est une application complète qui combine plusieurs fonctionnalités pour la gestion et la détection des gravures de verres optiques :
 
-EngraveDetect est une application complète de gestion et d'analyse des verres optiques. Ce système permet de gérer l'ensemble du cycle de vie des verres optiques, depuis leur référencement jusqu'à leur traitement, en passant par la gestion des fournisseurs et des caractéristiques techniques.
+- **API REST** : Gestion des données des verres et gravures
+- **Scraping** : Collecte automatisée des données techniques
+- **Interface de dessin** : Outil de création et reconnaissance des gravures
+- **Base de données** : Stockage structuré des informations
+- **Reconnaissance IA** : Détection automatique des symboles gravés
 
-## Table des matières
-- [Fonctionnalités](#fonctionnalités)
-- [Prérequis](#prérequis)
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [Utilisation](#utilisation)
-- [Architecture du Projet](#architecture-du-projet)
-- [API Reference](#api-reference)
-- [Base de données](#base-de-données)
-- [Tests](#tests)
-- [Sécurité](#sécurité)
-- [Déploiement](#déploiement)
-- [Contribution](#contribution)
-- [Licence](#licence)
-- [Support](#support)
+## État Actuel du Projet
 
-## Fonctionnalités
+### API REST (Opérationnel)
+- Authentification JWT implémentée
+- Routes CRUD pour :
+  - Fournisseurs
+  - Gammes
+  - Matériaux
+  - Séries
+  - Traitements
+  - Verres
+- Documentation Swagger disponible sur `/docs`
 
-### Gestion des Données
-- **Fournisseurs** : 
-  - Création et gestion des profils fournisseurs
-  - Suivi des informations de contact
-  - Historique des interactions
+### Base de Données (Opérationnel)
+- SQLite avec SQLAlchemy
+- Modèles :
+  - Verre
+  - Fournisseur
+  - Gamme
+  - Matériau
+  - Série
+  - Traitement
+- Scripts d'import/export des données
 
-- **Matériaux** :
-  - Catalogue complet des matériaux disponibles
-  - Caractéristiques techniques détaillées
-  - Compatibilité avec les traitements
+### Scraping (Opérationnel)
+- Collecte automatisée depuis plusieurs fournisseurs :
+  - BBGR OPTIQUE
+  - HOYA
+  - SEIKO
+  - SHAMIR
+  - RODENSTOCK
+  - Autres...
+- Pipeline de nettoyage des données
+- Export au format CSV standardisé
 
-- **Gammes et Séries** :
-  - Organisation hiérarchique des produits
-  - Gestion des gammes par fournisseur
-  - Classification des séries spéciales
+### Système de Reconnaissance (Opérationnel)
+- Réseau de neurones siamois pour la détection
+- Interface de dessin interactive
+- Performances :
+  - Précision : 92.3%
+  - Rappel : 88.7%
+  - F1-score : 90.4%
+- Fonctionnalités :
+  - Détection en temps réel
+  - Prétraitement automatique
+  - Débogage visuel
+  - Gestion des cas incertains
 
-- **Traitements** :
-  - Catalogue des traitements disponibles
-  - Compatibilité avec les matériaux
-  - Processus d'application
+### Interface de Dessin (Opérationnel)
+- Interface Tkinter intuitive
+- Fonctionnalités :
+  - Dessin libre avec épaisseur ajustable
+  - Détection automatique des symboles
+  - Sauvegarde des dessins
+  - Visualisation du processus de détection
+  - Feedback en temps réel
 
-- **Verres** :
-  - Fiches techniques détaillées
-  - Association avec les traitements
-  - Traçabilité complète
-
-### Fonctionnalités Techniques
-- API RESTful complète
-- Authentication JWT
-- Documentation interactive (Swagger/OpenAPI)
-- Gestion des erreurs robuste
-- Logging détaillé
-- Validation des données
-
-## Prérequis
-
-- Python 3.8 ou supérieur
-- SQLite 3
-- Git
-- Environnement virtuel Python (recommandé)
+## Structure du Projet
+```
+engravedetect/
+├── api/                    # API REST FastAPI
+│   ├── routes/            # Points d'entrée de l'API
+│   ├── auth/              # Authentification JWT
+│   ├── dependencies/      # Dépendances FastAPI
+│   └── models/            # Modèles Pydantic
+├── database/              # Gestion base de données
+│   ├── config/           # Configuration SQLAlchemy
+│   ├── models/           # Modèles SQLAlchemy
+│   ├── scripts/          # Scripts d'import/export
+│   └── utils/            # Utilitaires
+├── model/                 # Système de reconnaissance
+│   ├── dataset/          # Données d'entraînement
+│   ├── models/           # Modèles entraînés
+│   ├── templates/        # Templates de référence
+│   ├── draw_interface.py # Interface de dessin
+│   ├── siamese_model.py  # Architecture du modèle
+│   └── [autres modules]  # Modules auxiliaires
+├── scrapers/              # Scrapers Scrapy
+│   ├── spiders/          # Spiders par fournisseur
+│   ├── pipelines/        # Nettoyage des données
+│   └── utils/            # Utilitaires
+└── scripts/              # Scripts principaux
+    ├── runall.sh        # Lancement des scrapers
+    └── server.py        # Démarrage du serveur
+```
 
 ## Installation
 
-1. **Clonage du dépôt**
-   ```bash
-   git clone https://github.com/votre-utilisateur/engravedetect.git
-   cd engravedetect
-   ```
+### Prérequis
+- Python 3.8+
+- pip
+- virtualenv (recommandé)
+- CUDA (optionnel, pour accélération GPU)
 
-2. **Création de l'environnement virtuel**
-   ```bash
-   python -m venv venv
-   # Sur Windows
-   .\venv\Scripts\activate
-   # Sur Linux/MacOS
-   source venv/bin/activate
-   ```
+### Installation des dépendances
+```bash
+pip install -r requirements.txt
+```
 
-3. **Installation des dépendances**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. **Configuration de l'environnement**
-   ```bash
-   cp .env.example .env
-   # Éditez le fichier .env avec vos paramètres
-   ```
-
-5. **Initialisation de la base de données**
-   ```bash
-   bash database/setup_db.sh
-   ```
-
-6. **Import des données initiales**
-   ```bash
-   bash database/import_data.sh
-   ```
-
-## Configuration
-
-Le fichier `.env` doit contenir les variables suivantes :
+### Configuration
+1. Copier `.env.example` en `.env`
+2. Configurer les variables d'environnement :
 ```env
-DATABASE_URL=sqlite:///./sql_app.db
-SECRET_KEY=votre_clé_secrète
-ALGORITHM=HS256
-ACCESS_TOKEN_EXPIRE_MINUTES=30
+JWT_SECRET_KEY=your_secret_key
+JWT_ALGORITHM=HS256
+JWT_ACCESS_TOKEN_EXPIRE_MINUTES=30
+ADMIN_USERNAME=admin
+ADMIN_PASSWORD=password
+```
+
+### Initialisation
+1. Base de données :
+```bash
+cd database
+./setup_db.sh
+```
+
+2. Système de reconnaissance :
+```bash
+cd model
+python create_dataset.py
+python create_templates.py
+python train_siamese.py
 ```
 
 ## Utilisation
 
-1. **Démarrage du serveur**
-   ```bash
-   uvicorn api.main:app --reload --host 0.0.0.0 --port 8000
-   ```
+### Démarrage des Services
 
-2. **Accès aux interfaces**
-   - Documentation API : http://localhost:8000/docs
-   - Documentation alternative : http://localhost:8000/redoc
-   - API Base URL : http://localhost:8000/api/v1
-
-## Architecture du Projet
-
-```
-engravedetect/
-├── api/
-│   ├── dependencies/      # Dépendances de l'API (auth, etc.)
-│   ├── routes/           # Routes de l'API par ressource
-│   └── main.py          # Point d'entrée de l'API
-├── database/
-│   ├── config/          # Configuration de la base de données
-│   ├── models/          # Modèles SQLAlchemy
-│   └── scripts/         # Scripts d'initialisation et import
-├── tests/               # Tests unitaires et d'intégration
-├── .env                 # Variables d'environnement
-├── requirements.txt     # Dépendances Python
-└── README.md           # Documentation
-```
-
-## API Reference
-
-### Endpoints Principaux
-
-#### Fournisseurs
-- `GET /api/v1/fournisseurs/` - Liste tous les fournisseurs
-- `POST /api/v1/fournisseurs/` - Crée un nouveau fournisseur
-- `GET /api/v1/fournisseurs/{id}` - Détails d'un fournisseur
-- `PUT /api/v1/fournisseurs/{id}` - Met à jour un fournisseur
-- `DELETE /api/v1/fournisseurs/{id}` - Supprime un fournisseur
-
-[Documentation complète similaire pour les autres endpoints]
-
-## Base de données
-
-### Schéma Relationnel
-
-![Schéma de la base de données](image.png)
-
-### Tables Principales
-
-- **verres**: Table centrale contenant les informations des verres optiques
-  - `id`: Identifiant unique
-  - `reference`: Référence du verre
-  - `fournisseur_id`: Lien vers le fournisseur
-  - [autres champs...]
-
-[Description détaillée des autres tables]
-
-## Tests
-
+1. Serveur API :
 ```bash
-# Exécution de tous les tests
-pytest
-
-# Tests avec couverture
-pytest --cov=app tests/
+python server.py
 ```
+L'API sera disponible sur `http://localhost:8000`
 
-## Sécurité
-
-- Authentication JWT
-- Hachage des mots de passe avec Bcrypt
-- Validation des données entrantes
-- Protection CORS
-- Rate limiting
-
-## Déploiement
-
-### Production
-1. Configurez les variables d'environnement de production
-2. Utilisez un serveur WSGI (Gunicorn recommandé)
-3. Configurez un reverse proxy (Nginx recommandé)
-
+2. Interface de reconnaissance :
 ```bash
-gunicorn api.main:app --workers 4 --worker-class uvicorn.workers.UvicornWorker
+python -m model.draw_interface
 ```
 
-## Contribution
+3. Collecte des données :
+```bash
+./scripts/runall.sh
+```
 
-1. Fork le projet
-2. Créez votre branche (`git checkout -b feature/AmazingFeature`)
-3. Committez vos changements (`git commit -m 'Add some AmazingFeature'`)
-4. Push vers la branche (`git push origin feature/AmazingFeature`)
-5. Ouvrez une Pull Request
+### Utilisation de l'Interface de Dessin
 
-## Licence
+1. Lancer l'interface :
+```bash
+python -m model.draw_interface
+```
 
-Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de détails.
+2. Fonctionnalités :
+   - Dessiner avec la souris
+   - Ajuster l'épaisseur du trait (2-6 pixels)
+   - Détecter le symbole (bouton "Détecter")
+   - Consulter les résultats et le débogage
+
+## API Endpoints
+
+### Authentification
+- POST `/token` : Obtention du token JWT
+
+### Fournisseurs
+- GET `/fournisseurs` : Liste des fournisseurs
+- GET `/fournisseurs/{id}` : Détails d'un fournisseur
+- POST `/fournisseurs` : Création (auth requise)
+- PUT `/fournisseurs/{id}` : Modification (auth requise)
+- DELETE `/fournisseurs/{id}` : Suppression (auth requise)
+
+[Documentation complète disponible sur `/docs`]
+
+## Maintenance
+
+### Base de données
+- Sauvegarde régulière recommandée
+- Scripts de migration fournis
+- Validation des données importées
+
+### Système de Reconnaissance
+- Vérification régulière des templates
+- Monitoring des performances
+- Réentraînement périodique recommandé
+
+### Scraping
+- Mise à jour des spiders si nécessaire
+- Validation des données collectées
+- Nettoyage régulier du cache
 
 ## Support
 
-Pour toute question ou assistance :
-- Ouvrez une issue sur GitHub
-- Contactez l'équipe de développement à [email]
-- Consultez la documentation en ligne
-
-
-
+Pour plus d'informations :
+- Documentation technique détaillée dans `/model/README.md`
+- Guide de dépannage dans `/docs/troubleshooting.md`
+- Issues et bugs sur le repository GitHub
 

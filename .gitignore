@@ -1,7 +1,7 @@
 # Created by https://www.toptal.com/developers/gitignore/api/python
 # Edit at https://www.toptal.com/developers/gitignore?templates=python
 
-
+gravures 
 media
 ### Python ###
 # Byte-compiled / optimized / DLL files
@@ -176,3 +176,31 @@ poetry.toml
 pyrightconfig.json
 
 # End of https://www.toptal.com/developers/gitignore/api/python
+
+# Dossiers de données
+model/dataset/
+model/debug/
+model/drawing_normalized/
+model/engraving_draw/
+model/models/
+model/pairs/
+model/templates/
+
+# Logs et checkpoints
+*.log
+*.pth
+*.ckpt
+
+# Environnements virtuels
+venv/
+ENV/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Système
+.DS_Store
+Thumbs.db
