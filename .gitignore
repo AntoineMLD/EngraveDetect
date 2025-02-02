@@ -1,6 +1,6 @@
 # Created by https://www.toptal.com/developers/gitignore/api/python
 # Edit at https://www.toptal.com/developers/gitignore?templates=python
-node_modules
+node_modules/
 package-lock.json 
 package.json
 coverage
@@ -208,3 +208,39 @@ ENV/
 .DS_Store
 Thumbs.db
 .early.coverage
+
+# Virtual Environment
+venv/
+env/
+ENV/
+
+# Node
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Logs
+*.log
+
+# Local development
+.env
+.env.local
+.env.*.local
+
+# Coverage
+coverage/
+.coverage
+htmlcov/
+
+# Database
+*.db
+*.sqlite3
+
+# Distribution
+dist/
+build/
+
+# Misc
+.DS_Store
+Thumbs.db
