@@ -1,6 +1,9 @@
 # Created by https://www.toptal.com/developers/gitignore/api/python
 # Edit at https://www.toptal.com/developers/gitignore?templates=python
-
+node_modules
+package-lock.json 
+package.json
+coverage
 gravures 
 media
 ### Python ###
@@ -204,3 +207,4 @@ ENV/
 # Système
 .DS_Store
 Thumbs.db
+.early.coverage

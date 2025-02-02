@@ -6,6 +6,8 @@ from pydantic import BaseModel
 from database.models.base import Verre, Traitement
 from database.config.database import get_db
 from api.dependencies.auth import verify_auth
+from sqlalchemy.exc import SQLAlchemyError
+from fastapi import status
 
 # Modèle Pydantic pour les traitements
 class TraitementResponse(BaseModel):
@@ -55,17 +57,24 @@ async def get_verre(verre_id: int, db: Session = Depends(get_db)):
     return verre
 
 # Routes protégées (POST, PUT, DELETE)
-@router.post("/verres", response_model=VerreResponse)
+@router.post("/verres", response_model=VerreResponse, status_code=status.HTTP_201_CREATED)
 async def create_verre(
     verre: VerreBase,
     db: Session = Depends(get_db),
     _: str = Depends(verify_auth)
 ):
-    db_verre = Verre(**verre.dict())
-    db.add(db_verre)
-    db.commit()
-    db.refresh(db_verre)
-    return db_verre
+    try:
+        db_verre = Verre(**verre.dict())
+        db.add(db_verre)
+        db.commit()
+        db.refresh(db_verre)
+        return db_verre
+    except SQLAlchemyError as e:
+        db.rollback()
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Erreur lors de la création du verre: {str(e)}"
+        )
 
 @router.put("/verres/{verre_id}", response_model=VerreResponse)
 async def update_verre(
@@ -74,28 +83,48 @@ async def update_verre(
     db: Session = Depends(get_db),
     _: str = Depends(verify_auth)
 ):
-    db_verre = db.query(Verre).filter(Verre.id == verre_id).first()
-    if db_verre is None:
-        raise HTTPException(status_code=404, detail="Verre non trouvé")
-    
-    for key, value in verre.dict(exclude_unset=True).items():
-        setattr(db_verre, key, value)
-    
-    db.commit()
-    db.refresh(db_verre)
-    return db_verre
+    try:
+        db_verre = db.query(Verre).filter(Verre.id == verre_id).first()
+        if db_verre is None:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Verre non trouvé"
+            )
+        
+        for key, value in verre.dict(exclude_unset=True).items():
+            setattr(db_verre, key, value)
+        
+        db.commit()
+        db.refresh(db_verre)
+        return db_verre
+    except SQLAlchemyError as e:
+        db.rollback()
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Erreur lors de la mise à jour du verre: {str(e)}"
+        )
 
-@router.delete("/verres/{verre_id}")
+@router.delete("/verres/{verre_id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_verre(
     verre_id: int,
     db: Session = Depends(get_db),
     _: str = Depends(verify_auth)
 ):
-    db_verre = db.query(Verre).filter(Verre.id == verre_id).first()
-    if db_verre is None:
-        raise HTTPException(status_code=404, detail="Verre non trouvé")
-    
-    db.delete(db_verre)
-    db.commit()
-    return {"message": "Verre supprimé"}
+    try:
+        db_verre = db.query(Verre).filter(Verre.id == verre_id).first()
+        if db_verre is None:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Verre non trouvé"
+            )
+        
+        db.delete(db_verre)
+        db.commit()
+        return None
+    except SQLAlchemyError as e:
+        db.rollback()
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Erreur lors de la suppression du verre: {str(e)}"
+        )
 
