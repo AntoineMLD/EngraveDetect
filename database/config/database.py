@@ -1,7 +1,7 @@
 import os
 from typing import Generator
 from contextlib import contextmanager
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 from sqlalchemy.orm import declarative_base, sessionmaker, Session
 from sqlalchemy.exc import SQLAlchemyError
 from dotenv import load_dotenv
@@ -111,10 +111,16 @@ def check_database_connection() -> bool:
         bool: True si la connexion est établie, False sinon
     """
     try:
-        with get_db() as db:
-            db.execute("SELECT 1")
+        db = SessionLocal()
+        try:
+            db.execute(text("SELECT 1"))
             db_logger.info("Connexion à la base de données vérifiée avec succès")
             return True
+        except Exception as e:
+            db_logger.error(f"Erreur de connexion à la base de données: {str(e)}")
+            return False
+        finally:
+            db.close()
     except Exception as e:
-        db_logger.error(f"Erreur de connexion à la base de données: {str(e)}")
+        db_logger.error(f"Erreur lors de la création de la session: {str(e)}")
         return False
