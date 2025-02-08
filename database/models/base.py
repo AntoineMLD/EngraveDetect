@@ -1,6 +1,5 @@
 from pydantic import BaseModel
-from sqlalchemy import (Boolean, Column, Float, ForeignKey, Integer, String,
-                        Table)
+from sqlalchemy import Boolean, Column, Float, ForeignKey, Integer, String, Table
 from sqlalchemy.orm import relationship
 from sqlalchemy.schema import Index
 
