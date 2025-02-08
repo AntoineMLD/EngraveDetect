@@ -5,7 +5,8 @@ import pytest
 import torch
 from PIL import Image
 
-from model.infer_siamese import SiamesePredictor, load_templates, predict_symbol
+from model.infer_siamese import (SiamesePredictor, load_templates,
+                                 predict_symbol)
 
 
 class TestSiamesePredictor:
