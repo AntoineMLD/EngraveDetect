@@ -1,8 +1,25 @@
 import pytest
 from fastapi.testclient import TestClient
+from unittest.mock import patch, MagicMock
 
 from api.main import app
-from database.database import Base, engine
+from database.config.database import Base, engine
+
+
+@pytest.fixture(autouse=True)
+def mock_load_templates():
+    """Mock le chargement des templates pour tous les tests"""
+    with patch('model.infer_siamese.load_templates') as mock:
+        # Créer un mock du prédicteur
+        predictor_mock = MagicMock()
+        predictor_mock.predict.return_value = {
+            "predicted_symbol": "test_symbol",
+            "similarity_score": 0.8,
+            "is_confident": True,
+            "message": "Test prediction"
+        }
+        mock.return_value = predictor_mock
+        yield mock
 
 
 @pytest.fixture
