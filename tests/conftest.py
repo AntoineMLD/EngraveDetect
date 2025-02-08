@@ -56,7 +56,9 @@ def mock_siamese_network():
         mock_network.return_value = model_mock
 
         # Mock le chargement du modèle
-        with patch("torch.load") as mock_load, patch("pathlib.Path.exists") as mock_exists:
+        with patch("torch.load") as mock_load, patch(
+            "pathlib.Path.exists"
+        ) as mock_exists:
             mock_exists.return_value = True  # Simule que le fichier existe
             mock_load.return_value = {
                 "model_state_dict": {},
