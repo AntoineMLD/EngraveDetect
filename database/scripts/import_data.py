@@ -8,8 +8,7 @@ from sqlalchemy import and_
 from sqlalchemy.exc import SQLAlchemyError
 
 from database.config.database import get_db
-from database.models.base import (Fournisseur, Gamme, Materiau, Serie,
-                                  Traitement, Verre)
+from database.models.base import Fournisseur, Gamme, Materiau, Serie, Traitement, Verre
 from database.utils.logger import db_logger
 
 

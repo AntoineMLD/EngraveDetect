@@ -6,8 +6,15 @@ from fastapi.testclient import TestClient
 from sqlalchemy.orm import Session
 
 from api.dependencies.auth import verify_auth
-from api.routes import (detection, fournisseurs, gammes, materiaux, series,
-                        traitements, verres)
+from api.routes import (
+    detection,
+    fournisseurs,
+    gammes,
+    materiaux,
+    series,
+    traitements,
+    verres,
+)
 from database.config.database import get_db
 
 
