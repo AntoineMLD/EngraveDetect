@@ -5,14 +5,9 @@ from sqlalchemy import text
 from sqlalchemy.engine import Engine
 from sqlalchemy.orm import Session
 
-from database.config.database import (
-    Base,
-    check_database_connection,
-    create_db_engine,
-    get_database_url,
-    get_db,
-    init_database,
-)
+from database.config.database import (Base, check_database_connection,
+                                      create_db_engine, get_database_url,
+                                      get_db, init_database)
 
 
 def test_get_database_url():

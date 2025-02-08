@@ -1,7 +1,8 @@
 import pytest
 from sqlalchemy.exc import IntegrityError
 
-from database.models.base import Fournisseur, Gamme, Materiau, Serie, Traitement, Verre
+from database.models.base import (Fournisseur, Gamme, Materiau, Serie,
+                                  Traitement, Verre)
 
 
 class TestFournisseur:
