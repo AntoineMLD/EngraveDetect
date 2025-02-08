@@ -21,7 +21,7 @@ from PIL import Image, ImageOps
 import numpy as np
 import torch.nn as nn
 
-from siamese_model import SiameseNetwork
+from .siamese_model import SiameseNetwork
 
 # Configuration du logging
 logging.basicConfig(level=logging.INFO)

@@ -8,8 +8,8 @@ import torch
 import torch.nn as nn
 import numpy as np
 from torchvision import transforms
-from siamese_model import SiameseNetwork
-from infer_siamese import load_templates, predict_symbol, SiamesePredictor
+from .siamese_model import SiameseNetwork
+from .infer_siamese import load_templates, predict_symbol, SiamesePredictor
 
 class DrawingInterface:
     def __init__(self, root):

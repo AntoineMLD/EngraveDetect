@@ -79,7 +79,7 @@ app.include_router(materiau_router)
 app.include_router(serie_router)
 app.include_router(traitement_router)
 app.include_router(verre_router)
-app.include_router(detection_router, prefix="/api")
+app.include_router(detection_router)
 
 @app.get("/")
 def read_root():

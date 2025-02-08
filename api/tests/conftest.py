@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from unittest.mock import MagicMock
 from database.config.database import get_db
 from api.dependencies.auth import verify_auth
-from api.routes import verres, traitements, materiaux, gammes, series, fournisseurs
+from api.routes import verres, traitements, materiaux, gammes, series, fournisseurs, detection
 
 # Configuration de l'application de test
 @pytest.fixture
@@ -18,6 +18,7 @@ def app():
     app.include_router(gammes.router, prefix="/api")
     app.include_router(series.router, prefix="/api")
     app.include_router(fournisseurs.router, prefix="/api")
+    app.include_router(detection.router, prefix="/api")
     return app
 
 @pytest.fixture

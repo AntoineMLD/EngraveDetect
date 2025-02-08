@@ -57,68 +57,66 @@ async def detect_image(file: UploadFile = File(...)):
     Returns:
         DetectionResponse: Résultat de la détection avec le symbole et le score de confiance
     """
-    try:
-        logger.info(f"Nouvelle demande de détection pour le fichier: {file.filename}")
+    logger.info(f"Nouvelle demande de détection pour le fichier: {file.filename}")
+    
+    # Vérification de l'extension du fichier
+    if not is_valid_image_extension(file.filename):
+        logger.warning(f"Extension non supportée: {file.filename}")
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Format de fichier non supporté. Formats acceptés: {', '.join(ALLOWED_EXTENSIONS)}"
+        )
         
-        # Vérification de l'extension du fichier
-        if not is_valid_image_extension(file.filename):
-            logger.warning(f"Extension non supportée: {file.filename}")
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail=f"Format de fichier non supporté. Formats acceptés: {', '.join(ALLOWED_EXTENSIONS)}"
-            )
-            
+    try:
+        # Lecture de l'image
+        contents = await file.read()
+        image = Image.open(io.BytesIO(contents))
+        logger.info(f"Image chargée avec succès. Dimensions: {image.size}, Mode: {image.mode}")
+        
+        # Vérification supplémentaire que le fichier est bien une image
+        image.verify()
+        image = Image.open(io.BytesIO(contents))  # Réouverture après verify()
+        
+        # Sauvegarde temporaire de l'image
+        temp_path = "temp_detection.png"
+        image.save(temp_path)
+        logger.info(f"Image temporaire sauvegardée: {temp_path}")
+        
         try:
-            # Lecture de l'image
-            contents = await file.read()
-            image = Image.open(io.BytesIO(contents))
-            logger.info(f"Image chargée avec succès. Dimensions: {image.size}, Mode: {image.mode}")
+            # Prédiction
+            logger.info("Lancement de la détection...")
+            predicted_symbol, similarity_score = predict_symbol(temp_path, None, templates, device)
+            logger.info(f"Détection terminée. Symbole: {predicted_symbol}, Score: {similarity_score:.2%}")
             
-            # Vérification supplémentaire que le fichier est bien une image
-            image.verify()
-            image = Image.open(io.BytesIO(contents))  # Réouverture après verify()
+            # Vérification du seuil de confiance (utilise le même seuil que le modèle)
+            is_confident = similarity_score >= templates.similarity_threshold
+            logger.info(f"Confiance suffisante: {is_confident} (seuil: {templates.similarity_threshold})")
             
-            # Sauvegarde temporaire de l'image
-            temp_path = "temp_detection.png"
-            image.save(temp_path)
-            logger.info(f"Image temporaire sauvegardée: {temp_path}")
+            message = "Détection réussie" if is_confident else "Confiance insuffisante dans la détection"
             
-            try:
-                # Prédiction
-                logger.info("Lancement de la détection...")
-                predicted_symbol, similarity_score = predict_symbol(temp_path, None, templates, device)
-                logger.info(f"Détection terminée. Symbole: {predicted_symbol}, Score: {similarity_score:.2%}")
-                
-                # Vérification du seuil de confiance (utilise le même seuil que le modèle)
-                is_confident = similarity_score >= templates.similarity_threshold
-                logger.info(f"Confiance suffisante: {is_confident} (seuil: {templates.similarity_threshold})")
-                
-                message = "Détection réussie" if is_confident else "Confiance insuffisante dans la détection"
-                
-                response = DetectionResponse(
-                    image_path=temp_path,
-                    predicted_symbol=predicted_symbol,
-                    similarity_score=similarity_score,
-                    is_confident=is_confident,
-                    message=message
-                )
-                logger.info(f"Réponse préparée: {response.dict()}")
-                return response
-                
-            finally:
-                # Nettoyage du fichier temporaire
-                import os
-                if os.path.exists(temp_path):
-                    os.remove(temp_path)
-                    logger.info("Fichier temporaire supprimé")
-                    
-        except (IOError, SyntaxError) as e:
-            logger.error(f"Erreur lors du traitement de l'image: {str(e)}")
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail="Le fichier semble corrompu ou n'est pas une image valide"
+            response = DetectionResponse(
+                image_path=temp_path,
+                predicted_symbol=predicted_symbol,
+                similarity_score=similarity_score,
+                is_confident=is_confident,
+                message=message
             )
+            logger.info(f"Réponse préparée: {response.dict()}")
+            return response
+            
+        finally:
+            # Nettoyage du fichier temporaire
+            import os
+            if os.path.exists(temp_path):
+                os.remove(temp_path)
+                logger.info("Fichier temporaire supprimé")
                 
+    except (IOError, SyntaxError) as e:
+        logger.error(f"Erreur lors du traitement de l'image: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Le fichier semble corrompu ou n'est pas une image valide"
+        )
     except Exception as e:
         logger.error(f"Erreur inattendue: {str(e)}")
         raise HTTPException(
