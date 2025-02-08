@@ -3,9 +3,9 @@ from pathlib import Path
 from unittest.mock import MagicMock, patch
 
 import pytest
+import torch
 from dotenv import load_dotenv
 from fastapi.testclient import TestClient
-import torch
 
 from api.main import app
 from database.config.database import Base, engine
@@ -47,21 +47,22 @@ def mock_siamese_network():
         model_mock = MagicMock()
         model_mock.eval.return_value = model_mock
         model_mock.to.return_value = model_mock
-        
+
         # Configurer forward_once pour retourner un tensor valide
         def mock_forward_once(x):
             return torch.ones(1, 128)  # Retourne un tensor de taille (1, 128)
+
         model_mock.forward_once.side_effect = mock_forward_once
-        
+
         mock_network.return_value = model_mock
-        
+
         # Mock le chargement du modèle
         with patch("torch.load") as mock_load:
             mock_load.return_value = {
                 "model_state_dict": {},
                 "epoch": 100,  # Ajout de l'époque
                 "optimizer_state_dict": {},
-                "loss": 0.1
+                "loss": 0.1,
             }
             yield mock_network
 
