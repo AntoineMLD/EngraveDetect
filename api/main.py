@@ -49,26 +49,22 @@ async def verify_token(token: Annotated[str, Depends(oauth2_scheme)]):
 # Route pour obtenir un token
 @app.post("/token")
 async def login(form_data: OAuth2PasswordRequestForm = Depends()):
-    # Lire directement le contenu du fichier .env
-    with open(".env", "r") as f:
-        env_content = f.read()
-    logger.info("Contenu du fichier .env:")
-    logger.info(env_content)
-
     # Récupérer les credentials depuis les variables d'environnement
     admin_username = os.getenv("ADMIN_USERNAME")
     admin_password = os.getenv("ADMIN_PASSWORD")
 
     # Logs pour le débogage
     logger.info(f"Tentative de connexion pour l'utilisateur: {form_data.username}")
-    logger.info(f"Valeurs des variables d'environnement:")
-    logger.info(f"ADMIN_USERNAME: {admin_username}")
-    logger.info(f"ADMIN_PASSWORD: {admin_password}")
+
+    if not admin_username or not admin_password:
+        logger.error("Variables d'environnement ADMIN_USERNAME ou ADMIN_PASSWORD non définies")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Configuration d'authentification manquante",
+        )
 
     if form_data.username != admin_username or form_data.password != admin_password:
-        logger.warning(
-            f"Échec de l'authentification pour l'utilisateur: {form_data.username}"
-        )
+        logger.warning(f"Échec de l'authentification pour l'utilisateur: {form_data.username}")
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Identifiants incorrects",

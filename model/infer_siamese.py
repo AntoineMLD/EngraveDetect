@@ -285,10 +285,11 @@ def load_templates():
     checkpoint = torch.load(model_path, map_location=device)
     if isinstance(checkpoint, dict) and "model_state_dict" in checkpoint:
         model.load_state_dict(checkpoint["model_state_dict"])
-        logging.info(f"Modèle chargé depuis l'époque {checkpoint['epoch']}")
+        epoch = checkpoint.get("epoch", "inconnue")
+        logging.info(f"Modèle chargé depuis l'époque {epoch}")
     else:
         model.load_state_dict(checkpoint)
-        logging.info("Modèle chargé")
+        logging.info("Modèle chargé avec succès")
 
     model.eval()  # Mettre le modèle en mode évaluation
 
