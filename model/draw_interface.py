@@ -4,12 +4,8 @@ from PIL import Image, ImageDraw, ImageOps
 import os
 from pathlib import Path
 import datetime
-import torch
-import torch.nn as nn
-import numpy as np
-from torchvision import transforms
-from .siamese_model import SiameseNetwork
-from .infer_siamese import load_templates, predict_symbol, SiamesePredictor
+import requests
+import json
 
 class DrawingInterface:
     def __init__(self, root):
@@ -25,7 +21,7 @@ class DrawingInterface:
         self.last_x = None
         self.last_y = None
         self.current_color = 'black'
-        self.line_width = 4  # Augmentation de l'épaisseur par défaut
+        self.line_width = 4
         
         # Création des dossiers
         self.save_dir = Path("model/engraving_draw")
@@ -33,17 +29,8 @@ class DrawingInterface:
         self.save_dir.mkdir(parents=True, exist_ok=True)
         self.debug_dir.mkdir(parents=True, exist_ok=True)
         
-        # Chargement du modèle et des templates
-        self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-        self.templates = load_templates()
-        
-        # Vérification des templates disponibles
-        self.available_templates = []
-        templates_dir = Path("model/templates")
-        for template_dir in templates_dir.iterdir():
-            if template_dir.is_dir() and (template_dir / "template.png").exists():
-                self.available_templates.append(template_dir.name)
-        print("Templates disponibles:", sorted(self.available_templates))
+        # URL de l'API
+        self.api_url = "http://localhost:8000/api/detect"
         
         self.setup_ui()
         self.setup_canvas()
@@ -64,11 +51,11 @@ class DrawingInterface:
         ttk.Button(control_frame, text="Sauvegarder", command=self.save_drawing).pack(side=tk.LEFT, padx=5)
         ttk.Button(control_frame, text="Détecter", command=self.detect_drawing).pack(side=tk.LEFT, padx=5)
         
-        # Contrôle de l'épaisseur du trait (réduit la plage)
+        # Contrôle de l'épaisseur du trait
         ttk.Label(control_frame, text="Épaisseur:").pack(side=tk.LEFT, padx=5)
         self.width_scale = ttk.Scale(control_frame, from_=2, to=6, orient=tk.HORIZONTAL,
                                    command=self.change_width)
-        self.width_scale.set(3)  # Valeur par défaut plus petite
+        self.width_scale.set(3)
         self.width_scale.pack(side=tk.LEFT, padx=5)
 
     def setup_canvas(self):
@@ -139,138 +126,44 @@ class DrawingInterface:
         binary.save(filepath)
         print(f"Dessin sauvegardé: {filepath}")
 
-    def preprocess_drawing(self, image):
-        """Prétraite le dessin pour la détection."""
-        timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-        
-        try:
-            # 1. Convertir en noir et blanc et réduire la taille initiale
-            # Réduire d'abord l'image pour avoir une taille plus proche des templates
-            initial_size = 100  # Taille initiale plus petite
-            bw_image = image.convert('L')
-            aspect_ratio = bw_image.width / bw_image.height
-            if aspect_ratio > 1:
-                new_w = initial_size
-                new_h = int(initial_size / aspect_ratio)
-            else:
-                new_h = initial_size
-                new_w = int(initial_size * aspect_ratio)
-            bw_image = bw_image.resize((new_w, new_h), Image.Resampling.LANCZOS)
-            bw_image.save(self.debug_dir / f"1_grayscale_{timestamp}.png")
-            
-            # 2. Convertir en numpy array pour un meilleur contrôle
-            img_array = np.array(bw_image)
-            
-            # 3. Binariser avec un seuil adaptatif
-            threshold = np.mean(img_array)  # Utiliser la moyenne comme dans create_templates.py
-            binary = (img_array > threshold).astype(np.uint8) * 255
-            binary_image = Image.fromarray(binary)
-            binary_image.save(self.debug_dir / f"2_binary_{timestamp}.png")
-            
-            # 4. Inverser pour avoir le dessin en noir
-            inverted = ImageOps.invert(binary_image)
-            inverted.save(self.debug_dir / f"3_inverted_{timestamp}.png")
-            
-            # 5. Trouver la boîte englobante
-            bbox = inverted.getbbox()
-            if not bbox:
-                return None, None
-            
-            # 6. Recadrer
-            cropped = inverted.crop(bbox)
-            
-            # Vérifier la taille minimale
-            min_size = 10
-            if cropped.size[0] < min_size or cropped.size[1] < min_size:
-                return None, None
-            
-            # 7. Ajouter une marge fixe de 4 pixels
-            margin = 4  # Comme dans create_templates.py
-            padded_size = (cropped.size[0] + 2*margin, cropped.size[1] + 2*margin)
-            padded = Image.new('L', padded_size, 255)
-            padded.paste(cropped, (margin, margin))
-            padded.save(self.debug_dir / f"4_padded_{timestamp}.png")
-            
-            # 8. Redimensionner en préservant le ratio
-            target_size = 64
-            w, h = padded.size
-            if w > h:
-                new_w = target_size
-                new_h = int((h * target_size) / w)
-            else:
-                new_h = target_size
-                new_w = int((w * target_size) / h)
-            
-            # S'assurer que les dimensions ne sont pas nulles
-            new_w = max(new_w, 1)
-            new_h = max(new_h, 1)
-            
-            resized = padded.resize((new_w, new_h), Image.Resampling.LANCZOS)
-            
-            # 9. Centrer dans une image carrée
-            final = Image.new('L', (target_size, target_size), 255)
-            paste_x = (target_size - new_w) // 2
-            paste_y = (target_size - new_h) // 2
-            final.paste(resized, (paste_x, paste_y))
-            final.save(self.debug_dir / f"5_final_{timestamp}.png")
-            
-            return final, timestamp
-            
-        except Exception as e:
-            print(f"Erreur lors du prétraitement: {str(e)}")
-            return None, None
-
     def detect_drawing(self):
-        """Détecte le symbole dessiné."""
+        """Détecte le symbole dessiné en utilisant l'API."""
         if not hasattr(self, 'image'):
             messagebox.showwarning("Attention", "Veuillez d'abord dessiner quelque chose!")
             return
             
-        # Prétraiter l'image
-        processed_image, timestamp = self.preprocess_drawing(self.image)
-        if processed_image is None:
-            messagebox.showwarning("Attention", "Aucun dessin détecté!")
-            return
-            
-        # Sauvegarder temporairement l'image
-        temp_path = self.save_dir / "temp_drawing.png"
-        processed_image.save(temp_path)
-        
         try:
-            # Prédire le symbole
-            predicted_symbol, similarity = predict_symbol(str(temp_path), None, self.templates, self.device)
+            # Sauvegarder temporairement l'image
+            temp_path = self.save_dir / "temp_drawing.png"
+            self.image.save(temp_path)
             
-            # Vérifier si la prédiction est suffisamment confiante
-            confidence_threshold = 0.65  # Seuil plus strict
-            
-            if similarity < confidence_threshold:
-                message = (
-                    f"Aucun symbole n'a été détecté avec une confiance suffisante.\n"
-                    f"Meilleure correspondance : {predicted_symbol} ({similarity:.2%})\n"
-                    f"Veuillez réessayer en dessinant plus clairement."
-                )
-                messagebox.showwarning("Détection incertaine", message)
-                return
-            
-            # Sauvegarder les templates pour comparaison
-            template_path = Path(f"model/templates/{predicted_symbol}/template.png")
-            if template_path.exists():
-                # Sauvegarder le template de référence et le template détecté
-                template = Image.open(template_path)
-                template.save(self.debug_dir / f"6_template_reference_{timestamp}.png")
-                template.save(self.debug_dir / f"7_template_detected_{timestamp}.png")
-            
-            # Afficher le résultat avec plus de détails
-            message = (
-                f"Symbole détecté : {predicted_symbol}\n"
-                f"Confiance : {similarity:.2%}\n\n"
-                f"Les images de débogage ont été sauvegardées dans le dossier 'debug'.\n"
-                f"Vérifiez les images pour voir les étapes de traitement."
-            )
-            messagebox.showinfo("Résultat de la détection", message)
-            
+            # Préparer le fichier pour l'envoi
+            with open(temp_path, 'rb') as f:
+                files = {'file': ('drawing.png', f, 'image/png')}
+                
+                # Envoyer la requête à l'API
+                print(f"Envoi de la requête à {self.api_url}...")
+                response = requests.post(self.api_url, files=files)
+                
+                if response.status_code == 200:
+                    result = response.json()
+                    
+                    # Afficher le résultat
+                    message = (
+                        f"Symbole détecté : {result['predicted_symbol']}\n"
+                        f"Confiance : {result['similarity_score']:.2%}\n"
+                        f"Statut : {result['message']}"
+                    )
+                    messagebox.showinfo("Résultat de la détection", message)
+                else:
+                    messagebox.showerror(
+                        "Erreur",
+                        f"Erreur lors de la détection (code {response.status_code}):\n{response.text}"
+                    )
+                
         except Exception as e:
             messagebox.showerror("Erreur", f"Une erreur est survenue lors de la détection : {str(e)}")
+            
         finally:
             # Supprimer le fichier temporaire
             if temp_path.exists():

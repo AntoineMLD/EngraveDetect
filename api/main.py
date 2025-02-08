@@ -26,6 +26,10 @@ load_dotenv(dotenv_path, override=True)
 
 app = FastAPI(title="API Verres")
 
+# Log des routes disponibles
+for route in app.routes:
+    logger.info(f"Route disponible: {route.path} [{route.methods}]")
+
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 # Fonction de dépendance pour vérifier le token
@@ -79,7 +83,7 @@ app.include_router(materiau_router)
 app.include_router(serie_router)
 app.include_router(traitement_router)
 app.include_router(verre_router)
-app.include_router(detection_router)
+app.include_router(detection_router, prefix="/api")
 
 @app.get("/")
 def read_root():
