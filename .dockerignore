@@ -1,0 +1,65 @@
+# Git
+.git
+.gitignore
+.github
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# Environnement
+.env
+.venv
+venv/
+ENV/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs et données temporaires
+*.log
+logs/
+temp/
+tmp/
+
+# Documentation
+docs/
+*.md
+!README.md
+
+# Tests
+tests/
+test/
+testing/
+
+# Docker
+.docker/
+docker-compose*.yml
+Dockerfile*
+.dockerignore 
