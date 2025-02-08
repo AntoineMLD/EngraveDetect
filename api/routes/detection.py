@@ -35,7 +35,7 @@ class DetectionResponse(BaseModel):
 def init_model():
     """Initialise le modèle et les templates"""
     global templates
-    
+
     logger.info("Initialisation du modèle de détection...")
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     logger.info(f"Utilisation du device: {device}")
@@ -55,6 +55,7 @@ def init_model():
 def is_valid_image_extension(filename: str) -> bool:
     """Vérifie si l'extension du fichier est autorisée"""
     import os
+
     return os.path.splitext(filename.lower())[1] in ALLOWED_EXTENSIONS
 
 
@@ -104,7 +105,10 @@ async def detect_image(file: UploadFile = File(...)):
             # Prédiction
             logger.info("Lancement de la détection...")
             predicted_symbol, similarity_score = predict_symbol(
-                temp_path, None, templates, torch.device("cuda" if torch.cuda.is_available() else "cpu")
+                temp_path,
+                None,
+                templates,
+                torch.device("cuda" if torch.cuda.is_available() else "cpu"),
             )
             logger.info(
                 f"Détection terminée. Symbole: {predicted_symbol}, Score: {similarity_score:.2%}"
