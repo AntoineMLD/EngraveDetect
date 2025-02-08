@@ -9,6 +9,16 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
+  AZURE_CONTAINER_NAME: "raw-data"
+  DEBUG: "True"
+  DATABASE_URL: "sqlite:///app/database/data/verres.db"
+  JWT_ALGORITHM: "HS256"
+  JWT_ACCESS_TOKEN_EXPIRE_MINUTES: "30"
+  REDIS_URL: "redis://redis:6379/0"
+  MODEL_URL: "http://model:5000"
+  API_HOST: "0.0.0.0"
+  API_PORT: "8000"
+  SCRAPER_INTERVAL: "86400"
 
 jobs:
   test:
@@ -33,6 +43,11 @@ jobs:
         pip install -r model/requirements.txt
         
     - name: Run tests with pytest
+      env:
+        AZURE_CONNECTION_STRING: ${{ secrets.AZURE_CONNECTION_STRING }}
+        JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
+        ADMIN_USERNAME: ${{ secrets.ADMIN_USERNAME }}
+        ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
       run: |
         pytest tests/ --cov=./ --cov-report=xml
         
@@ -96,6 +111,11 @@ jobs:
         push: true
         tags: ${{ steps.meta.outputs.tags }}-api
         labels: ${{ steps.meta.outputs.labels }}
+        build-args: |
+          AZURE_CONNECTION_STRING=${{ secrets.AZURE_CONNECTION_STRING }}
+          JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }}
+          ADMIN_USERNAME=${{ secrets.ADMIN_USERNAME }}
+          ADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }}
         
     - name: Build and push Model image
       uses: docker/build-push-action@v5
@@ -105,6 +125,8 @@ jobs:
         push: true
         tags: ${{ steps.meta.outputs.tags }}-model
         labels: ${{ steps.meta.outputs.labels }}
+        build-args: |
+          AZURE_CONNECTION_STRING=${{ secrets.AZURE_CONNECTION_STRING }}
 
   deploy:
     needs: build-and-push
@@ -113,6 +135,11 @@ jobs:
     
     steps:
     - name: Deploy to production
+      env:
+        AZURE_CONNECTION_STRING: ${{ secrets.AZURE_CONNECTION_STRING }}
+        JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
+        ADMIN_USERNAME: ${{ secrets.ADMIN_USERNAME }}
+        ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
       run: |
         echo "Add deployment steps here"
         # Exemple de déploiement avec SSH :
