@@ -1,10 +1,13 @@
+from unittest.mock import MagicMock
+
 import pytest
 from fastapi import status
+from pydantic import BaseModel
 from sqlalchemy.exc import SQLAlchemyError
+
 from api.routes.materiaux import MateriauBase
 from database.models.base import Materiau
-from pydantic import BaseModel
-from unittest.mock import MagicMock
+
 
 # Mock data
 class MockMateriau(BaseModel):
@@ -12,13 +15,11 @@ class MockMateriau(BaseModel):
     nom: str
     description: str = None
 
+
 @pytest.fixture
 def mock_materiau():
-    return MockMateriau(
-        id=1,
-        nom="Materiau Test",
-        description="Description Test"
-    )
+    return MockMateriau(id=1, nom="Materiau Test", description="Description Test")
+
 
 class TestGetMateriaux:
     def test_get_materiaux_returns_list(self, client, db_session, mock_materiau):
@@ -44,10 +45,13 @@ class TestGetMateriaux:
         assert response.status_code == status.HTTP_200_OK
         assert len(response.json()) == 0
 
+
 class TestGetMateriau:
     def test_get_materiau_success(self, client, db_session, mock_materiau):
         # Arrange
-        db_session.query.return_value.filter.return_value.first.return_value = mock_materiau
+        db_session.query.return_value.filter.return_value.first.return_value = (
+            mock_materiau
+        )
 
         # Act
         response = client.get("/api/materiaux/1")
@@ -74,19 +78,20 @@ class TestGetMateriau:
         # Assert
         assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
 
+
 class TestCreateMateriau:
     def test_create_materiau_success(self, client, db_session, auth_headers):
         # Arrange
-        materiau_data = {
-            "nom": "Nouveau Materiau"
-        }
+        materiau_data = {"nom": "Nouveau Materiau"}
         mock_materiau = Materiau(id=1, **materiau_data)
         db_session.add = MagicMock()
         db_session.commit = MagicMock()
-        db_session.refresh = MagicMock(side_effect=lambda x: setattr(x, 'id', 1))
+        db_session.refresh = MagicMock(side_effect=lambda x: setattr(x, "id", 1))
 
         # Act
-        response = client.post("/api/materiaux", json=materiau_data, headers=auth_headers)
+        response = client.post(
+            "/api/materiaux", json=materiau_data, headers=auth_headers
+        )
 
         # Assert
         assert response.status_code == status.HTTP_201_CREATED
@@ -101,21 +106,30 @@ class TestCreateMateriau:
         db_session.commit.side_effect = SQLAlchemyError("DB Error")
 
         # Act
-        response = client.post("/api/materiaux", json=materiau_data, headers=auth_headers)
+        response = client.post(
+            "/api/materiaux", json=materiau_data, headers=auth_headers
+        )
 
         # Assert
         assert response.status_code == status.HTTP_500_INTERNAL_SERVER_ERROR
         assert "Erreur lors de la création du materiau" in response.json()["detail"]
         db_session.rollback.assert_called_once()
 
+
 class TestUpdateMateriau:
-    def test_update_materiau_success(self, client, db_session, mock_materiau, auth_headers):
+    def test_update_materiau_success(
+        self, client, db_session, mock_materiau, auth_headers
+    ):
         # Arrange
-        db_session.query.return_value.filter.return_value.first.return_value = mock_materiau
+        db_session.query.return_value.filter.return_value.first.return_value = (
+            mock_materiau
+        )
         update_data = {"nom": "Materiau Modifié"}
 
         # Act
-        response = client.put(f"/api/materiaux/{mock_materiau.id}", json=update_data, headers=auth_headers)
+        response = client.put(
+            f"/api/materiaux/{mock_materiau.id}", json=update_data, headers=auth_headers
+        )
 
         # Assert
         assert response.status_code == status.HTTP_200_OK
@@ -128,19 +142,28 @@ class TestUpdateMateriau:
         update_data = {"nom": "Materiau Modifié"}
 
         # Act
-        response = client.put("/api/materiaux/999", json=update_data, headers=auth_headers)
+        response = client.put(
+            "/api/materiaux/999", json=update_data, headers=auth_headers
+        )
 
         # Assert
         assert response.status_code == status.HTTP_404_NOT_FOUND
         assert response.json()["detail"] == "Materiau non trouvé"
 
+
 class TestDeleteMateriau:
-    def test_delete_materiau_success(self, client, db_session, mock_materiau, auth_headers):
+    def test_delete_materiau_success(
+        self, client, db_session, mock_materiau, auth_headers
+    ):
         # Arrange
-        db_session.query.return_value.filter.return_value.first.return_value = mock_materiau
+        db_session.query.return_value.filter.return_value.first.return_value = (
+            mock_materiau
+        )
 
         # Act
-        response = client.delete(f"/api/materiaux/{mock_materiau.id}", headers=auth_headers)
+        response = client.delete(
+            f"/api/materiaux/{mock_materiau.id}", headers=auth_headers
+        )
 
         # Assert
         assert response.status_code == status.HTTP_204_NO_CONTENT
@@ -163,4 +186,4 @@ class TestDeleteMateriau:
         response = client.delete("/api/materiaux/invalid", headers=auth_headers)
 
         # Assert
-        assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY 
+        assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
