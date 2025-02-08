@@ -18,6 +18,8 @@ def mock_load_templates():
             "is_confident": True,
             "message": "Test prediction"
         }
+        predictor_mock.similarity_threshold = 0.5
+        predictor_mock.templates = {"test_symbol": "test_template"}
         mock.return_value = predictor_mock
         yield mock
 

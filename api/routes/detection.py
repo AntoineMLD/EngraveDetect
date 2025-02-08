@@ -19,6 +19,9 @@ router = APIRouter()
 # Extensions d'images autorisées
 ALLOWED_EXTENSIONS: Set[str] = {".jpg", ".jpeg", ".png", ".gif", ".bmp", ".tiff"}
 
+# Variable globale pour les templates
+templates = None
+
 
 # Modèle de réponse
 class DetectionResponse(BaseModel):
@@ -29,27 +32,29 @@ class DetectionResponse(BaseModel):
     message: str
 
 
-# Initialisation du device et des templates
-logger.info("Initialisation du modèle de détection...")
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-logger.info(f"Utilisation du device: {device}")
+def init_model():
+    """Initialise le modèle et les templates"""
+    global templates
+    
+    logger.info("Initialisation du modèle de détection...")
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    logger.info(f"Utilisation du device: {device}")
 
-try:
-    templates = load_templates()
-    logger.info("Modèle et templates chargés avec succès")
-    logger.info(f"Seuil de confiance: {templates.similarity_threshold}")
-    # Liste les templates disponibles
-    template_names = list(templates.templates.keys())
-    logger.info(f"Templates disponibles: {template_names}")
-except Exception as e:
-    logger.error(f"Erreur lors du chargement du modèle: {str(e)}")
-    raise
+    try:
+        templates = load_templates()
+        logger.info("Modèle et templates chargés avec succès")
+        logger.info(f"Seuil de confiance: {templates.similarity_threshold}")
+        # Liste les templates disponibles
+        template_names = list(templates.templates.keys())
+        logger.info(f"Templates disponibles: {template_names}")
+    except Exception as e:
+        logger.error(f"Erreur lors du chargement du modèle: {str(e)}")
+        raise
 
 
 def is_valid_image_extension(filename: str) -> bool:
     """Vérifie si l'extension du fichier est autorisée"""
     import os
-
     return os.path.splitext(filename.lower())[1] in ALLOWED_EXTENSIONS
 
 
@@ -64,6 +69,10 @@ async def detect_image(file: UploadFile = File(...)):
     Returns:
         DetectionResponse: Résultat de la détection avec le symbole et le score de confiance
     """
+    global templates
+    if templates is None:
+        init_model()
+
     logger.info(f"Nouvelle demande de détection pour le fichier: {file.filename}")
 
     # Vérification de l'extension du fichier
@@ -95,7 +104,7 @@ async def detect_image(file: UploadFile = File(...)):
             # Prédiction
             logger.info("Lancement de la détection...")
             predicted_symbol, similarity_score = predict_symbol(
-                temp_path, None, templates, device
+                temp_path, None, templates, torch.device("cuda" if torch.cuda.is_available() else "cpu")
             )
             logger.info(
                 f"Détection terminée. Symbole: {predicted_symbol}, Score: {similarity_score:.2%}"
