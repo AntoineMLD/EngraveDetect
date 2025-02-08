@@ -1,10 +1,13 @@
+from unittest.mock import MagicMock
+
 import pytest
 from fastapi import status
+from pydantic import BaseModel
 from sqlalchemy.exc import SQLAlchemyError
+
 from api.routes.fournisseurs import FournisseurBase
 from database.models.base import Fournisseur
-from pydantic import BaseModel
-from unittest.mock import MagicMock
+
 
 # Mock data
 class MockFournisseur(BaseModel):
@@ -14,6 +17,7 @@ class MockFournisseur(BaseModel):
     telephone: str = None
     email: str = None
 
+
 @pytest.fixture
 def mock_fournisseur():
     return MockFournisseur(
@@ -21,8 +25,9 @@ def mock_fournisseur():
         nom="Fournisseur Test",
         adresse="1 rue Test",
         telephone="0123456789",
-        email="test@fournisseur.com"
+        email="test@fournisseur.com",
     )
+
 
 class TestGetFournisseurs:
     def test_get_fournisseurs_returns_list(self, client, db_session, mock_fournisseur):
@@ -48,10 +53,13 @@ class TestGetFournisseurs:
         assert response.status_code == status.HTTP_200_OK
         assert len(response.json()) == 0
 
+
 class TestGetFournisseur:
     def test_get_fournisseur_success(self, client, db_session, mock_fournisseur):
         # Arrange
-        db_session.query.return_value.filter.return_value.first.return_value = mock_fournisseur
+        db_session.query.return_value.filter.return_value.first.return_value = (
+            mock_fournisseur
+        )
 
         # Act
         response = client.get("/api/fournisseurs/1")
@@ -78,19 +86,20 @@ class TestGetFournisseur:
         # Assert
         assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
 
+
 class TestCreateFournisseur:
     def test_create_fournisseur_success(self, client, db_session, auth_headers):
         # Arrange
-        fournisseur_data = {
-            "nom": "Nouveau Fournisseur"
-        }
+        fournisseur_data = {"nom": "Nouveau Fournisseur"}
         mock_fournisseur = Fournisseur(id=1, **fournisseur_data)
         db_session.add = MagicMock()
         db_session.commit = MagicMock()
-        db_session.refresh = MagicMock(side_effect=lambda x: setattr(x, 'id', 1))
+        db_session.refresh = MagicMock(side_effect=lambda x: setattr(x, "id", 1))
 
         # Act
-        response = client.post("/api/fournisseurs", json=fournisseur_data, headers=auth_headers)
+        response = client.post(
+            "/api/fournisseurs", json=fournisseur_data, headers=auth_headers
+        )
 
         # Assert
         assert response.status_code == status.HTTP_201_CREATED
@@ -105,21 +114,32 @@ class TestCreateFournisseur:
         db_session.commit.side_effect = SQLAlchemyError("DB Error")
 
         # Act
-        response = client.post("/api/fournisseurs", json=fournisseur_data, headers=auth_headers)
+        response = client.post(
+            "/api/fournisseurs", json=fournisseur_data, headers=auth_headers
+        )
 
         # Assert
         assert response.status_code == status.HTTP_500_INTERNAL_SERVER_ERROR
         assert "Erreur lors de la création du fournisseur" in response.json()["detail"]
         db_session.rollback.assert_called_once()
 
+
 class TestUpdateFournisseur:
-    def test_update_fournisseur_success(self, client, db_session, mock_fournisseur, auth_headers):
+    def test_update_fournisseur_success(
+        self, client, db_session, mock_fournisseur, auth_headers
+    ):
         # Arrange
-        db_session.query.return_value.filter.return_value.first.return_value = mock_fournisseur
+        db_session.query.return_value.filter.return_value.first.return_value = (
+            mock_fournisseur
+        )
         update_data = {"nom": "Fournisseur Modifié"}
 
         # Act
-        response = client.put(f"/api/fournisseurs/{mock_fournisseur.id}", json=update_data, headers=auth_headers)
+        response = client.put(
+            f"/api/fournisseurs/{mock_fournisseur.id}",
+            json=update_data,
+            headers=auth_headers,
+        )
 
         # Assert
         assert response.status_code == status.HTTP_200_OK
@@ -132,19 +152,28 @@ class TestUpdateFournisseur:
         update_data = {"nom": "Fournisseur Modifié"}
 
         # Act
-        response = client.put("/api/fournisseurs/999", json=update_data, headers=auth_headers)
+        response = client.put(
+            "/api/fournisseurs/999", json=update_data, headers=auth_headers
+        )
 
         # Assert
         assert response.status_code == status.HTTP_404_NOT_FOUND
         assert response.json()["detail"] == "Fournisseur non trouvé"
 
+
 class TestDeleteFournisseur:
-    def test_delete_fournisseur_success(self, client, db_session, mock_fournisseur, auth_headers):
+    def test_delete_fournisseur_success(
+        self, client, db_session, mock_fournisseur, auth_headers
+    ):
         # Arrange
-        db_session.query.return_value.filter.return_value.first.return_value = mock_fournisseur
+        db_session.query.return_value.filter.return_value.first.return_value = (
+            mock_fournisseur
+        )
 
         # Act
-        response = client.delete(f"/api/fournisseurs/{mock_fournisseur.id}", headers=auth_headers)
+        response = client.delete(
+            f"/api/fournisseurs/{mock_fournisseur.id}", headers=auth_headers
+        )
 
         # Assert
         assert response.status_code == status.HTTP_204_NO_CONTENT

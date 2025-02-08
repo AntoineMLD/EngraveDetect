@@ -1,10 +1,13 @@
+from unittest.mock import MagicMock
+
 import pytest
 from fastapi import HTTPException, status
+from pydantic import BaseModel
 from sqlalchemy.exc import SQLAlchemyError
+
 from api.routes.verres import VerreBase
 from database.models.base import Verre
-from pydantic import BaseModel
-from unittest.mock import MagicMock
+
 
 # Mock data
 class MockVerre(BaseModel):
@@ -21,6 +24,7 @@ class MockVerre(BaseModel):
     gamme_id: int
     serie_id: int
 
+
 @pytest.fixture
 def mock_verre():
     return MockVerre(
@@ -35,8 +39,9 @@ def mock_verre():
         fournisseur_id=1,
         materiau_id=1,
         gamme_id=1,
-        serie_id=1
+        serie_id=1,
     )
+
 
 class TestGetVerres:
     def test_get_verres_returns_list(self, client, db_session, mock_verre):
@@ -62,10 +67,13 @@ class TestGetVerres:
         assert response.status_code == status.HTTP_200_OK
         assert len(response.json()) == 0
 
+
 class TestGetVerre:
     def test_get_verre_success(self, client, db_session, mock_verre):
         # Arrange
-        db_session.query.return_value.filter.return_value.first.return_value = mock_verre
+        db_session.query.return_value.filter.return_value.first.return_value = (
+            mock_verre
+        )
 
         # Act
         response = client.get("/api/verre/1")
@@ -92,6 +100,7 @@ class TestGetVerre:
         # Assert
         assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
 
+
 class TestCreateVerre:
     def test_create_verre_success(self, client, db_session, auth_headers):
         # Arrange
@@ -100,12 +109,12 @@ class TestCreateVerre:
             "variante": "Nouvelle Variante",
             "hauteur_min": 10,
             "hauteur_max": 20,
-            "indice": 1.5
+            "indice": 1.5,
         }
         mock_verre = Verre(id=1, **verre_data)
         db_session.add = MagicMock()
         db_session.commit = MagicMock()
-        db_session.refresh = MagicMock(side_effect=lambda x: setattr(x, 'id', 1))
+        db_session.refresh = MagicMock(side_effect=lambda x: setattr(x, "id", 1))
 
         # Act
         response = client.post("/api/verres", json=verre_data, headers=auth_headers)
@@ -130,14 +139,19 @@ class TestCreateVerre:
         assert "Erreur lors de la création du verre" in response.json()["detail"]
         db_session.rollback.assert_called_once()
 
+
 class TestUpdateVerre:
     def test_update_verre_success(self, client, db_session, mock_verre, auth_headers):
         # Arrange
-        db_session.query.return_value.filter.return_value.first.return_value = mock_verre
+        db_session.query.return_value.filter.return_value.first.return_value = (
+            mock_verre
+        )
         update_data = {"nom": "Verre Modifié"}
 
         # Act
-        response = client.put(f"/api/verres/{mock_verre.id}", json=update_data, headers=auth_headers)
+        response = client.put(
+            f"/api/verres/{mock_verre.id}", json=update_data, headers=auth_headers
+        )
 
         # Assert
         assert response.status_code == status.HTTP_200_OK
@@ -156,10 +170,13 @@ class TestUpdateVerre:
         assert response.status_code == status.HTTP_404_NOT_FOUND
         assert response.json()["detail"] == "Verre non trouvé"
 
+
 class TestDeleteVerre:
     def test_delete_verre_success(self, client, db_session, mock_verre, auth_headers):
         # Arrange
-        db_session.query.return_value.filter.return_value.first.return_value = mock_verre
+        db_session.query.return_value.filter.return_value.first.return_value = (
+            mock_verre
+        )
 
         # Act
         response = client.delete(f"/api/verres/{mock_verre.id}", headers=auth_headers)
@@ -185,4 +202,4 @@ class TestDeleteVerre:
         response = client.delete("/api/verres/invalid", headers=auth_headers)
 
         # Assert
-        assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY 
+        assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY

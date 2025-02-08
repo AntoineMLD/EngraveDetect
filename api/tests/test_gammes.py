@@ -1,10 +1,13 @@
+from unittest.mock import MagicMock
+
 import pytest
 from fastapi import status
+from pydantic import BaseModel
 from sqlalchemy.exc import SQLAlchemyError
+
 from api.routes.gammes import GammeBase
 from database.models.base import Gamme
-from pydantic import BaseModel
-from unittest.mock import MagicMock
+
 
 # Mock data
 class MockGamme(BaseModel):
@@ -12,13 +15,11 @@ class MockGamme(BaseModel):
     nom: str
     description: str = None
 
+
 @pytest.fixture
 def mock_gamme():
-    return MockGamme(
-        id=1,
-        nom="Gamme Test",
-        description="Description Test"
-    )
+    return MockGamme(id=1, nom="Gamme Test", description="Description Test")
+
 
 class TestGetGammes:
     def test_get_gammes_returns_list(self, client, db_session, mock_gamme):
@@ -44,10 +45,13 @@ class TestGetGammes:
         assert response.status_code == status.HTTP_200_OK
         assert len(response.json()) == 0
 
+
 class TestGetGamme:
     def test_get_gamme_success(self, client, db_session, mock_gamme):
         # Arrange
-        db_session.query.return_value.filter.return_value.first.return_value = mock_gamme
+        db_session.query.return_value.filter.return_value.first.return_value = (
+            mock_gamme
+        )
 
         # Act
         response = client.get("/api/gammes/1")
@@ -74,16 +78,15 @@ class TestGetGamme:
         # Assert
         assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
 
+
 class TestCreateGamme:
     def test_create_gamme_success(self, client, db_session, auth_headers):
         # Arrange
-        gamme_data = {
-            "nom": "Nouvelle Gamme"
-        }
+        gamme_data = {"nom": "Nouvelle Gamme"}
         mock_gamme = Gamme(id=1, **gamme_data)
         db_session.add = MagicMock()
         db_session.commit = MagicMock()
-        db_session.refresh = MagicMock(side_effect=lambda x: setattr(x, 'id', 1))
+        db_session.refresh = MagicMock(side_effect=lambda x: setattr(x, "id", 1))
 
         # Act
         response = client.post("/api/gammes", json=gamme_data, headers=auth_headers)
@@ -108,14 +111,19 @@ class TestCreateGamme:
         assert "Erreur lors de la création de la gamme" in response.json()["detail"]
         db_session.rollback.assert_called_once()
 
+
 class TestUpdateGamme:
     def test_update_gamme_success(self, client, db_session, mock_gamme, auth_headers):
         # Arrange
-        db_session.query.return_value.filter.return_value.first.return_value = mock_gamme
+        db_session.query.return_value.filter.return_value.first.return_value = (
+            mock_gamme
+        )
         update_data = {"nom": "Gamme Modifiée"}
 
         # Act
-        response = client.put(f"/api/gammes/{mock_gamme.id}", json=update_data, headers=auth_headers)
+        response = client.put(
+            f"/api/gammes/{mock_gamme.id}", json=update_data, headers=auth_headers
+        )
 
         # Assert
         assert response.status_code == status.HTTP_200_OK
@@ -134,10 +142,13 @@ class TestUpdateGamme:
         assert response.status_code == status.HTTP_404_NOT_FOUND
         assert response.json()["detail"] == "Gamme non trouvée"
 
+
 class TestDeleteGamme:
     def test_delete_gamme_success(self, client, db_session, mock_gamme, auth_headers):
         # Arrange
-        db_session.query.return_value.filter.return_value.first.return_value = mock_gamme
+        db_session.query.return_value.filter.return_value.first.return_value = (
+            mock_gamme
+        )
 
         # Act
         response = client.delete(f"/api/gammes/{mock_gamme.id}", headers=auth_headers)
@@ -163,4 +174,4 @@ class TestDeleteGamme:
         response = client.delete("/api/gammes/invalid", headers=auth_headers)
 
         # Assert
-        assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY 
+        assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY

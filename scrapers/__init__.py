@@ -1,1 +1,1 @@
-"""Package scrapers pour la récupération des données de verres.""" 
+"""Package scrapers pour la récupération des données de verres."""

@@ -1,22 +1,22 @@
-from setuptools import setup, find_packages
+from setuptools import find_packages, setup
 
 setup(
     name="engravedetect",
     version="0.1",
     packages=find_packages(),
     install_requires=[
-        'fastapi',
-        'sqlalchemy',
-        'pydantic',
-        'python-jose[cryptography]',
-        'passlib[bcrypt]',
-        'pytest',
-        'pytest-asyncio',
-        'httpx',
-        'scrapy',
-        'pillow',
-        'torch',
-        'torchvision',
+        "fastapi",
+        "sqlalchemy",
+        "pydantic",
+        "python-jose[cryptography]",
+        "passlib[bcrypt]",
+        "pytest",
+        "pytest-asyncio",
+        "httpx",
+        "scrapy",
+        "pillow",
+        "torch",
+        "torchvision",
     ],
-    python_requires='>=3.8',
-) 
+    python_requires=">=3.8",
+)
