@@ -3,6 +3,7 @@
 ## Architecture
 
 ### Structure du Module
+
 ```
 scrapers/
 ├── spiders/              # Spiders Scrapy
