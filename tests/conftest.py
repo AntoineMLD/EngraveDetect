@@ -53,12 +53,10 @@ def mock_siamese_network():
             return torch.ones(1, 128)  # Retourne un tensor de taille (1, 128)
 
         model_mock.forward_once.side_effect = mock_forward_once
-
         mock_network.return_value = model_mock
 
         # Mock le chargement du modèle
-        with patch("torch.load") as mock_load, \
-             patch("pathlib.Path.exists") as mock_exists:
+        with patch("torch.load") as mock_load, patch("pathlib.Path.exists") as mock_exists:
             mock_exists.return_value = True  # Simule que le fichier existe
             mock_load.return_value = {
                 "model_state_dict": {},
