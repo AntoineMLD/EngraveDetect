@@ -1,23 +1,51 @@
-from unittest.mock import MagicMock, patch
-
+import os
+from pathlib import Path
 import pytest
 from fastapi.testclient import TestClient
+from unittest.mock import patch, MagicMock
+from dotenv import load_dotenv
 
 from api.main import app
 from database.config.database import Base, engine
 
 
 @pytest.fixture(autouse=True)
+def mock_env_vars():
+    """Configure les variables d'environnement pour les tests"""
+    # Sauvegarde les variables d'environnement actuelles
+    original_environ = dict(os.environ)
+    
+    # Charge les variables de test depuis .env.test s'il existe
+    env_test_path = Path(__file__).parent / '.env.test'
+    if env_test_path.exists():
+        load_dotenv(env_test_path, override=True)
+    else:
+        # Utilise des valeurs par défaut sécurisées pour les tests
+        os.environ.update({
+            'ADMIN_USERNAME': 'test_user',  # Uniquement pour les tests
+            'ADMIN_PASSWORD': 'test_pass',  # Uniquement pour les tests
+            'JWT_ALGORITHM': 'HS256',
+            'JWT_ACCESS_TOKEN_EXPIRE_MINUTES': '30'
+        })
+    
+    yield
+    
+    # Restaure les variables d'environnement originales
+    os.environ.clear()
+    os.environ.update(original_environ)
+
+
+@pytest.fixture(autouse=True)
 def mock_load_templates():
     """Mock le chargement des templates pour tous les tests"""
-    with patch("model.infer_siamese.load_templates") as mock:
+    with patch('model.infer_siamese.load_templates', autospec=True) as mock:
         # Créer un mock du prédicteur
         predictor_mock = MagicMock()
         predictor_mock.predict.return_value = {
             "predicted_symbol": "test_symbol",
             "similarity_score": 0.8,
             "is_confident": True,
-            "message": "Test prediction",
+            "message": "Test prediction"
         }
         predictor_mock.similarity_threshold = 0.5
         predictor_mock.templates = {"test_symbol": "test_template"}

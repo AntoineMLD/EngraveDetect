@@ -244,3 +244,9 @@ build/
 # Misc
 .DS_Store
 Thumbs.db
+
+# Fichiers d'environnement
+.env
+.env.test
+.env.local
+.env.*.local
