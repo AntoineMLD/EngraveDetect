@@ -5,6 +5,7 @@ from api.routes.materiaux import router as materiau_router
 from api.routes.series import router as serie_router
 from api.routes.traitements import router as traitement_router
 from api.routes.verres import router as verre_router
+from api.routes.detection import router as detection_router
 from typing import Annotated
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from datetime import timedelta
@@ -78,6 +79,7 @@ app.include_router(materiau_router)
 app.include_router(serie_router)
 app.include_router(traitement_router)
 app.include_router(verre_router)
+app.include_router(detection_router, prefix="/api")
 
 @app.get("/")
 def read_root():
