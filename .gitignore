@@ -250,3 +250,4 @@ Thumbs.db
 .env.test
 .env.local
 .env.*.local
+database/data/verres.db
