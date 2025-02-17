@@ -1,7 +1,8 @@
 from pydantic import BaseModel
-from sqlalchemy import Boolean, Column, Float, ForeignKey, Integer, String, Table
+from sqlalchemy import Boolean, Column, Float, ForeignKey, Integer, String, Table, DateTime
 from sqlalchemy.orm import relationship
 from sqlalchemy.schema import Index
+import datetime
 
 from database.config.database import Base
 from database.utils.logger import db_logger
@@ -71,6 +72,44 @@ class Traitement(Base):
     )
 
 
+class SymboleTag(Base):
+    __tablename__ = "symboles_tags"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    nom = Column(String(500), nullable=False, unique=True)
+    description = Column(String(1000), nullable=True)
+    created_at = Column(DateTime, default=datetime.datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
+    
+    # Relations
+    verres_associations = relationship("VerreSymbole", back_populates="symbole")
+
+    __table_args__ = (Index("idx_symboles_nom", "nom"),)
+
+
+class VerreSymbole(Base):
+    __tablename__ = "verres_symboles"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    verre_id = Column(Integer, ForeignKey("verres.id"), nullable=False)
+    symbole_id = Column(Integer, ForeignKey("symboles_tags.id"), nullable=False)
+    score_confiance = Column(Float, nullable=False)  # Score de similarité du modèle siamois
+    est_valide = Column(Boolean, default=False)  # Validation manuelle
+    valide_par = Column(String(100), nullable=True)  # Utilisateur ayant validé
+    created_at = Column(DateTime, default=datetime.datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
+    
+    # Relations
+    verre = relationship("Verre", back_populates="symboles_associations")
+    symbole = relationship("SymboleTag", back_populates="verres_associations")
+
+    __table_args__ = (
+        Index("idx_verres_symboles_verre_id", "verre_id"),
+        Index("idx_verres_symboles_symbole_id", "symbole_id"),
+        Index("idx_verres_symboles_score", "score_confiance"),
+    )
+
+
 class Verre(Base):
     __tablename__ = "verres"
 
@@ -100,6 +139,7 @@ class Verre(Base):
         back_populates="verres",
         lazy="joined",  # Chargement eager pour éviter les problèmes N+1
     )
+    symboles_associations = relationship("VerreSymbole", back_populates="verre")
 
     def __repr__(self):
         return f"<Verre(id={self.id}, nom={self.nom})>"
