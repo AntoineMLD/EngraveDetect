@@ -14,8 +14,10 @@ from api.routes.fournisseurs import router as fournisseur_router
 from api.routes.gammes import router as gamme_router
 from api.routes.materiaux import router as materiau_router
 from api.routes.series import router as serie_router
+from api.routes.symboles import router as symbole_router
 from api.routes.traitements import router as traitement_router
 from api.routes.verres import router as verre_router
+from api.routes.verres_symboles import router as verre_symbole_router
 
 # Configuration du logging
 logging.basicConfig(level=logging.INFO)
@@ -91,6 +93,8 @@ app.include_router(serie_router)
 app.include_router(traitement_router)
 app.include_router(verre_router)
 app.include_router(detection_router, prefix="/api")
+app.include_router(symbole_router)
+app.include_router(verre_symbole_router)
 
 
 @app.get("/")
