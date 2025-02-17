@@ -207,5 +207,5 @@ pytest tests/integration/
 - Licence: MIT
 - Auteur: [Votre Nom]
 - Version: 1.0.0
-- Copyright: 2024
+- Copyright: 2024-2025
 
