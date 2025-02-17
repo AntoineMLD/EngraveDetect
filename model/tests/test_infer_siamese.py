@@ -6,14 +6,13 @@ import torch
 from PIL import Image
 
 from model.infer_siamese import SiamesePredictor, load_templates, predict_symbol
+from model.siamese_model import SiameseNetwork
 
 
 class TestSiamesePredictor:
     def test_predictor_creation(self, device, model_dir):
         """Test la création du prédicteur"""
         # Créer un modèle factice et le sauvegarder
-        from model.siamese_model import SiameseNetwork
-
         model = SiameseNetwork()
         model_path = model_dir / "best_model.pth"
         torch.save(
@@ -32,8 +31,6 @@ class TestSiamesePredictor:
 
     def test_preprocess_image(self, device, sample_image):
         """Test le prétraitement d'une image"""
-        from model.siamese_model import SiameseNetwork
-
         model = SiameseNetwork()
         predictor = SiamesePredictor(model, device)
 
@@ -48,8 +45,6 @@ class TestSiamesePredictor:
 
     def test_compare_images(self, device, sample_image):
         """Test la comparaison d'images"""
-        from model.siamese_model import SiameseNetwork
-
         model = SiameseNetwork()
         predictor = SiamesePredictor(model, device)
 
@@ -65,8 +60,6 @@ class TestSiamesePredictor:
 
     def test_find_closest_symbol(self, device, sample_image, templates_dir):
         """Test la recherche du symbole le plus proche"""
-        from model.siamese_model import SiameseNetwork
-
         model = SiameseNetwork()
         predictor = SiamesePredictor(model, device)
 
@@ -88,8 +81,6 @@ class TestSiamesePredictor:
 
     def test_predict(self, device, sample_image, templates_dir):
         """Test la prédiction complète"""
-        from model.siamese_model import SiameseNetwork
-
         model = SiameseNetwork()
         predictor = SiamesePredictor(model, device)
 
