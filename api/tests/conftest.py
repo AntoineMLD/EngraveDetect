@@ -22,15 +22,16 @@ from database.config.database import get_db
 
 class MockSession(MagicMock):
     """Mock personnalisé pour la session de base de données."""
+
     _id_counter = 1
     _objects = {}  # Stockage des objets par type et ID
 
     def add(self, obj):
         """Simule l'ajout d'un objet en lui assignant un ID."""
-        if not hasattr(obj, 'id') or obj.id is None:
+        if not hasattr(obj, "id") or obj.id is None:
             obj.id = self._id_counter
             self._id_counter += 1
-        
+
         # Stocker l'objet
         obj_type = type(obj).__name__
         if obj_type not in self._objects:
@@ -59,7 +60,7 @@ class MockSession(MagicMock):
     def query(self, model):
         """Simule une requête."""
         model_name = model.__name__
-        
+
         class MockQuery:
             def __init__(self, session, model_name):
                 self.session = session
@@ -73,7 +74,7 @@ class MockSession(MagicMock):
             def first(self):
                 if self.model_name not in self.session._objects:
                     return None
-                
+
                 # Pour simplifier, on retourne le premier objet qui correspond
                 # Dans un cas réel, il faudrait évaluer les conditions
                 objects = list(self.session._objects[self.model_name].values())
