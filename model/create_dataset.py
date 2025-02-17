@@ -5,11 +5,9 @@ import shutil
 from pathlib import Path
 
 
-
-def create_dataset(source_dir="model/drawing_normalized", 
-                  output_dir="model/dataset",
-                  train_ratio=0.8):
-
+def create_dataset(
+    source_dir="model/drawing_normalized", output_dir="model/dataset", train_ratio=0.8
+):
     """
     Crée les datasets d'entraînement et de test à partir des images normalisées.
 

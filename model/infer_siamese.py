@@ -24,6 +24,7 @@ from model.siamese_model import SiameseNetwork
 # Configuration du logging
 logging.basicConfig(level=logging.INFO)
 
+
 class SiamesePredictor:
     """
     Classe pour l'inférence avec le réseau siamois.
@@ -206,6 +207,7 @@ class SiamesePredictor:
             "is_confident": similarity >= self.similarity_threshold,
         }
 
+
 def main():
     """
     Point d'entrée principal du script.
@@ -248,7 +250,9 @@ def main():
             logging.error(f"Image non trouvée : {image_path}")
     else:
 
-        logging.info("Aucune image fournie. Usage : python infer_siamese.py <chemin_image>")
+        logging.info(
+            "Aucune image fournie. Usage : python infer_siamese.py <chemin_image>"
+        )
 
 
 def load_templates():
@@ -297,8 +301,12 @@ def load_templates():
     return predictor
 
 
-def predict_symbol(image_path: str, model: torch.nn.Module, templates: SiamesePredictor, device: torch.device) -> Tuple[str, float]:
-
+def predict_symbol(
+    image_path: str,
+    model: torch.nn.Module,
+    templates: SiamesePredictor,
+    device: torch.device,
+) -> Tuple[str, float]:
     """
     Prédit le symbole pour une image donnée.
 
@@ -313,6 +321,7 @@ def predict_symbol(image_path: str, model: torch.nn.Module, templates: SiamesePr
     """
     prediction = templates.predict(Path(image_path))
     return prediction["predicted_symbol"], prediction["similarity_score"]
+
 
 if __name__ == "__main__":
     main()

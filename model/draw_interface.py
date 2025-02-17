@@ -10,9 +10,7 @@ import torch.nn as nn
 from PIL import Image, ImageDraw, ImageOps
 from torchvision import transforms
 
-
-from model.infer_siamese import (SiamesePredictor, load_templates,
-                                 predict_symbol)
+from model.infer_siamese import SiamesePredictor, load_templates, predict_symbol
 from model.siamese_model import SiameseNetwork
 
 
