@@ -1,8 +1,18 @@
+import datetime
+
 from pydantic import BaseModel
-from sqlalchemy import Boolean, Column, Float, ForeignKey, Integer, String, Table, DateTime
+from sqlalchemy import (
+    Boolean,
+    Column,
+    DateTime,
+    Float,
+    ForeignKey,
+    Integer,
+    String,
+    Table,
+)
 from sqlalchemy.orm import relationship
 from sqlalchemy.schema import Index
-import datetime
 
 from database.config.database import Base
 from database.utils.logger import db_logger
@@ -79,8 +89,10 @@ class SymboleTag(Base):
     nom = Column(String(500), nullable=False, unique=True)
     description = Column(String(1000), nullable=True)
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
-    updated_at = Column(DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
-    
+    updated_at = Column(
+        DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow
+    )
+
     # Relations
     verres_associations = relationship("VerreSymbole", back_populates="symbole")
 
@@ -93,12 +105,16 @@ class VerreSymbole(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     verre_id = Column(Integer, ForeignKey("verres.id"), nullable=False)
     symbole_id = Column(Integer, ForeignKey("symboles_tags.id"), nullable=False)
-    score_confiance = Column(Float, nullable=False)  # Score de similarité du modèle siamois
+    score_confiance = Column(
+        Float, nullable=False
+    )  # Score de similarité du modèle siamois
     est_valide = Column(Boolean, default=False)  # Validation manuelle
     valide_par = Column(String(100), nullable=True)  # Utilisateur ayant validé
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
-    updated_at = Column(DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
-    
+    updated_at = Column(
+        DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow
+    )
+
     # Relations
     verre = relationship("Verre", back_populates="symboles_associations")
     symbole = relationship("SymboleTag", back_populates="verres_associations")
