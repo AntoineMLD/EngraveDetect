@@ -9,15 +9,17 @@ Permet de :
 """
 import logging
 from pathlib import Path
-from typing import Tuple, List
+from typing import List, Tuple
+
+import matplotlib.pyplot as plt
+import numpy as np
 import torch
 import torch.nn.functional as F
-from torch.utils.data import DataLoader
-import numpy as np
-from sklearn.metrics import precision_recall_curve, f1_score
-import matplotlib.pyplot as plt
 from siamese_model import SiameseNetwork
+from sklearn.metrics import f1_score, precision_recall_curve
+from torch.utils.data import DataLoader
 from train_siamese import PairDataset
+
 # Configuration du logging
 logging.basicConfig(level=logging.INFO)
 class SiameseEvaluator:

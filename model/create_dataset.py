@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 import os
+import random
 import shutil
 from pathlib import Path
-import random
+
+
 def create_dataset(source_dir="model/drawing_normalized", 
                   output_dir="model/dataset",
                   train_ratio=0.8):

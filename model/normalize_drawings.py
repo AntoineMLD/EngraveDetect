@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
 import os
 import sys
+from pathlib import Path
+
 import cv2
 import numpy as np
-from pathlib import Path
+
+
 def apply_random_rotation(image, max_angle=15):
     """Applique une rotation aléatoire à l'image"""
     angle = np.random.uniform(-max_angle, max_angle)

@@ -7,21 +7,23 @@ Ce script :
 - Évalue les performances sur l'ensemble de validation
 - Sauvegarde le meilleur modèle
 """
-import os
 import csv
 import logging
+import os
 from pathlib import Path
-from typing import Tuple, Dict
+from typing import Dict, Tuple
+
+import numpy as np
+import pandas as pd
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
-from torch.utils.data import Dataset, DataLoader
-from torchvision import transforms
 from PIL import Image
-import numpy as np
-import pandas as pd
-from siamese_model import SiameseNetwork, ContrastiveLoss
+from siamese_model import ContrastiveLoss, SiameseNetwork
+from torch.utils.data import DataLoader, Dataset
+from torchvision import transforms
+
 # Configuration du logging
 logging.basicConfig(level=logging.INFO)
 class PairDataset(Dataset):

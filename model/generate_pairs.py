@@ -7,13 +7,14 @@ Ce script parcourt les dossiers train/val/test et génère des paires d'images :
 Les paires sont équilibrées (autant de positives que de négatives) et
 sauvegardées dans des fichiers CSV pour chaque ensemble de données.
 """
-import os
 import csv
-import random
-from pathlib import Path
-from typing import List, Tuple, Dict
-from itertools import combinations
 import logging
+import os
+import random
+from itertools import combinations
+from pathlib import Path
+from typing import Dict, List, Tuple
+
 # Configuration du logging
 logging.basicConfig(level=logging.INFO)
 class PairGenerator:

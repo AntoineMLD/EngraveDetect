@@ -3,12 +3,14 @@
 Script utilitaire pour créer le dossier de templates.
 Copie une image de référence pour chaque symbole depuis le jeu d'entraînement.
 """
-import os
-from pathlib import Path
-from PIL import Image, ImageOps
-import shutil
-import numpy as np
 import logging
+import os
+import shutil
+from pathlib import Path
+
+import numpy as np
+from PIL import Image, ImageOps
+
 # Configuration du logging
 logging.basicConfig(level=logging.INFO)
 def normalize_image(image_path, target_size=64):

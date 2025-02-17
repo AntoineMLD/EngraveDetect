@@ -9,15 +9,17 @@ et les répartit en trois ensembles :
 Les images sont soit déplacées physiquement dans des dossiers correspondants,
 soit référencées dans un fichier JSON avec leurs labels et leur attribution.
 """
-import os
 import json
+import logging
+import os
 import random
 import shutil
 from pathlib import Path
 from typing import Dict, List, Tuple
-import logging
+
 import cv2
 import numpy as np
+
 # Configuration du logging
 logging.basicConfig(level=logging.INFO)
 class DatasetSplitter:

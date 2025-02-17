@@ -8,6 +8,8 @@ Ce module définit :
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+
+
 class SiameseNetwork(nn.Module):
     """
     Implémente un réseau siamois pour la reconnaissance de symboles.

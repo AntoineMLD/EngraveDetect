@@ -1,13 +1,16 @@
 #!/usr/bin/env python3
 import os
-import torch
-import pandas as pd
-import numpy as np
-from PIL import Image
+from pathlib import Path
 from typing import Tuple
+
+import numpy as np
+import pandas as pd
+import torch
+from PIL import Image
 from torch.utils.data import Dataset
 from torchvision import transforms
-from pathlib import Path
+
+
 class SiameseDataset(Dataset):
     """
     Dataset pour charger les paires d'images pour l'entraînement du réseau siamois.
