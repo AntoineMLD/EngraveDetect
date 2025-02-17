@@ -20,6 +20,9 @@ class VerreSymboleBase(BaseModel):
     est_valide: bool = False
     valide_par: Optional[str] = None
 
+    class Config:
+        orm_mode = True
+
 class VerreSymboleCreate(VerreSymboleBase):
     pass
 
@@ -27,10 +30,13 @@ class VerreSymboleUpdate(BaseModel):
     est_valide: bool
     valide_par: str
 
+    class Config:
+        orm_mode = True
+
 class VerreSymboleResponse(VerreSymboleBase):
     id: int
-    created_at: datetime
-    updated_at: datetime
+    created_at: Optional[datetime] = None
+    updated_at: Optional[datetime] = None
 
     class Config:
         orm_mode = True
@@ -91,7 +97,7 @@ def create_verre_symbole(
             detail=f"Impossible de créer l'association : {str(e)}"
         )
     
-    return db_association
+    return VerreSymboleResponse.from_orm(db_association)
 
 @router.get("/verres/{verre_id}/symboles/", response_model=List[VerreSymboleResponse], tags=["Associations Verres-Symboles"])
 def get_symboles_for_verre(
@@ -109,9 +115,11 @@ def get_symboles_for_verre(
     if not verre:
         raise HTTPException(status_code=404, detail="Verre non trouvé")
 
-    return db.query(VerreSymbole).filter(
+    associations = db.query(VerreSymbole).filter(
         VerreSymbole.verre_id == verre_id
     ).offset(skip).limit(limit).all()
+
+    return [VerreSymboleResponse.from_orm(a) for a in associations]
 
 @router.put("/verres/{verre_id}/symboles/{symbole_id}", response_model=VerreSymboleResponse, tags=["Associations Verres-Symboles"])
 def validate_verre_symbole(
@@ -148,7 +156,7 @@ def validate_verre_symbole(
             detail=f"Impossible de mettre à jour l'association : {str(e)}"
         )
     
-    return association
+    return VerreSymboleResponse.from_orm(association)
 
 @router.delete("/verres/{verre_id}/symboles/{symbole_id}", tags=["Associations Verres-Symboles"])
 def delete_verre_symbole(

@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 from api.dependencies.auth import verify_auth
 from database.config.database import get_db
 from database.models.base import SymboleTag
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 router = APIRouter()
 
@@ -14,6 +14,9 @@ router = APIRouter()
 class SymboleBase(BaseModel):
     nom: str
     description: Optional[str] = None
+
+    class Config:
+        orm_mode = True
 
 class SymboleCreate(SymboleBase):
     pass
@@ -44,7 +47,8 @@ def get_symboles(
     if search:
         query = query.filter(SymboleTag.nom.ilike(f"%{search}%"))
     
-    return query.offset(skip).limit(limit).all()
+    symboles = query.offset(skip).limit(limit).all()
+    return [Symbole.from_orm(s) for s in symboles]
 
 @router.post("/symboles/", response_model=Symbole, tags=["Symboles"])
 def create_symbole(
@@ -68,7 +72,7 @@ def create_symbole(
             detail=f"Impossible de créer le symbole : {str(e)}",
         )
     
-    return db_symbole
+    return Symbole.from_orm(db_symbole)
 
 @router.get("/symboles/{symbole_id}", response_model=Symbole, tags=["Symboles"])
 def get_symbole(
@@ -82,7 +86,7 @@ def get_symbole(
     symbole = db.query(SymboleTag).filter(SymboleTag.id == symbole_id).first()
     if not symbole:
         raise HTTPException(status_code=404, detail="Symbole non trouvé")
-    return symbole
+    return Symbole.from_orm(symbole)
 
 @router.put("/symboles/{symbole_id}", response_model=Symbole, tags=["Symboles"])
 def update_symbole(
@@ -111,7 +115,7 @@ def update_symbole(
             detail=f"Impossible de mettre à jour le symbole : {str(e)}",
         )
     
-    return db_symbole
+    return Symbole.from_orm(db_symbole)
 
 @router.delete("/symboles/{symbole_id}", tags=["Symboles"])
 def delete_symbole(
