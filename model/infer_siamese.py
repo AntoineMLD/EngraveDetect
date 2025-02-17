@@ -7,19 +7,23 @@ Permet de :
 - Comparer avec une base de templates
 - Identifier le symbole le plus proche
 """
+import json
 import logging
 from pathlib import Path
-from typing import Dict, Tuple, List
-import json
-import torch
-import torch.nn.functional as F
-from torchvision import transforms
-from PIL import Image, ImageOps
+from typing import Dict, List, Tuple
+
 import numpy as np
+import torch
 import torch.nn as nn
+import torch.nn.functional as F
+from PIL import Image, ImageOps
+from torchvision import transforms
+
 from model.siamese_model import SiameseNetwork
+
 # Configuration du logging
 logging.basicConfig(level=logging.INFO)
+
 class SiamesePredictor:
     """
     Classe pour l'inférence avec le réseau siamois.
@@ -186,6 +190,7 @@ class SiamesePredictor:
             "similarity_score": similarity,
             "is_confident": similarity >= self.similarity_threshold
         }
+
 def main():
     """
     Point d'entrée principal du script.
@@ -227,6 +232,7 @@ def main():
             logging.error(f"Image non trouvée : {image_path}")
     else:
         logging.info("Aucune image fournie. Usage : python infer_siamese.py <chemin_image>")
+
 def load_templates():
     """
     Charge les templates et retourne un prédicteur initialisé.
@@ -271,6 +277,7 @@ def load_templates():
     predictor.load_templates(templates_dir)
     
     return predictor
+
 def predict_symbol(image_path: str, model: torch.nn.Module, templates: SiamesePredictor, device: torch.device) -> Tuple[str, float]:
     """
     Prédit le symbole pour une image donnée.
@@ -286,5 +293,6 @@ def predict_symbol(image_path: str, model: torch.nn.Module, templates: SiamesePr
     """
     prediction = templates.predict(Path(image_path))
     return prediction["predicted_symbol"], prediction["similarity_score"]
+
 if __name__ == "__main__":
     main() 

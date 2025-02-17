@@ -1,15 +1,18 @@
-import tkinter as tk
-from tkinter import ttk, colorchooser, messagebox
-from PIL import Image, ImageDraw, ImageOps
-import os
-from pathlib import Path
 import datetime
+import os
+import tkinter as tk
+from pathlib import Path
+from tkinter import colorchooser, messagebox, ttk
+
+import numpy as np
 import torch
 import torch.nn as nn
-import numpy as np
+from PIL import Image, ImageDraw, ImageOps
 from torchvision import transforms
+
+from model.infer_siamese import SiamesePredictor, load_templates, predict_symbol
 from model.siamese_model import SiameseNetwork
-from model.infer_siamese import load_templates, predict_symbol, SiamesePredictor
+
 class DrawingInterface:
     def __init__(self, root):
         self.root = root
