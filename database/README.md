@@ -6,7 +6,7 @@
 ```
 database/
 ├── config/              # Configuration SQLAlchemy
-│   ├── database.py     # Configuration connexion
+│   ├── database.py     # Configuration connexion SQLite
 │   └── settings.py     # Paramètres globaux
 ├── models/             # Modèles SQLAlchemy (ORM)
 │   ├── verre.py       # Modèle Verre
@@ -28,10 +28,14 @@ database/
 ```python
 # database.py
 SQLALCHEMY_DATABASE_URL = "sqlite:///./verres.db"
-POOL_SIZE = 20
-MAX_OVERFLOW = 10
-POOL_TIMEOUT = 30
-POOL_RECYCLE = 3600
+
+# Configuration SQLite spécifique
+SQLITE_PRAGMA = {
+    "journal_mode": "WAL",  # Write-Ahead Logging pour de meilleures performances
+    "synchronous": "NORMAL",  # Bon compromis entre performance et sécurité
+    "foreign_keys": "ON",    # Active la vérification des clés étrangères
+    "cache_size": -64000     # Cache de 64MB pour de meilleures performances
+}
 ```
 
 ### Modèles de Données
@@ -41,7 +45,7 @@ POOL_RECYCLE = 3600
 class Verre(Base):
     __tablename__ = "verres"
     
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     nom = Column(String(100), nullable=False)
     variante = Column(String(50))
     hauteur_min = Column(Integer)
@@ -68,7 +72,7 @@ class Verre(Base):
 class Fournisseur(Base):
     __tablename__ = "fournisseurs"
     
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     nom = Column(String(100), unique=True, nullable=False)
     verres = relationship("Verre", back_populates="fournisseur")
 ```
@@ -77,27 +81,32 @@ class Fournisseur(Base):
 
 ## Performance
 
-### Optimisations
-1. Indexes stratégiques
+### Optimisations SQLite
+1. Write-Ahead Logging (WAL)
+   - Meilleure concurrence lecture/écriture
+   - Meilleures performances en écriture
+   - Plus grande fiabilité
+
+2. Indexes stratégiques
    - Clés primaires (B-tree)
    - Clés étrangères
    - Colonnes fréquemment recherchées
 
-2. Configuration Pool
-   - Pool_size: 20 connexions
-   - Max_overflow: 10 connexions
-   - Pool_timeout: 30 secondes
+3. Configuration du cache
+   - Cache size optimisé
+   - Page size adaptée
+   - Journal mode optimisé
 
-3. Requêtes optimisées
-   - Lazy loading
+4. Requêtes optimisées
+   - Utilisation de transactions
    - Jointures efficaces
    - Pagination
 
 ### Métriques
 - Temps de requête moyen: <50ms
 - Temps de transaction: <100ms
-- Taille DB max: 10GB
-- Connexions simultanées: 100
+- Taille DB max recommandée: 100GB
+- Connexions simultanées max recommandées: 20-25
 
 ## Sécurité
 
@@ -116,7 +125,7 @@ class VerreValidator:
 
 ### Transactions
 ```python
-# Gestion des transactions
+# Gestion des transactions avec SQLite
 def create_verre(db: Session, verre: VerreCreate):
     try:
         with db.begin_nested():
@@ -133,8 +142,8 @@ def create_verre(db: Session, verre: VerreCreate):
 #!/bin/bash
 # backup.sh
 DATE=$(date +%Y%m%d)
-sqlite3 verres.db ".backup '/backup/verres_$DATE.db'"
-gzip "/backup/verres_$DATE.db"
+sqlite3 verres.db ".backup 'backup/verres_$DATE.db'"
+gzip "backup/verres_$DATE.db"
 ```
 
 ## Migrations
@@ -145,6 +154,12 @@ gzip "/backup/verres_$DATE.db"
 [alembic]
 script_location = migrations
 sqlalchemy.url = sqlite:///./verres.db
+
+# SQLite-specific settings
+[sqlite]
+pragma.journal_mode=WAL
+pragma.synchronous=NORMAL
+pragma.foreign_keys=ON
 ```
 
 ### Exemple Migration
@@ -153,7 +168,7 @@ sqlalchemy.url = sqlite:///./verres.db
 def upgrade():
     op.create_table(
         'verres',
-        sa.Column('id', sa.Integer(), nullable=False),
+        sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
         sa.Column('nom', sa.String(100), nullable=False),
         # ...
     )
@@ -202,7 +217,7 @@ def test_verre_crud():
 
 ## Monitoring
 
-### Métriques SQLAlchemy
+### Métriques SQLite
 ```python
 from sqlalchemy import event
 
@@ -243,19 +258,13 @@ LOGGING = {
 1. Vérification des logs
 2. Backup automatique
 3. Monitoring des performances
-4. Nettoyage des sessions
+4. Vérification de l'intégrité de la base
 
 ### Tâches Hebdomadaires
 1. Analyse des requêtes lentes
 2. Optimisation des indexes
-3. Vérification intégrité
-4. Compaction base
-
-### Tâches Mensuelles
-1. Revue des performances
-2. Mise à jour schéma
-3. Archivage données
-4. Maintenance indexes
+3. VACUUM pour récupérer l'espace disque
+4. Vérification de la fragmentation
 
 ## Dépendances
 

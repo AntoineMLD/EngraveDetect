@@ -10,41 +10,18 @@ services:
       - "8001:8000"
     environment:
       - DATABASE_URL=sqlite:///app/database/data/verres.db
-      - MODEL_URL=http://model:5000
-      - REDIS_URL=redis://redis:6379/0
       - JWT_SECRET_KEY=${JWT_SECRET_KEY}
       - JWT_ALGORITHM=${JWT_ALGORITHM}
       - JWT_ACCESS_TOKEN_EXPIRE_MINUTES=${JWT_ACCESS_TOKEN_EXPIRE_MINUTES}
       - ADMIN_USERNAME=${ADMIN_USERNAME}
       - ADMIN_PASSWORD=${ADMIN_PASSWORD}
-      - PYTHONPATH=/app:/app/model
-    depends_on:
-      - model
-      - redis
+      - PYTHONPATH=/app
     volumes:
       - ./database/data:/app/database/data
       - ./model:/app/model
       - ./model/models:/app/model/models
       - ./model/templates:/app/model/templates
       - ./model/debug:/app/model/debug
-    networks:
-      - engravedetect-network
-
-  model:
-    build:
-      context: .
-      dockerfile: model/Dockerfile
-    restart: always
-    ports:
-      - "5000:5000"
-    volumes:
-      - ./model:/app/model
-      - ./model/models:/app/model/models
-      - ./model/templates:/app/model/templates
-      - ./model/debug:/app/model/debug
-    environment:
-      - CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-""}
-      - PYTHONPATH=/app
     networks:
       - engravedetect-network
 
