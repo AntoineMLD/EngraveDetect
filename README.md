@@ -1,7 +1,37 @@
 # EngraveDetect - Documentation Technique
 
 ## Vue d'Ensemble
-EngraveDetect est une solution complète de détection et gestion des gravures de verres optiques, combinant une API REST, un système de reconnaissance par deep learning, et une base de données relationnelle.
+EngraveDetect est une solution complète de détection et gestion des gravures de verres optiques, combinant une API REST, un système de reconnaissance par deep learning, une base de données SQLite avec synchronisation Azure SQL, et un moteur de recherche avancé basé sur Azure Cognitive Search.
+
+### 1.1 Vue d'Ensemble
+```mermaid
+graph TD
+    A[Interface Utilisateur] --> B[API FastAPI]
+    B --> C[Base de Données SQLite]
+    B --> D[Modèle IA]
+    E[Scrapers] --> C
+    F[Interface de Dessin] --> D
+    C --> G[Azure SQL Database]
+    B --> H[Azure Cognitive Search]
+    G --> H
+    H --> B
+```
+
+### 1.2 Flux de Données
+1. **Acquisition des Données**
+   - Scraping des sites fournisseurs
+   - Stockage dans SQLite local
+   - Synchronisation avec Azure SQL
+
+2. **Synchronisation Cloud**
+   - Migration des données vers Azure SQL
+   - Indexation dans Azure Cognitive Search
+   - Mise à jour automatique des index
+
+3. **Recherche et Accès**
+   - Recherche full-text via Azure Search
+   - Filtrage et facettes sur les attributs
+   - Cache et optimisation des requêtes
 
 ## Architecture Système
 
@@ -17,6 +47,7 @@ engravedetect/
 │   ├── config/           # Configuration SQLAlchemy
 │   ├── models/           # Modèles SQLAlchemy
 │   ├── scripts/          # Scripts d'import/export
+│   │   └── azure_sync/   # Scripts de synchronisation Azure
 │   └── tests/            # Tests unitaires
 ├── model/                 # Système de reconnaissance
 │   ├── dataset/          # Données d'entraînement
@@ -33,80 +64,71 @@ engravedetect/
 ### Environnement d'Exécution
 - Python 3.8+
 - OS Support: Windows, Linux, macOS
-- GPU Support: CUDA 11.0+ (optionnel)
-- RAM Minimale: 8GB
-- Espace Disque: 2GB+
+- RAM Minimale: 4GB
+- Espace Disque: 1GB+
+- ODBC Driver 18 pour SQL Server
 
 ### Dépendances Principales
 ```
-fastapi==0.68.0
-sqlalchemy==1.4.23
-torch==1.9.0
-scrapy==2.5.0
-pillow==8.3.1
-pytest==6.2.5
+fastapi>=0.100.0
+uvicorn>=0.23.0
+sqlalchemy>=2.0.0
+python-dotenv>=1.0.0
+azure-search-documents>=11.4.0
+azure-core>=1.26.0
+azure-common>=1.1.28
+pyodbc>=4.0.39
 ```
 
 ### Base de Données
-- Moteur: SQLite 3
-- ORM: SQLAlchemy
-- Schéma: 6 tables principales
+- SQLite 3.31+ (développement)
+- Azure SQL Database (production)
+- ORM: SQLAlchemy 2.0+
+- Schéma: 10 tables principales
 - Indexation: B-tree sur clés primaires
-- Contraintes: Intégrité référentielle
+- Synchronisation bidirectionnelle
+
+### Moteur de Recherche
+- Azure Cognitive Search
+- Index personnalisé pour les verres
+- Recherche full-text et filtres
+- Facettes sur fournisseurs et matériaux
+- Scoring basé sur la pertinence
 
 ### API REST
-- Framework: FastAPI
+- Framework: FastAPI 0.100+
 - Authentication: JWT
 - Documentation: OpenAPI 3.0
-- Rate Limiting: 100 req/min
+- Rate Limiting: 180s entre indexations
 - Timeout: 30s
-
-### Modèle de Deep Learning
-- Architecture: Réseau Siamois
-- Framework: PyTorch
-- Précision: 92.3%
-- Inférence: CPU/GPU
-- Taille du modèle: ~50MB
 
 ## Métriques de Performance
 
-### API
-- Temps de réponse moyen: <100ms
-- Throughput: 1000 req/s
-- Latence P95: 200ms
-- Disponibilité: 99.9%
-
 ### Base de Données
 - Temps de requête moyen: <50ms
-- Taille maximale: 10GB
-- Connections simultanées: 100
-- Backup: Quotidien
+- Taille actuelle: ~100MB
+- Synchronisation Azure: ~5min
+- Backup: Automatique quotidien
 
-### Modèle ML
-- Temps d'inférence: <200ms
-- Précision: 92.3%
-- Rappel: 88.7%
-- F1-score: 90.4%
+### Moteur de Recherche
+- Temps de réponse: <200ms
+- Précision recherche: >90%
+- Limite indexation: 180s
+- Taille index: <1GB
 
 ## Sécurité
 
-### Authentification
-- JWT avec rotation des clés
-- Durée de session: 30 minutes
-- Rate limiting par IP
-- Validation des tokens
-
 ### Protection des Données
-- Hachage des mots de passe: bcrypt
-- TLS 1.3
+- Variables d'environnement pour les credentials
+- Authentification Azure managée
+- TLS 1.2+ pour les connexions
 - Validation des entrées
-- Sanitization SQL
 
 ### Audit
-- Logs sécurité
-- Traçabilité des actions
-- Monitoring temps réel
-- Alertes automatiques
+- Logs de synchronisation
+- Traçabilité des indexations
+- Monitoring Azure
+- Alertes d'erreurs
 
 ## Déploiement
 
@@ -115,7 +137,7 @@ pytest==6.2.5
 # Dépendances système
 apt-get install python3.8 python3.8-dev
 apt-get install sqlite3 libsqlite3-dev
-apt-get install build-essential
+apt-get install unixodbc-dev
 
 # Environnement virtuel
 python -m venv venv
@@ -127,85 +149,52 @@ pip install -r requirements.txt
 ```bash
 # Variables d'environnement
 cp .env.example .env
-# Éditer .env avec les valeurs appropriées
+# Configuration requise:
+# - AZURE_SEARCH_ENDPOINT
+# - AZURE_SEARCH_KEY
+# - AZURE_SQL_CONNECTION_STRING
 
-# Base de données
-./database/setup_db.sh
-
-# Modèle ML
-python -m model.create_templates
-python -m model.train_siamese
+# Synchronisation
+python database/scripts/azure_sync/sync_schema_and_data.py
+python database/scripts/azure_sync/create_search_index.py
+python database/scripts/azure_sync/index_data.py
 ```
 
 ### Tests
 ```bash
-# Tests unitaires
-pytest
-
-# Tests de charge
-locust -f tests/locustfile.py
-
-# Tests d'intégration
-pytest tests/integration/
+# Tests de synchronisation
+python database/scripts/azure_sync/test_search.py
 ```
-
-## Monitoring
-
-### Métriques Système
-- CPU/RAM/Disk Usage
-- Latence réseau
-- Temps de réponse API
-- Performances DB
-
-### Logs
-- Application: `/var/log/engravedetect/app.log`
-- API: `/var/log/engravedetect/api.log`
-- ML: `/var/log/engravedetect/ml.log`
-- DB: `/var/log/engravedetect/db.log`
-
-### Alertes
-- Seuils de performance
-- Erreurs critiques
-- Sécurité
-- Disponibilité
 
 ## Maintenance
 
-### Backups
-- DB: Quotidien (00:00 UTC)
-- Modèles ML: Par version
-- Logs: Rotation 7 jours
-- Templates: Versionné
-
-### Mises à Jour
-- Dépendances: Mensuel
-- Sécurité: ASAP
-- Modèle ML: Trimestriel
-- DB: Selon besoin
+### Tâches Régulières
+- Synchronisation Azure SQL: Quotidienne
+- Réindexation Search: Au besoin
+- Vérification des logs: Quotidienne
+- Backup SQLite: Hebdomadaire
 
 ### Monitoring
-- Grafana Dashboard
-- Prometheus Metrics
-- ELK Stack
-- NewRelic APM
+- Azure Monitor
+- Logs d'application
+- Métriques de recherche
+- Alertes d'erreurs
 
-## Support et Documentation
+## Support
 
 ### Documentation
-- API: `/docs` et `/redoc`
-- Base de données: `database/README.md`
-- ML: `model/README.md`
-- Scrapers: `scrapers/README.md`
+- README.md: Vue d'ensemble
+- TECHNICAL_DOCUMENTATION.md: Détails techniques
+- database/README.md: Documentation BDD
+- Commentaires dans le code
 
-### Support
+### Contact
 - Issues GitHub
-- Documentation technique
-- Guides maintenance
-- Procédures incident
+- Documentation en ligne
+- Support technique Azure
 
 ## Licence et Crédits
 - Licence: MIT
-- Auteur: [Votre Nom]
 - Version: 1.0.0
-- Copyright: 2024-2025
+- Copyright: 2024
 

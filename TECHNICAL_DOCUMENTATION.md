@@ -841,9 +841,9 @@ database/
 #### 7.2.1 Configuration de la Base de Données
 ```python
 # Configuration Azure SQL
-SERVER = 'adventureworks-server-hdf.database.windows.net'
-DATABASE = 'engravedetect-db'
-USERNAME = 'jvcb'
+SERVER = '<your-server>.database.windows.net'
+DATABASE = '<your-database>'
+USERNAME = '<your-username>'
 DRIVER = '{ODBC Driver 18 for SQL Server}'
 ```
 
@@ -957,9 +957,12 @@ results = search_verres(
 
 ### 7.6 Variables d'Environnement (.env)
 ```
-AZURE_SEARCH_ENDPOINT=https://engravedetect-search.search.windows.net
-AZURE_SEARCH_KEY=<votre_clé>
-AZURE_SQL_CONNECTION_STRING=Server=...;Database=...;User Id=...;Password=...
+# Azure Cognitive Search
+AZURE_SEARCH_ENDPOINT=<your-search-endpoint>
+AZURE_SEARCH_KEY=<your-search-key>
+
+# Azure SQL Database
+AZURE_SQL_CONNECTION_STRING="Server=<your-server>.database.windows.net;Database=<your-database>;User Id=<your-username>;Password=<your-password>"
 ```
 
 ### 7.7 Bonnes Pratiques
