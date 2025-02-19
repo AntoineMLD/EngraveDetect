@@ -1,37 +1,44 @@
 #!/usr/bin/env python3
 import os
 import sqlite3
-import pyodbc
-from typing import List, Dict, Tuple
-import pandas as pd
-from tabulate import tabulate
 from datetime import datetime
+from typing import Dict, List, Tuple
+
 import numpy as np
+import pandas as pd
+import pyodbc
+from tabulate import tabulate
 
 # Configuration Azure SQL
-SERVER = 'adventureworks-server-hdf.database.windows.net'
-DATABASE = 'engravedetect-db'
-USERNAME = 'jvcb'
-PASSWORD = 'cbjv592023!'
-DRIVER = '{ODBC Driver 18 for SQL Server}'
+SERVER = "adventureworks-server-hdf.database.windows.net"
+DATABASE = "engravedetect-db"
+USERNAME = "jvcb"
+PASSWORD = "cbjv592023!"
+DRIVER = "{ODBC Driver 18 for SQL Server}"
 
 # Configuration SQLite
-SQLITE_DB_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'data', 'verres.db')
+SQLITE_DB_PATH = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "data", "verres.db"
+)
+
 
 def get_azure_connection():
     """Établit une connexion à Azure SQL"""
-    conn_str = f'DRIVER={DRIVER};SERVER={SERVER};DATABASE={DATABASE};UID={USERNAME};PWD={PASSWORD};Encrypt=yes;TrustServerCertificate=no;'
+    conn_str = f"DRIVER={DRIVER};SERVER={SERVER};DATABASE={DATABASE};UID={USERNAME};PWD={PASSWORD};Encrypt=yes;TrustServerCertificate=no;"
     return pyodbc.connect(conn_str)
+
 
 def get_sqlite_connection():
     """Établit une connexion à SQLite"""
     return sqlite3.connect(SQLITE_DB_PATH)
+
 
 def get_sqlite_tables(conn) -> List[str]:
     """Récupère la liste des tables existantes dans SQLite"""
     cursor = conn.cursor()
     cursor.execute("SELECT name FROM sqlite_master WHERE type='table'")
     return [row[0] for row in cursor.fetchall()]
+
 
 def create_azure_schema():
     """Crée le schéma dans Azure SQL"""
@@ -42,11 +49,18 @@ def create_azure_schema():
         # Suppression des tables existantes dans l'ordre inverse des dépendances
         print("Suppression des tables existantes...")
         tables_to_drop = [
-            'verres_symboles', 'verres_traitements', 'gravures', 'verres', 
-            'series', 'gammes', 'materiaux', 'fournisseurs', 'symboles', 
-            'traitements'
+            "verres_symboles",
+            "verres_traitements",
+            "gravures",
+            "verres",
+            "series",
+            "gammes",
+            "materiaux",
+            "fournisseurs",
+            "symboles",
+            "traitements",
         ]
-        
+
         for table in tables_to_drop:
             try:
                 cursor.execute(f"DROP TABLE IF EXISTS {table}")
@@ -56,29 +70,34 @@ def create_azure_schema():
 
         # Création des tables dans l'ordre des dépendances
         print("Création des nouvelles tables...")
-        
+
         # Table fournisseurs
-        cursor.execute("""
+        cursor.execute(
+            """
         CREATE TABLE fournisseurs (
             id INT PRIMARY KEY IDENTITY(1,1),
             nom VARCHAR(100) NOT NULL UNIQUE,
             created_at DATETIME DEFAULT GETDATE(),
             updated_at DATETIME DEFAULT GETDATE()
         )
-        """)
+        """
+        )
 
         # Table materiaux
-        cursor.execute("""
+        cursor.execute(
+            """
         CREATE TABLE materiaux (
             id INT PRIMARY KEY IDENTITY(1,1),
             nom VARCHAR(100) NOT NULL UNIQUE,
             created_at DATETIME DEFAULT GETDATE(),
             updated_at DATETIME DEFAULT GETDATE()
         )
-        """)
+        """
+        )
 
         # Table gammes
-        cursor.execute("""
+        cursor.execute(
+            """
         CREATE TABLE gammes (
             id INT PRIMARY KEY IDENTITY(1,1),
             nom VARCHAR(100) NOT NULL UNIQUE,
@@ -86,10 +105,12 @@ def create_azure_schema():
             created_at DATETIME DEFAULT GETDATE(),
             updated_at DATETIME DEFAULT GETDATE()
         )
-        """)
+        """
+        )
 
         # Table series
-        cursor.execute("""
+        cursor.execute(
+            """
         CREATE TABLE series (
             id INT PRIMARY KEY IDENTITY(1,1),
             nom VARCHAR(100) NOT NULL,
@@ -97,10 +118,12 @@ def create_azure_schema():
             created_at DATETIME DEFAULT GETDATE(),
             updated_at DATETIME DEFAULT GETDATE()
         )
-        """)
+        """
+        )
 
         # Table traitements
-        cursor.execute("""
+        cursor.execute(
+            """
         CREATE TABLE traitements (
             id INT PRIMARY KEY IDENTITY(1,1),
             nom VARCHAR(100) NOT NULL,
@@ -108,10 +131,12 @@ def create_azure_schema():
             created_at DATETIME DEFAULT GETDATE(),
             updated_at DATETIME DEFAULT GETDATE()
         )
-        """)
+        """
+        )
 
         # Table verres
-        cursor.execute("""
+        cursor.execute(
+            """
         CREATE TABLE verres (
             id INT PRIMARY KEY IDENTITY(1,1),
             nom VARCHAR(100),
@@ -128,10 +153,12 @@ def create_azure_schema():
             created_at DATETIME DEFAULT GETDATE(),
             updated_at DATETIME DEFAULT GETDATE()
         )
-        """)
+        """
+        )
 
         # Table symboles (correspond à symboles_tags dans SQLite)
-        cursor.execute("""
+        cursor.execute(
+            """
         CREATE TABLE symboles (
             id INT PRIMARY KEY IDENTITY(1,1),
             nom VARCHAR(100) NOT NULL,
@@ -140,10 +167,12 @@ def create_azure_schema():
             created_at DATETIME DEFAULT GETDATE(),
             updated_at DATETIME DEFAULT GETDATE()
         )
-        """)
+        """
+        )
 
         # Table verres_symboles
-        cursor.execute("""
+        cursor.execute(
+            """
         CREATE TABLE verres_symboles (
             id INT PRIMARY KEY IDENTITY(1,1),
             verre_id INT REFERENCES verres(id),
@@ -153,10 +182,12 @@ def create_azure_schema():
             created_at DATETIME DEFAULT GETDATE(),
             updated_at DATETIME DEFAULT GETDATE()
         )
-        """)
+        """
+        )
 
         # Table verres_traitements
-        cursor.execute("""
+        cursor.execute(
+            """
         CREATE TABLE verres_traitements (
             id INT PRIMARY KEY IDENTITY(1,1),
             verre_id INT REFERENCES verres(id),
@@ -164,10 +195,12 @@ def create_azure_schema():
             created_at DATETIME DEFAULT GETDATE(),
             updated_at DATETIME DEFAULT GETDATE()
         )
-        """)
+        """
+        )
 
         # Table gravures
-        cursor.execute("""
+        cursor.execute(
+            """
         CREATE TABLE gravures (
             id INT PRIMARY KEY IDENTITY(1,1),
             verre_id INT REFERENCES verres(id),
@@ -176,7 +209,8 @@ def create_azure_schema():
             image_url VARCHAR(500),
             date_ajout DATETIME DEFAULT GETDATE()
         )
-        """)
+        """
+        )
 
         # Création des index
         print("Création des index...")
@@ -190,9 +224,19 @@ def create_azure_schema():
 
         # Création des triggers pour updated_at
         print("Création des triggers...")
-        for table in ['verres', 'fournisseurs', 'materiaux', 'gammes', 'series', 
-                     'traitements', 'symboles', 'verres_symboles', 'verres_traitements']:
-            cursor.execute(f"""
+        for table in [
+            "verres",
+            "fournisseurs",
+            "materiaux",
+            "gammes",
+            "series",
+            "traitements",
+            "symboles",
+            "verres_symboles",
+            "verres_traitements",
+        ]:
+            cursor.execute(
+                f"""
             CREATE TRIGGER tr_{table}_update_timestamp
             ON {table}
             AFTER UPDATE
@@ -204,7 +248,8 @@ def create_azure_schema():
                 INNER JOIN inserted
                 ON {table}.id = inserted.id
             END
-            """)
+            """
+            )
 
         azure_conn.commit()
         print("Schéma créé avec succès dans Azure SQL")
@@ -216,6 +261,7 @@ def create_azure_schema():
     finally:
         azure_conn.close()
 
+
 def convert_numpy_types(value):
     """Convertit les types numpy en types Python natifs"""
     if isinstance(value, np.integer):
@@ -226,11 +272,12 @@ def convert_numpy_types(value):
         return bool(value)
     return value
 
+
 def migrate_data():
     """Migre les données de SQLite vers Azure SQL"""
     sqlite_conn = get_sqlite_connection()
     azure_conn = get_azure_connection()
-    
+
     try:
         # Récupération des tables existantes dans SQLite
         existing_tables = get_sqlite_tables(sqlite_conn)
@@ -238,28 +285,28 @@ def migrate_data():
 
         # Mapping des tables SQLite vers Azure
         table_mapping = {
-            'fournisseurs': 'fournisseurs',
-            'materiaux': 'materiaux',
-            'gammes': 'gammes',
-            'series': 'series',
-            'traitements': 'traitements',
-            'verres': 'verres',
-            'symboles_tags': 'symboles',  # Mapping de symboles_tags vers symboles
-            'verres_symboles': 'verres_symboles',
-            'verres_traitements': 'verres_traitements'
+            "fournisseurs": "fournisseurs",
+            "materiaux": "materiaux",
+            "gammes": "gammes",
+            "series": "series",
+            "traitements": "traitements",
+            "verres": "verres",
+            "symboles_tags": "symboles",  # Mapping de symboles_tags vers symboles
+            "verres_symboles": "verres_symboles",
+            "verres_traitements": "verres_traitements",
         }
 
         # Liste des tables dans l'ordre de migration
         tables_to_migrate = [
-            'fournisseurs',
-            'materiaux',
-            'gammes',
-            'series',
-            'traitements',
-            'verres',
-            'symboles_tags',  # On migre symboles_tags au lieu de symboles
-            'verres_symboles',
-            'verres_traitements'
+            "fournisseurs",
+            "materiaux",
+            "gammes",
+            "series",
+            "traitements",
+            "verres",
+            "symboles_tags",  # On migre symboles_tags au lieu de symboles
+            "verres_symboles",
+            "verres_traitements",
         ]
 
         for sqlite_table in tables_to_migrate:
@@ -269,7 +316,7 @@ def migrate_data():
 
             azure_table = table_mapping[sqlite_table]
             print(f"\nMigration de {sqlite_table} vers {azure_table}...")
-            
+
             try:
                 # Lecture des données SQLite
                 df = pd.read_sql_query(f"SELECT * FROM {sqlite_table}", sqlite_conn)
@@ -278,28 +325,41 @@ def migrate_data():
                     continue
 
                 # Suppression des colonnes created_at et updated_at
-                if 'created_at' in df.columns:
-                    df = df.drop('created_at', axis=1)
-                if 'updated_at' in df.columns:
-                    df = df.drop('updated_at', axis=1)
+                if "created_at" in df.columns:
+                    df = df.drop("created_at", axis=1)
+                if "updated_at" in df.columns:
+                    df = df.drop("updated_at", axis=1)
 
                 # Obtention des colonnes de la table Azure
                 cursor = azure_conn.cursor()
-                cursor.execute(f"""
+                cursor.execute(
+                    f"""
                     SELECT c.name AS COLUMN_NAME,
                            COLUMNPROPERTY(OBJECT_ID('{azure_table}'), c.name, 'IsIdentity') as IS_IDENTITY
                     FROM sys.columns c
                     WHERE object_id = OBJECT_ID('{azure_table}')
                     ORDER BY column_id
-                """)
+                """
+                )
                 azure_columns_info = cursor.fetchall()
                 azure_columns = [row.COLUMN_NAME for row in azure_columns_info]
                 has_identity = any(row.IS_IDENTITY == 1 for row in azure_columns_info)
-                identity_column = next((row.COLUMN_NAME for row in azure_columns_info if row.IS_IDENTITY == 1), None)
+                identity_column = next(
+                    (
+                        row.COLUMN_NAME
+                        for row in azure_columns_info
+                        if row.IS_IDENTITY == 1
+                    ),
+                    None,
+                )
 
                 # Si la table a une colonne identity mais qu'elle n'est pas dans les données SQLite,
                 # on génère des IDs séquentiels
-                if has_identity and identity_column and identity_column not in df.columns:
+                if (
+                    has_identity
+                    and identity_column
+                    and identity_column not in df.columns
+                ):
                     df[identity_column] = range(1, len(df) + 1)
 
                 # Filtrage des colonnes pour ne garder que celles qui existent dans Azure
@@ -307,30 +367,36 @@ def migrate_data():
                 df = df[df_columns]
 
                 # Préparation de la requête d'insertion
-                placeholders = ','.join(['?' for _ in df_columns])
+                placeholders = ",".join(["?" for _ in df_columns])
                 insert_query = f"INSERT INTO {azure_table} ({','.join(df_columns)}) VALUES ({placeholders})"
 
                 # Activation de IDENTITY_INSERT si nécessaire
                 if has_identity and identity_column in df_columns:
                     cursor.execute(f"SET IDENTITY_INSERT {azure_table} ON")
-                
+
                 try:
                     # Insertion des données avec conversion des types
                     for _, row in df.iterrows():
                         try:
                             # Conversion des types numpy en types Python natifs
-                            values = tuple(convert_numpy_types(row[col]) for col in df_columns)
+                            values = tuple(
+                                convert_numpy_types(row[col]) for col in df_columns
+                            )
                             cursor.execute(insert_query, values)
                         except Exception as e:
-                            print(f"Erreur lors de l'insertion dans {azure_table}: {str(e)}")
+                            print(
+                                f"Erreur lors de l'insertion dans {azure_table}: {str(e)}"
+                            )
                             print(f"Requête: {insert_query}")
                             print(f"Colonnes: {df_columns}")
                             print(f"Données: {values}")
                             raise
-                    
+
                     azure_conn.commit()
-                    print(f"Migration terminée pour la table {azure_table}: {len(df)} enregistrements")
-                
+                    print(
+                        f"Migration terminée pour la table {azure_table}: {len(df)} enregistrements"
+                    )
+
                 finally:
                     # Désactivation de IDENTITY_INSERT si nécessaire
                     if has_identity and identity_column in df_columns:
@@ -338,7 +404,9 @@ def migrate_data():
                         azure_conn.commit()
 
             except Exception as e:
-                print(f"Erreur lors de la migration de {sqlite_table} vers {azure_table}: {str(e)}")
+                print(
+                    f"Erreur lors de la migration de {sqlite_table} vers {azure_table}: {str(e)}"
+                )
                 raise
 
         print("\nMigration des données terminée avec succès")
@@ -350,24 +418,26 @@ def migrate_data():
         sqlite_conn.close()
         azure_conn.close()
 
+
 def main():
     """Fonction principale"""
     try:
         print("Début de la synchronisation...")
-        
+
         # Création du schéma dans Azure
         print("\n1. Création du schéma dans Azure SQL...")
         create_azure_schema()
-        
+
         # Migration des données
         print("\n2. Migration des données de SQLite vers Azure SQL...")
         migrate_data()
-        
+
         print("\nSynchronisation terminée avec succès!")
-        
+
     except Exception as e:
         print(f"\nErreur lors de la synchronisation: {str(e)}")
         raise
 
+
 if __name__ == "__main__":
-    main() 
+    main()
