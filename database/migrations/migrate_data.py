@@ -1,7 +1,8 @@
-import sqlite3
-import pyodbc
-import pandas as pd
 import os
+import sqlite3
+
+import pandas as pd
+import pyodbc
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 SQLITE_DB_PATH = os.path.join(BASE_DIR, "..", "data", "verres.db")
@@ -72,7 +73,7 @@ def migrate_table(table_name, sqlite_conn, azure_conn):
                 cursor.execute(sql, row)
             except pyodbc.IntegrityError:
                 print(f"⚠️ Donnée déjà existante ignorée pour {table_name} : {row}")
-        
+
         azure_conn.commit()
 
         # Vérifier combien de lignes ont été ajoutées
